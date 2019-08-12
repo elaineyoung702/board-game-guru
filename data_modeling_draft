@@ -1,0 +1,68 @@
+-write down questions for what i want the suggestion engine to suggest from
+-draft flow of info >> register and login page >> session data
+-get enough seed data
+-functionality first! making forms, no formatting. concentrate on backend
+-be mindful early on: how to cut up code into functions. how to separate out cade
+-to make it testable and modular
+-to do list - do top 3 items. do not keep getting stuck on different items and not 
+making progress. i can set days i want to have things done but definitely prioritize!
+-create journal of experiences
+-what pages to build and how each page will map to the others!! ***
+-learning to write routes that accept post requests and redirects to where it posted**
+
+
+
+Board Games
+____________________
+board game id (pkey)
+board game name
+min_players
+max_players
+suggested_players
+published_by
+min_time
+max_time
+min_age????
+
+## where to get co-op versus pvp games?
+## type of game? dice roll/build/rpg etc?
+## do we want info on strategy level?
+## figure out which table will contain backref. which will be more used, 
+
+
+Users
+__________________
+User ID (pkey)
+User Name
+Email
+Password
+age????
+
+user.board_game = db.relationship!! no need for foreign keys! 
+
+
+
+Favorite 
+__________________
+what to name this primary key though??? wishlist id? favorite id? this will be overwritten if they unfavorite the game????
+Board game ID (fkey)
+user ID (fkey)
+Favorite ID (pkey)
+**many to many relationship
+
+game types brainstorm
+
+
+
+Tag Table
+_________________
+
+
+
+
+## many users can have many favorites/games on wishlist
+## board games can be sfavorited by many users
+## Middle Table = Favorites
+
+additional table
+## alternate idea... what if we allow users to vote on categories for a game to build out our database with information that doesn't already exist? (co-op, light strategy, heavy strategy, party game, family game, etc.)... probably a checklist to vote since a game can land in multiple categories
