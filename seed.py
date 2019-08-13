@@ -1,0 +1,77 @@
+# install BeautifulSoup4
+# install lxml
+
+from bs4 import BeautifulSoup
+from sqlalchemy import func
+# from model import app
+# from model import connect_to_db, db
+from model import BoardGame
+
+
+result_dict = {}
+
+
+def parse_please(path):
+    """"""
+
+    with open(path) as fp:
+        soup = BeautifulSoup(fp, "xml")
+
+    bg_id = (soup.item['id']) #Board Game ID
+
+    game_attr = soup.find("name").attrs
+    name = (game_attr["value"]) # board game name (primary name)
+
+    thumbnail = (soup.thumbnail) #thumbnail img link
+
+    image = (soup.image) # fill img link
+
+    description = (soup.description) # board game description
+
+    playtime = (soup.playingtime) #Suggested Playtime
+    min_time = (soup.minplaytime) #Minimum Playtime
+    max_time = (soup.maxplaytime) #Maximum Playtime
+
+    year_published = (soup.yearpublished) #Year Published
+
+    min_players = (soup.minplayers) # Minimum Players
+    max_players = (soup.maxplayers) #Maximum Players
+
+    # Obtain Suggested Player Amount
+    poll = (soup.poll)
+
+    for result in poll.find_all('results'): #for each child in the poll parent
+        num_players = result['numplayers']  #index into result child and get num_players
+        best_votes = result.find('result', value='Best')    #find item with value="Best"
+        num_votes = int(best_votes['numvotes']) #index into item for numvotes
+        result_dict[num_votes] = num_players    #add num_votes into dict w/num_players value
+
+    max_votes = max(result_dict)    #find highest number of votes
+    suggested_players = result_dict[max_votes]  #index into dict for value for suggested num
+    print(suggested_players)
+
+    boardgame = BoardGame(bg_id=bg_id, bg_name=name, thumbnail_url=thumbnail, 
+                image_url=image, description=description, playtime=playtime, 
+                min_time=min_time, max_time=max_time, year_published=year_published, 
+                min_players=min_players, max_players=max_players, 
+                suggested_players=suggested_players)
+
+
+    db.session.add(boardgame)
+
+
+
+
+parse_please("3.xml")
+
+
+# Board_Game(thumbnail_url=thumbnail, ...etc)
+#db.session.add(...)
+#db.session.commit
+
+
+#db.session.commit
+
+# if __name__ == "__main__":
+#      connect_to_db(app)
+#      db.create_all()

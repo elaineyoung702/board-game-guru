@@ -3,42 +3,70 @@
 
 from bs4 import BeautifulSoup
 
-with open("3.xml") as fp:
-    soup = BeautifulSoup(fp, "xml")
+result_dict = {}
 
-game_attr = soup.find("name").attrs
-print(game_attr["value"]) # board game name (primary name)
+def parse_please(path):
+    """"""
 
-# print(soup.thumbnail) #thumbnail img link
+    with open(path) as fp:
+        soup = BeautifulSoup(fp, "xml")
 
-# print(soup.image) # fill img link
 
-# print(soup.description) # board game description
+    game_attr = soup.find("name").attrs
+    name = (game_attr["value"]) # board game name (primary name)
 
-print(soup.item['id']) #Board Game ID
-print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-# print(soup.yearpublished) #Year Published
+    thumbnail = (soup.thumbnail) #thumbnail img link
 
-# print(soup.minplayers) # Minimum Players
+    image = (soup.image) # fill img link
 
-# print(soup.maxplayers) #Maximum Players
+    description = (soup.description) # board game description
 
-# print(soup.playingtime) #Suggested Playtime
+    bg_id = (soup.item['id']) #Board Game ID
 
-# print(soup.minplaytime) #Minimum Playtime
+    year_published = (soup.yearpublished) #Year Published
 
-# print(soup.maxplaytime) #Maximum Playtime
+    min_players = (soup.minplayers) # Minimum Players
 
-######################################
+    max_players = (soup.maxplayers) #Maximum Players
+
+    playtime = (soup.playingtime) #Suggested Playtime
+
+    min_playtime = (soup.minplaytime) #Minimum Playtime
+
+    max_playtime = (soup.maxplaytime) #Maximum Playtime
+
+    for result in poll.find_all('results'):
+        num_players = result['numplayers']
+        best_votes = result.find('result', value='Best')
+        num_votes = int(best_votes['numvotes'])
+        result_dict[num_votes] = num_players
+
+    max_votes = max(result_dict)
+    suggest_players = result_dict[max_votes]
+
+    # Board_Game(thumbnail_url=thumbnail, ...etc)
+    #db.session.add(...)
+    #db.session.commit
+
+
+parse_please("3.xml")
+
+# ######################################
 
 # print(soup.poll['totalvotes']) #Total Votes on suggested players
+# print("~~~~~~~~~~~~~~~~~~~~")
 
+# print(soup.results['numplayers']) # 
+# print("***********")
+# results = (soup.find_all("results")) # 
+# print("***********")
 
-# print(soup.poll) # 
-# print("***********")
-# print(soup.results) # 
-# print("***********")
+# new_list =[]
+
+# if "Best" in results:
+#     new_list.append("yay")
+
 # print()
 # print("***********")
-# print() 
-# print("***********")
+# # print(soup.results[3]) 
+# # print("***********")
