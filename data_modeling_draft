@@ -11,7 +11,6 @@ making progress. i can set days i want to have things done but definitely priori
 -learning to write routes that accept post requests and redirects to where it posted**
 
 
-
 Board Games
 ____________________
 board game id (pkey)
@@ -19,15 +18,11 @@ board game name
 min_players
 max_players
 suggested_players
-published_by
+year_published
 min_time
 max_time
-min_age????
-
-## where to get co-op versus pvp games?
-## type of game? dice roll/build/rpg etc?
-## do we want info on strategy level?
-## figure out which table will contain backref. which will be more used, 
+playtime
+designer
 
 
 Users
@@ -41,23 +36,24 @@ age????
 user.board_game = db.relationship!! no need for foreign keys! 
 
 
-
 Favorite 
 __________________
-what to name this primary key though??? wishlist id? favorite id? this will be overwritten if they unfavorite the game????
+Favorite ID (pkey)
 Board game ID (fkey)
 user ID (fkey)
-Favorite ID (pkey)
 **many to many relationship
 
-game types brainstorm
 
 
 
-Tag Table
+
+Tag Table (future feature if there is time)
 _________________
 
 
+
+## where to get co-op versus pvp games + strat level? future feature of tags
+## type of game? dice roll/build/rpg etc? game types brainstorm
 
 
 ## many users can have many favorites

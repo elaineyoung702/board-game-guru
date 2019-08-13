@@ -48,16 +48,38 @@ def parse_please(path):
 
     max_votes = max(result_dict)    #find highest number of votes
     suggested_players = result_dict[max_votes]  #index into dict for value for suggested num
-    print(suggested_players)
+
+    link_fam = soup.find_all('link')
+
+    for item in link_fam:
+        link_type = (item['type'])
+        if link_type == 'boardgamedesigner':
+            designer = item['value']
+            break
+
 
     boardgame = BoardGame(bg_id=bg_id, bg_name=name, thumbnail_url=thumbnail, 
                 image_url=image, description=description, playtime=playtime, 
                 min_time=min_time, max_time=max_time, year_published=year_published, 
                 min_players=min_players, max_players=max_players, 
-                suggested_players=suggested_players)
+                suggested_players=suggested_players, designer=designer)
+
+    print(boardgame.bg_id)
+    print(boardgame.bg_name)
+    print(boardgame.thumbnail_url)
+    print(boardgame.image_url)
+    print(boardgame.description)
+    print(boardgame.playtime)
+    print(boardgame.min_time)
+    print(boardgame.max_time)
+    print(boardgame.year_published)
+    print(boardgame.min_players)
+    print(boardgame.max_players)
+    print(boardgame.suggested_players)
+    print(boardgame.designer)
 
 
-    db.session.add(boardgame)
+    # db.session.add(boardgame)
 
 
 
