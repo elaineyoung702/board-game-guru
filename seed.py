@@ -22,20 +22,20 @@ def parse_please(path):
     game_attr = soup.find("name").attrs
     name = (game_attr["value"]) # board game name (primary name)
 
-    thumbnail = (soup.thumbnail) #thumbnail img link
+    thumbnail = (soup.thumbnail.text) #thumbnail img link
 
-    image = (soup.image) # fill img link
+    image = (soup.image.text) # fill img link
 
-    description = (soup.description) # board game description
+    description = (soup.description.text) # board game description
 
-    playtime = (soup.playingtime) #Suggested Playtime
-    min_time = (soup.minplaytime) #Minimum Playtime
-    max_time = (soup.maxplaytime) #Maximum Playtime
+    playtime = (soup.playingtime['value']) #Suggested Playtime
+    min_time = (soup.minplaytime['value']) #Minimum Playtime
+    max_time = (soup.maxplaytime['value']) #Maximum Playtime
 
-    year_published = (soup.yearpublished) #Year Published
+    year_published = (soup.yearpublished['value']) #Year Published
 
-    min_players = (soup.minplayers) # Minimum Players
-    max_players = (soup.maxplayers) #Maximum Players
+    min_players = (soup.minplayers['value']) # Minimum Players
+    max_players = (soup.maxplayers['value']) #Maximum Players
 
     # Obtain Suggested Player Amount
     poll = (soup.poll)
