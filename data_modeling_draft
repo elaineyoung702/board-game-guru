@@ -31,7 +31,7 @@ User ID (pkey)
 User Name
 Email
 Password
-age????
+
 
 user.board_game = db.relationship!! no need for foreign keys! 
 
