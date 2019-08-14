@@ -7,6 +7,8 @@ from sqlalchemy import func
 from model import connect_to_db, db
 from model import BoardGame
 
+from server import app
+
 
 def parse_please(path):
     """Parsing board game XML files and building database."""
@@ -64,6 +66,7 @@ def parse_please(path):
                 suggested_players=suggested_players, designer=designer)
 
     db.session.add(boardgame)
+    db.session.commit()
 
     # print(boardgame.bg_id)
     # print(boardgame.bg_name)
@@ -80,10 +83,11 @@ def parse_please(path):
     # print(boardgame.designer)
 
 
-for i in range(1,3):
-    parse_please(f"{i}.xml")
 
-db.session.commit()
+
+parse_please("3.xml")
+
+
 
 
 if __name__ == "__main__":
@@ -93,4 +97,3 @@ if __name__ == "__main__":
 
 
 
-     

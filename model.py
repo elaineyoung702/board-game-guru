@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+# from server import app
 
 db = SQLAlchemy()
 
@@ -14,9 +15,9 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=True)
     password = db.Column(db.String(64), nullable=True)
 
-    boardgames = db.relationship("Boardgame", secondary="favorites",
+    boardgames = db.relationship("BoardGame", secondary="favorites",
                                     backref="users")
-    
+
 
     def __repr__(self):
         """Provide helpful User info when printed."""
@@ -80,11 +81,11 @@ class Favorite(db.Model):
 #########################################################################
 # Helper Functions
 
-def connected_to_db(app):
+def connect_to_db(app):
     """Connect the databse to our Flask app"""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///games' ####CHECK THIS
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///' ####CHECK THIS
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
@@ -92,7 +93,7 @@ def connected_to_db(app):
 
 if __name__ == "__main__":
 
-    from server import app
+    # from server import app
     connect_to_db(app)
     print("Connected to DB.")
 
