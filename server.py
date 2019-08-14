@@ -1,4 +1,5 @@
 from flask import Flask
+# from flask import render_template, redirect, flash
 # from flask_debugtoolbar import DebugToolbarExtension
 # from jinja2 import StrictUndefined
 from model import connect_to_db, db
@@ -14,6 +15,45 @@ def index():
     """Homepage."""
 
     return "<html><body>Placeholder</body></html>"
+
+
+@app.route('/login')
+def show_login_page():
+    """Show Login Form."""
+
+    return "<html><body>Placeholder</body></html>"
+
+
+
+@app.route('/favorites')
+def show_favorites():
+    """Show User's Favorite Board Games."""
+
+    return "<html><body>Placeholder</body></html>"
+
+
+@app.route('/boardgame')
+def show_boardgame_info():
+    """Show Board Game Info Page."""
+
+    return "<html><body>Placeholder</body></html>"
+
+
+
+@app.route('/database')
+def show_database():
+    """Show Board Game Database."""
+
+    return "<html><body>Placeholder</body></html>"
+
+
+@app.route('/search')
+def show_search_form():
+    """Show Search Form."""
+
+    return "<html><body>Placeholder</body></html>"
+
+
 
 
 
