@@ -1,6 +1,3 @@
-# install BeautifulSoup4
-# install lxml
-
 from bs4 import BeautifulSoup
 from sqlalchemy import func
 # from model import app
@@ -15,6 +12,10 @@ def parse_please(path):
 
     with open(path) as fp:
         soup = BeautifulSoup(fp, "xml")
+
+    if soup.item == None:
+        print("Skipping...")
+        return
 
     bg_id = (soup.item['id']) #Board Game ID
 
@@ -42,12 +43,18 @@ def parse_please(path):
 
     for result in poll.find_all('results'): #for each child in the poll parent
         num_players = result['numplayers']  #index into result child and get num_players
+        if '+' in num_players:  #remove suggested player of number+
+            break
         best_votes = result.find('result', value='Best')    #find item with value="Best"
         num_votes = int(best_votes['numvotes']) #index into item for numvotes
         result_dict[num_votes] = num_players    #add num_votes into dict w/num_players value
 
     max_votes = max(result_dict)    #find highest number of votes
     suggested_players = result_dict[max_votes]  #index into dict for value for suggested num
+
+    # if "+" not in suggested_players:
+    #     if int(suggested_players) < int(min_players):
+    #         suggested_players = min_players
 
     # Obtain Board Game Designer
     link_fam = soup.find_all('link')    #find all link tags
@@ -68,6 +75,8 @@ def parse_please(path):
     db.session.add(boardgame)
     db.session.commit()
 
+    print(f'Successfully added: {boardgame}')
+
     # print(boardgame.bg_id)
     # print(boardgame.bg_name)
     # print(boardgame.thumbnail_url)
@@ -85,14 +94,11 @@ def parse_please(path):
 
 
 
-parse_please("3.xml")
-
-
-
-
 if __name__ == "__main__":
-     connect_to_db(app)
-     db.create_all()
+
+    connect_to_db(app)
+    db.create_all()
+    parse_please("6889.xml")
 
 
 
