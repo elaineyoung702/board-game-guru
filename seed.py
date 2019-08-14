@@ -13,7 +13,7 @@ def parse_please(path):
     with open(path) as fp:
         soup = BeautifulSoup(fp, "xml")
 
-    if soup.item == None:
+    if soup.item is None:
         print("Skipping...")
         return
 
@@ -98,7 +98,9 @@ if __name__ == "__main__":
 
     connect_to_db(app)
     db.create_all()
-    parse_please("6889.xml")
+
+    for i in range (80,90):
+        parse_please(f"{i}.xml")
 
 
 
