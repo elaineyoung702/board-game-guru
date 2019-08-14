@@ -14,12 +14,17 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=True)
     password = db.Column(db.String(64), nullable=True)
 
+    boardgames = db.relationship("Boardgame", secondary="favorites",
+                                    backref="users")
+    
+
     def __repr__(self):
         """Provide helpful User info when printed."""
 
         return f"<User user_id={self.user_id}, name={self.name}, email={self.email}>"
 
     # user.boardgame = db.relationship
+
 
 
 class BoardGame(db.Model):
@@ -63,6 +68,7 @@ class Favorite(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     bg_id = db.Column(db.Integer, db.ForeignKey('boardgames.bg_id'))
+    is_fav = db.Column(db.Boolean, default=False)
 
 
     def __repr__(self):
@@ -74,21 +80,21 @@ class Favorite(db.Model):
 #########################################################################
 # Helper Functions
 
-def connected_to_db(app):
-    """Connect the databse to our Flask app"""
+# def connected_to_db(app):
+#     """Connect the databse to our Flask app"""
 
-    # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///games' ####CHECK THIS
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db.app = app
-    db.init_app(app)
+#     # Configure to use our PostgreSQL database
+#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///games' ####CHECK THIS
+#     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#     db.app = app
+#     db.init_app(app)
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    from server import app
-    connect_to_db(app)
-    print("Connected to DB.")
+#     from server import app
+#     connect_to_db(app)
+#     print("Connected to DB.")
 
 
 
