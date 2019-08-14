@@ -8,11 +8,11 @@ from sqlalchemy import func
 from model import BoardGame
 
 
-result_dict = {}
+
 
 
 def parse_please(path):
-    """"""
+    """Parsing Board Game XML files and building database."""
 
     with open(path) as fp:
         soup = BeautifulSoup(fp, "xml")
@@ -38,6 +38,7 @@ def parse_please(path):
     max_players = (soup.maxplayers['value']) #Maximum Players
 
     # Obtain Suggested Player Amount
+    result_dict = {}
     poll = (soup.poll)
 
     for result in poll.find_all('results'): #for each child in the poll parent
@@ -49,12 +50,13 @@ def parse_please(path):
     max_votes = max(result_dict)    #find highest number of votes
     suggested_players = result_dict[max_votes]  #index into dict for value for suggested num
 
-    link_fam = soup.find_all('link')
+    # Obtain Board Game Designer
+    link_fam = soup.find_all('link')    #find all link tags
 
-    for item in link_fam:
-        link_type = (item['type'])
-        if link_type == 'boardgamedesigner':
-            designer = item['value']
+    for item in link_fam:   #for each item with link tag
+        link_type = (item['type'])  #index type tag within link tag and set variable
+        if link_type == 'boardgamedesigner':    #search each type tag to find match
+            designer = item['value'] #set value to designer variable
             break
 
 

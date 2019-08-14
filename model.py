@@ -14,6 +14,11 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=True)
     password = db.Column(db.String(64), nullable=True)
 
+    def __repr__(self):
+        """Provide helpful User info when printed."""
+
+        return f"<User user_id={self.user_id}, name={self.name}, email={self.email}>"
+
     # user.boardgame = db.relationship
 
 
@@ -39,9 +44,13 @@ class BoardGame(db.Model):
     max_players = db.Column(db.Integer, nullable=True)
     suggested_players = db.Column(db.Integer, nullable=False)
 
-    publisher = db.Column(db.String(100), nullable=False)
     designer = db.Column(db.String(100), nullable=False)
 
+
+    def __repr__(self):
+        """Provide helpful BoardGame info when printed."""
+
+        return f"<BoardGame bg_id={self.bg_id}, bg_name={self.bg_name}>"
 
 
 
@@ -54,6 +63,12 @@ class Favorite(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     bg_id = db.Column(db.Integer, db.ForeignKey('boardgames.bg_id'))
+
+
+    def __repr__(self):
+        """Provide helpful Favorite info when printed."""
+
+        return f"<Favorite fav_id={self.fav_id}, user_id={self.user_id}, bg_id={self.bg_id}>"
 
 
 #########################################################################
