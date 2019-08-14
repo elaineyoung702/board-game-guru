@@ -4,15 +4,12 @@
 from bs4 import BeautifulSoup
 from sqlalchemy import func
 # from model import app
-# from model import connect_to_db, db
+from model import connect_to_db, db
 from model import BoardGame
 
 
-
-
-
 def parse_please(path):
-    """Parsing Board Game XML files and building database."""
+    """Parsing board game XML files and building database."""
 
     with open(path) as fp:
         soup = BeautifulSoup(fp, "xml")
@@ -66,6 +63,8 @@ def parse_please(path):
                 min_players=min_players, max_players=max_players, 
                 suggested_players=suggested_players, designer=designer)
 
+    db.session.add(boardgame)
+
     # print(boardgame.bg_id)
     # print(boardgame.bg_name)
     # print(boardgame.thumbnail_url)
@@ -81,21 +80,17 @@ def parse_please(path):
     # print(boardgame.designer)
 
 
-    # db.session.add(boardgame)
+for i in range(1,3):
+    parse_please(f"{i}.xml")
+
+db.session.commit()
+
+
+if __name__ == "__main__":
+     connect_to_db(app)
+     db.create_all()
 
 
 
 
-parse_please("3.xml")
-
-
-# Board_Game(thumbnail_url=thumbnail, ...etc)
-#db.session.add(...)
-#db.session.commit
-
-
-#db.session.commit
-
-# if __name__ == "__main__":
-#      connect_to_db(app)
-#      db.create_all()
+     

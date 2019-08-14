@@ -80,21 +80,21 @@ class Favorite(db.Model):
 #########################################################################
 # Helper Functions
 
-# def connected_to_db(app):
-#     """Connect the databse to our Flask app"""
+def connected_to_db(app):
+    """Connect the databse to our Flask app"""
 
-#     # Configure to use our PostgreSQL database
-#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///games' ####CHECK THIS
-#     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-#     db.app = app
-#     db.init_app(app)
+    # Configure to use our PostgreSQL database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///games' ####CHECK THIS
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db.app = app
+    db.init_app(app)
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
 
-#     from server import app
-#     connect_to_db(app)
-#     print("Connected to DB.")
+    from server import app
+    connect_to_db(app)
+    print("Connected to DB.")
 
 
 
