@@ -4,29 +4,17 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    
     <div class="navbar navbar-inverse navbar-static-top">
     <div class="container">
-
         <div class="navbar-header">
-            <img src="https://placekitten.com/333/333">
-            <a class="navbar-brand" href="/">Board Games</a>
+            <a class="navbar-brand" href="/">Homepage</a>
+            <a href="/favorites">My Favorite Board Games    </a>
+            <a href="/login">Log In</a>
         </div>
-
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="/favorites">
-                        <img class="favorites"
-                             src="https://placekitten.com/200/250">
-                        My Favorite Board Games
-                    </a>
-                </li>
-                <li><a href="/login">Log In</a></li>
-            </ul>
-        </div>
-
     </div>
-</div>
+    </div>
+    <br><br><br><br><br>
 
   <!-- Show flashed messages -->
   {% with messages = get_flashed_messages() %}
@@ -37,7 +25,7 @@
 
   <!-- This is where the main content goes. -->
   {% block body %}
-      BODY OF PAGE GOES HERE VIA INHERITANCE
+      <img src="https://placekitten.com/900/500">
   {% endblock %}
 
 </body>
