@@ -34,8 +34,8 @@ def show_favorites():
     return "<html><body>Placeholder</body></html>"
 
 
-@app.route('/boardgame')
-def show_boardgame_info(bg_id=94):
+@app.route('/boardgame/<bg_id>')
+def show_boardgame_info(bg_id):
     """Show Board Game Info Page."""
 
     boardgame = db.session.query(BoardGame).filter_by(bg_id=bg_id).one()
@@ -48,7 +48,9 @@ def show_boardgame_info(bg_id=94):
 def show_database():
     """Show Board Game Database."""
 
-    return "<html><body>Placeholder</body></html>"
+    bg_obj_list = db.session.query(BoardGame).all()
+
+    return render_template('database.html', bg_obj_list=bg_obj_list)
 
 
 @app.route('/search')

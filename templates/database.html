@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<table>
+    <tr>
+        <th>Thumbnail</th>
+        <th>Board Game Name</th>
+        <th>Minimum Players</th>
+        <th>Maximum Players</th>
+        <th>Suggested Players</th>
+        <th>Playtime</th>
+        <th>Description</th>
+        <th>Year Published</th>
+        <th>Designer</th>
+    </tr>
+
+    {% for bg in bg_obj_list %}
+    <tr>
+        <td><img src={{bg.thumbnail_url}}></td>
+        <td><a href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}<a></td>
+        <td>minimum {{bg.min_players}} players</td>
+        <td>maximum {{bg.max_players}} players</td>
+        <td>suggested {{bg.suggested_players}} players</td>
+        <td>{{bg.playtime}} minutes</td>
+        <td>{{bg.description}}</td>
+        <td>published in {{bg.year_published}}</td>
+        <td>Designer: {{bg.designer}}</td>
+    </tr>
+    {% endfor %}
+
+
+</table>
+
+{% endblock %}
