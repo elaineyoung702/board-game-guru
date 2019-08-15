@@ -1,27 +1,27 @@
 from flask import Flask
-# from flask import render_template, redirect, flash
+from flask import render_template, redirect, flash
 # from flask_debugtoolbar import DebugToolbarExtension
-# from jinja2 import StrictUndefined
+from jinja2 import StrictUndefined
 from model import connect_to_db, db
 
 app = Flask(__name__)
 
 app.secret_key = "s00persekret"
 
-# app.jinja_env.undefinted = StrictUndefined
+app.jinja_env.undefinted = StrictUndefined
 
 @app.route('/')
 def index():
     """Homepage."""
 
-    return "<html><body>Placeholder</body></html>"
+    return render_template("homepage.html")
 
 
 @app.route('/login')
 def show_login_page():
     """Show Login Form."""
 
-    return "<html><body>Placeholder</body></html>"
+    return render_template("base.html")
 
 
 
