@@ -2,18 +2,14 @@
 
 {% block body %}
 
-
-
-BG Object: {{boardgame}}
-
-<br><br>
+<!-- BG Object: {{boardgame}} -->
 
 <br><br>
 Board Game ID: {{boardgame.bg_id}}
 <br><br>
-Image URL: <img src={{boardgame.image_url}}>
+Image: <img src={{boardgame.image_url}}>
 <br><br>
-Thumbnail URL: <img src={{boardgame.thumbnail_url}}>
+Thumbnail: <img src={{boardgame.thumbnail_url}}>
 <br><br>
 Description: {{boardgame.description}}
 <br><br>
@@ -33,9 +29,6 @@ Suggested Players: {{boardgame.suggested_players}} players
 <br><br>
 Board Game Designer: {{boardgame.designer}}
 <br><br><br><br><br><br><br><br>
-
-
-
 
 
 {% endblock %}
