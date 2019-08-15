@@ -6,6 +6,8 @@ from model import BoardGame
 
 from server import app
 
+import html
+
 
 def parse_please(path):
     """Parsing board game XML files and building database."""
@@ -26,7 +28,7 @@ def parse_please(path):
 
     image = (soup.image.text) # fill img link
 
-    description = (soup.description.text) # board game description
+    description = html.unescape(soup.description.text) # board game description
 
     playtime = (soup.playingtime['value']) #Suggested Playtime
     min_time = (soup.minplaytime['value']) #Minimum Playtime
@@ -99,7 +101,7 @@ if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
 
-    for i in range (80,90):
+    for i in range (91,100):
         parse_please(f"{i}.xml")
 
 
