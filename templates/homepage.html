@@ -8,11 +8,18 @@
     <br>
     <h2 class="homepage">What would you like to do?</h2>
     <br>
-    <a href='/search'>Receive a board game suggestion from answering a couple questions</a>
-        <br><br>
     <a href='/favorites'>Receive a board game suggestion based on user favorites - 
                 Must have user account </a>
         <br><br>
+        <form action='/login' method='POST'>
+            <b>Email: <input type="email" name="email" required></b><br><br>
+            <b>Password: <input type="password" name="password" required></b><br><br>
+            <input type="submit" value="Login">
+        </form>
+    <br><br>
+    <a href='/search'>Receive a board game suggestion from answering a couple questions</a>
+    <br><br>
+    <br><br>
     <a href='/database'>View Board Game Guru's database of board games</a>
         <br><br>
 

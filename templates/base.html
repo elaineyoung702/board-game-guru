@@ -15,8 +15,12 @@
             <span align="center">
               <a href="/favorites">My Favorite Board Games</a>
             <!-- </span> -->
-            <span align="rignt">
-              <a href="/login">Log In</a>
+            <span align="right">
+                <form action='/login' method='POST'>
+                    Email: <input type="email" name="email" required>
+                    Password: <input type="password" name="password" required>
+                    <input type="submit" value="Login">
+                </form>
             <!-- </span> -->
         </div>
     </div>
