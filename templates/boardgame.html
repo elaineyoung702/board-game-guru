@@ -4,11 +4,38 @@
 
 
 
-{{boardgame}}
+BG Object: {{boardgame}}
 
 <br><br>
 
-{{id}}
+<br><br>
+Board Game ID: {{boardgame.bg_id}}
+<br><br>
+Image URL: <img src={{boardgame.image_url}}>
+<br><br>
+Thumbnail URL: <img src={{boardgame.thumbnail_url}}>
+<br><br>
+Description: {{boardgame.description}}
+<br><br>
+Playtime: {{boardgame.playtime}} minutes
+<br><br>
+Minimum Playtime: {{boardgame.min_time}} minutes
+<br><br>
+Maximum Playtime: {{boardgame.max_time}} minutes
+<br><br>
+Year Published: {{boardgame.year_published}}
+<br><br>
+Minimum Players: {{boardgame.min_players}} players
+<br><br>
+Maximum Players: {{boardgame.max_players}} players
+<br><br>
+Suggested Players: {{boardgame.suggested_players}} players
+<br><br>
+Board Game Designer: {{boardgame.designer}}
+<br><br><br><br><br><br><br><br>
+
+
+
 
 
 {% endblock %}

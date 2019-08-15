@@ -38,11 +38,9 @@ def show_favorites():
 def show_boardgame_info():
     """Show Board Game Info Page."""
 
-    boardgame = db.session.query(BoardGame).filter_by(bg_id=3).one()
-    id = boardgame.bg_id
+    boardgame = db.session.query(BoardGame).filter_by(bg_id=94).one()
 
-
-    return render_template('boardgame.html', boardgame=boardgame, id=id)
+    return render_template('boardgame.html', boardgame=boardgame)
 
 
 
