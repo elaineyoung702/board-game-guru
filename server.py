@@ -2,7 +2,9 @@ from flask import Flask
 from flask import render_template, redirect, flash
 # from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
-from model import connect_to_db, db
+from model import connect_to_db, db, BoardGame
+
+
 
 app = Flask(__name__)
 
@@ -36,7 +38,11 @@ def show_favorites():
 def show_boardgame_info():
     """Show Board Game Info Page."""
 
-    return "<html><body>Placeholder</body></html>"
+    boardgame = db.session.query(BoardGame).filter_by(bg_id=3).one()
+    id = boardgame.bg_id
+
+
+    return render_template('boardgame.html', boardgame=boardgame, id=id)
 
 
 
