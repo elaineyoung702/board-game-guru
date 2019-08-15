@@ -35,10 +35,10 @@ def show_favorites():
 
 
 @app.route('/boardgame')
-def show_boardgame_info():
+def show_boardgame_info(bg_id=94):
     """Show Board Game Info Page."""
 
-    boardgame = db.session.query(BoardGame).filter_by(bg_id=94).one()
+    boardgame = db.session.query(BoardGame).filter_by(bg_id=bg_id).one()
 
     return render_template('boardgame.html', boardgame=boardgame)
 
