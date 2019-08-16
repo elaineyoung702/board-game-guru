@@ -68,27 +68,24 @@ def show_database():
     return render_template('database.html', bg_obj_list=bg_obj_list)
 
 
-@app.route('/favorites')
+@app.route('/favorites', methods=['GET', 'POST'])
 def show_favorites():
     """Show User's Favorite Board Games."""
 
     if 'user_id' in session:
-        user_id = request.args.get('user_id')
-        bg_id = request.args.get('bg_id')
-        new_fav = Favorite(user_id=user_id, bg_id=bg_id)
-        print (new_fav)
-        db.session.add(new_fav)
-        db.session.commit()
-        faves_list = Favorite.query.filter(Favorite.user_id == session['user_id'])
+        user = User.query.get(session['user_id'])
+
+        if request.method == 'POST':
+            bg_id = request.form.get('bg_id')
+            
+            bg = BoardGame.query.get(bg_id)
+
+            user.favorites.append(bg)
+
+            db.session.commit()
+
         
-        bg_id_list = []
-        for fave in faves_list:
-            bg_id_list.append(fave.bg_id)
-        
-        bg_obj_list = []
-        for item in bg_id_list:
-            bg_item = db.session.query(BoardGame).filter(BoardGame.bg_id==item).one()
-            bg_obj_list.append(bg_item)
+        bg_obj_list = user.favorites
 
         return render_template('favorites.html',bg_obj_list=bg_obj_list)
     else:
