@@ -2,12 +2,16 @@
 
 {% block body %}
 
+
 <!-- BG Object: {{boardgame}} -->
-<form>
-    <input id='fav_button' type="button" name="favorite" value="Favorite">
-    <input type="text" name="bg_id" value={{boardgame.bg_id}}>
-    <input type="text" name="user_id" value={{user.user_id}}>
-</form>
+  <form action="/favorites">
+      <input type="text" name="bg_id" value={{boardgame.bg_id}} hidden>
+      {% if session %}
+      <input type="text" name="user_id" value={{user.user_id}} hidden>
+      {% endif %}
+      <input id="fav_button" type="submit" name="fav_button" value="Favorite">
+  </form>
+
 
 <br><br>
 Board Game ID: {{boardgame.bg_id}}
