@@ -4,7 +4,7 @@
 
 
 <!-- BG Object: {{boardgame}} -->
-  <form action="/favorites">
+  <form action="/favorites" method='POST'>
       <input type="text" name="bg_id" value={{boardgame.bg_id}} hidden>
       {% if session %}
       <input type="text" name="user_id" value={{user.user_id}} hidden>
