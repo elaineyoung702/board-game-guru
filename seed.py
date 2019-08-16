@@ -101,7 +101,7 @@ if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
 
-    for i in range (91,100):
+    for i in range (6800,6895):
         parse_please(f"{i}.xml")
 
 
