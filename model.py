@@ -69,8 +69,7 @@ class Favorite(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     bg_id = db.Column(db.Integer, db.ForeignKey('boardgames.bg_id'))
-    is_fav = db.Column(db.Boolean, default=False)
-
+    
 
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
