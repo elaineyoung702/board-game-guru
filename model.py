@@ -15,7 +15,7 @@ class User(db.Model):
     email = db.Column(db.String(50), nullable=True)
     password = db.Column(db.String(64), nullable=True)
 
-    boardgames = db.relationship("BoardGame", secondary="favorites",
+    favorites = db.relationship("BoardGame", secondary="favorites",
                                     backref="users")
 
 
@@ -36,7 +36,7 @@ class BoardGame(db.Model):
     bg_id = db.Column(db.Integer, primary_key=True)
 
     bg_name = db.Column(db.String, nullable=True)
-    thumbnail_url = db.Column(db.String, nullable=False)
+    thumbnail_url = db.Column(db.String, nullable=False, default='/static/image/placeholder.png')
     image_url = db.Column(db.String, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
@@ -48,7 +48,7 @@ class BoardGame(db.Model):
 
     min_players = db.Column(db.Integer, nullable=True)
     max_players = db.Column(db.Integer, nullable=True)
-    suggested_players = db.Column(db.Integer, nullable=False)
+    suggested_players = db.Column(db.Integer, nullable=True)
 
     designer = db.Column(db.String(100), nullable=False)
 
@@ -64,12 +64,13 @@ class Favorite(db.Model):
     """A collection of user's favorite board games."""
 
     __tablename__ = "favorites"
+    __table_args__ = (db.UniqueConstraint('user_id', 'bg_id'),)
 
     fav_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     bg_id = db.Column(db.Integer, db.ForeignKey('boardgames.bg_id'))
-    
+
 
     def __repr__(self):
         """Provide helpful Favorite info when printed."""

@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from sqlalchemy import func
 # from model import app
 from model import connect_to_db, db
-from model import BoardGame
+from model import BoardGame, User
 
 from server import app
 
@@ -24,9 +24,12 @@ def parse_please(path):
     game_attr = soup.find("name").attrs
     name = (game_attr["value"]) # board game name (primary name)
 
-    thumbnail = (soup.thumbnail.text) #thumbnail img link
-
-    image = (soup.image.text) # fill img link
+    try:
+        thumbnail = (soup.thumbnail.text) #thumbnail img link
+        image = (soup.image.text) # fill img link
+    except AttributeError:
+        thumbnail = '/static/image/placeholder.png'
+        image = '/static/image/placeholder.png'
 
     description = html.unescape(soup.description.text) # board game description
 
@@ -51,8 +54,11 @@ def parse_please(path):
         num_votes = int(best_votes['numvotes']) #index into item for numvotes
         result_dict[num_votes] = num_players    #add num_votes into dict w/num_players value
 
-    max_votes = max(result_dict)    #find highest number of votes
-    suggested_players = result_dict[max_votes]  #index into dict for value for suggested num
+    try:
+        max_votes = max(result_dict)    #find highest number of votes
+        suggested_players = result_dict[max_votes]  #index into dict for value for suggested num
+    except ValueError:
+        suggested_players = None
 
     # if "+" not in suggested_players:
     #     if int(suggested_players) < int(min_players):
@@ -97,12 +103,18 @@ def parse_please(path):
 
 
 if __name__ == "__main__":
+    import sys
 
     connect_to_db(app)
     db.create_all()
 
-    for i in range (6800,6895):
-        parse_please(f"{i}.xml")
+    try:
+        if sys.argv[1] == '--create-user':
+            db.session.add(User(name='TEST', email='test@test.com', password='test'))
+            db.session.commit()
+    except IndexError:       
+        for i in range (6800,6895):
+            parse_please(f"{i}.xml")
 
 
 
