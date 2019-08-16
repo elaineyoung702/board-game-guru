@@ -24,19 +24,20 @@ def index():
 def show_login_page():
     """Show Login Form."""
 
-    user_list = User.query.all()
+    user_list = User.query.all()    #obtain all user objects within users table
 
-    email = request.form.get("email")
-    password = request.form.get('password')
+    email = request.form.get("email")   #get email provided in form
+    password = request.form.get('password') #get passwork provided in form
 
-    for user in user_list:
-        if user.email == email and user.password == password:
-            session['user'] = user.user_id
-            print("hooray!")
-            print(f"SESSION USER ID: {session['user']}")
+    for user in user_list:  #check to see if user is in users table
+        if user.email == email and user.password == password:   #check email/password match with db
+            session['user_id'] = user.user_id   #set session user_id
+            session['email'] = user.email   #set session email (maybe get rid of this?)
+            print(f"SESSION USER EMAIL: {session['email']}") #Debugging prints
+            print(f"Session User ID: {session['user_id']}") #Debugging prints
             return redirect('/favorites')
         else:
-            print("no login")
+            print("no login") #Debugging prints
             return render_template("login.html")
 
 
@@ -47,10 +48,12 @@ def show_boardgame_info(bg_id):
 
     boardgame = db.session.query(BoardGame).filter_by(bg_id=bg_id).one()
 
-    if session['user']:
-        user = session['user']
+    if session:
+        user = db.session.query(User).filter_by(user_id=session['user_id']).one()
+        return render_template('boardgame.html', boardgame=boardgame, user=user)
+    else:
+        return render_template('boardgame.html', boardgame=boardgame)
 
-    return render_template('boardgame.html', boardgame=boardgame, user=user)
 
 
 @app.route('/database')
@@ -66,7 +69,17 @@ def show_database():
 def show_favorites():
     """Show User's Favorite Board Games."""
 
-    return render_template('favorites.html')
+    if session:
+        user_id = request.args.get('user_id')
+        bg_id = request.args.get('bg_id')
+        new_fav = Favorite(user_id=user_id, bg_id=bg_id)
+        print (new_fav)
+        db.session.add(new_fav)
+        db.session.commit()
+        return render_template('favorites.html')
+    else:
+        return render_template('login.html')
+
 
 
 @app.route('/search')
