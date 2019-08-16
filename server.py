@@ -32,9 +32,11 @@ def show_login_page():
     for user in user_list:
         if user.email == email and user.password == password:
             session['user'] = user.user_id
+            print("hooray!")
             print(f"SESSION USER ID: {session['user']}")
             return redirect('/favorites')
         else:
+            print("no login")
             return render_template("login.html")
 
 
@@ -45,7 +47,10 @@ def show_boardgame_info(bg_id):
 
     boardgame = db.session.query(BoardGame).filter_by(bg_id=bg_id).one()
 
-    return render_template('boardgame.html', boardgame=boardgame)
+    if session['user']:
+        user = session['user']
+
+    return render_template('boardgame.html', boardgame=boardgame, user=user)
 
 
 @app.route('/database')

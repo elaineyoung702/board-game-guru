@@ -3,6 +3,11 @@
 {% block body %}
 
 <!-- BG Object: {{boardgame}} -->
+<form>
+    <input id='fav_button' type="button" name="favorite" value="Favorite">
+    <input type="text" name="bg_id" value={{boardgame.bg_id}}>
+    <input type="text" name="user_id" value={{user.user_id}}>
+</form>
 
 <br><br>
 Board Game ID: {{boardgame.bg_id}}
@@ -30,5 +35,17 @@ Suggested Players: {{boardgame.suggested_players}} players
 Board Game Designer: {{boardgame.designer}}
 <br><br><br><br><br><br><br><br>
 
+<script>
+  "use strict";
+  const favButton = document.querySelector('#signIn');
+  function changeButton() {
+    if (favButton.innerText === 'Favorite') {
+      favButton.innerText = 'Favorited';
+    } else {
+      favButton.innerText = 'Not a Favorite';
+    }
+  }
+  favButton.addEventListener('click', changeButton);
+</script>
 
 {% endblock %}
