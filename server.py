@@ -79,7 +79,18 @@ def show_favorites():
         print (new_fav)
         db.session.add(new_fav)
         db.session.commit()
-        return render_template('favorites.html')
+        faves_list = Favorite.query.filter(Favorite.user_id == session['user_id'])
+        
+        bg_id_list = []
+        for fave in faves_list:
+            bg_id_list.append(fave.bg_id)
+        
+        bg_obj_list = []
+        for item in bg_id_list:
+            bg_item = db.session.query(BoardGame).filter(BoardGame.bg_id==item).one()
+            bg_obj_list.append(bg_item)
+
+        return render_template('favorites.html',bg_obj_list=bg_obj_list)
     else:
         return render_template('login.html')
 
