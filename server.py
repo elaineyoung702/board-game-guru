@@ -29,9 +29,12 @@ def show_login_page():
     email = request.form.get("email")
     password = request.form.get('password')
 
-    print (f'email = {email}, password = {password}')
+    for user in user_list:
+        if user.email == email and user.password == password:
+            return render_template("favorites.html")
+        else:
+            return render_template("login.html")
 
-    return render_template("base.html")
 
 
 @app.route('/boardgame/<bg_id>')
