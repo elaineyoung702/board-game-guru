@@ -26,6 +26,9 @@ def show_login_page():
 
     user_list = User.query.all()    #obtain all user objects within users table
 
+    if user_list == []:
+        return render_template("login.html")
+
     email = request.form.get("email")   #get email provided in form
     password = request.form.get('password') #get passwork provided in form
 
@@ -69,7 +72,7 @@ def show_database():
 def show_favorites():
     """Show User's Favorite Board Games."""
 
-    if session:
+    if 'user_id' in session:
         user_id = request.args.get('user_id')
         bg_id = request.args.get('bg_id')
         new_fav = Favorite(user_id=user_id, bg_id=bg_id)
