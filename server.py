@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, session
 from flask import render_template, redirect, flash
 # from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
@@ -31,7 +31,9 @@ def show_login_page():
 
     for user in user_list:
         if user.email == email and user.password == password:
-            return render_template("favorites.html")
+            session['user'] = user.user_id
+            print(f"SESSION USER ID: {session['user']}")
+            return redirect('/favorites')
         else:
             return render_template("login.html")
 
@@ -59,7 +61,7 @@ def show_database():
 def show_favorites():
     """Show User's Favorite Board Games."""
 
-    return render_template('base.html')
+    return render_template('favorites.html')
 
 
 @app.route('/search')
