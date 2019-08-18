@@ -33,7 +33,7 @@ class BoardGame(db.Model):
 
     __tablename__ = "boardgames"
 
-    bg_id = db.Column(db.Integer, primary_key=True)
+    bg_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     bg_name = db.Column(db.String, nullable=True)
     thumbnail_url = db.Column(db.String, nullable=False, default='/static/image/placeholder.png')
@@ -44,7 +44,7 @@ class BoardGame(db.Model):
     min_time = db.Column(db.Integer, nullable=False)
     max_time = db.Column(db.Integer, nullable=False)
 
-    year_published = db.Column(db.Integer, nullable=True) #maybe do datetime?
+    year_published = db.Column(db.Integer, nullable=True) #maybe do datetime for learning!
 
     min_players = db.Column(db.Integer, nullable=True)
     max_players = db.Column(db.Integer, nullable=True)
