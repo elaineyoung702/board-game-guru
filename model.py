@@ -24,9 +24,6 @@ class User(db.Model):
 
         return f"<User user_id={self.user_id}, name={self.name}, email={self.email}>"
 
-    # user.boardgame = db.relationship
-
-
 
 class BoardGame(db.Model):
     """Board Game Object."""
@@ -57,7 +54,6 @@ class BoardGame(db.Model):
         """Provide helpful BoardGame info when printed."""
 
         return f"<BoardGame bg_id={self.bg_id}, bg_name={self.bg_name}>"
-
 
 
 class Favorite(db.Model):

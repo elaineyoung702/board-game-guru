@@ -24,33 +24,28 @@ def index():
 def show_login_page():
     """Show Login Form."""
 
-    # user_list = User.query.all()    #obtain all user objects within users table
-
-
-    # if user_list == []:
-    #     return render_template("login.html")
-
     email = request.form.get("email")   #get email provided in form
     password = request.form.get('password') #get passwork provided in form
 
     try:
-        user = User.query.filter(email=email, password=password).one() # check this syntax
+        user = db.session.query(User).filter(User.email==email, User.password==password).first() # check this syntax
         session['user_id'] = user.user_id   #set session user_id
         session['email'] = user.email   #set session email (maybe get rid of this?)
         print(f"SESSION USER EMAIL: {session['email']}") #Debugging prints
         print(f"Session User ID: {session['user_id']}") #Debugging prints
         return redirect('/favorites')
-    except SomeError:
+    except AttributeError:
         print("no login") #Debugging prints
         return render_template("login.html")
 
-    # for user in user_list:  #check to see if user is in users table
-    #     if user.email == email and user.password == password:   #check email/password match with db
-            
-    #     else:
-    #         print("no login") #Debugging prints
-    #         return render_template("login.html")
 
+@app.route('/logout', methods=["POST"])
+def log_user_out():
+
+    session.clear()
+    print(session)
+
+    return render_template('homepage.html')
 
 
 @app.route('/boardgame/<bg_id>')
@@ -98,7 +93,6 @@ def show_favorites():
         return render_template('favorites.html',bg_obj_list=bg_obj_list)
     else:
         return render_template('login.html')
-
 
 
 @app.route('/search')
