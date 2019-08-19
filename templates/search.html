@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container">
+
+<form>
+    Board Game Name: <input type="text" name="bg_name"><br><br>
+
+    Number of Players: <input type="number" name="num_players" min="1" max="100"><br><br>
+
+    Playtime in Minutes: <input type="number" name="playtime" min="1" max="60000"><br><br>
+    
+    <!-- {% for designer in designer_list %} -->
+    Board Game Designer: <input type="text" name="designer"><br><br>
+    <!-- {% endfor %} -->
+    <button type="submit" class="btn btn-primary">Search</button>
+
+</form>
+
+</div>
+
+{% endblock %}

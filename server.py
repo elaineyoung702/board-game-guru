@@ -114,7 +114,9 @@ def show_favorites():
 def show_search_form():
     """Show Search Form."""
 
-    return render_template('base.html')
+    designer_list = BoardGame.query.filter(BoardGame.designer !='(Undefined)').all()
+
+    return render_template('search.html', designer_list=designer_list)
 
 
 
