@@ -54,11 +54,16 @@ def parse_please(path):
         num_votes = int(best_votes['numvotes']) #index into item for numvotes
         result_dict[num_votes] = num_players    #add num_votes into dict w/num_players value
 
+    if len(result_dict) == 1:
+        print("No votes.")
+        return
+
     try:
         max_votes = max(result_dict)    #find highest number of votes
         suggested_players = result_dict[max_votes]  #index into dict for value for suggested num
     except ValueError:
-        suggested_players = None
+        print("No suggested players. Skipping...")
+        return
 
     # if "+" not in suggested_players:
     #     if int(suggested_players) < int(min_players):
@@ -72,7 +77,8 @@ def parse_please(path):
         if link_type == 'boardgamedesigner':    #search each type tag to find match
             designer = item['value'] #set value to designer variable
             break
-
+        else:
+            designer = "Uncredited"
 
     boardgame = BoardGame(bg_id=bg_id, bg_name=name, thumbnail_url=thumbnail, 
                 image_url=image, description=description, playtime=playtime, 
@@ -85,22 +91,7 @@ def parse_please(path):
 
     print(f'Successfully added: {boardgame}')
 
-    # print(boardgame.bg_id)
-    # print(boardgame.bg_name)
-    # print(boardgame.thumbnail_url)
-    # print(boardgame.image_url)
-    # print(boardgame.description)
-    # print(boardgame.playtime)
-    # print(boardgame.min_time)
-    # print(boardgame.max_time)
-    # print(boardgame.year_published)
-    # print(boardgame.min_players)
-    # print(boardgame.max_players)
-    # print(boardgame.suggested_players)
-    # print(boardgame.designer)
-
-
-
+##############################################################
 
 if __name__ == "__main__":
     import sys
@@ -113,7 +104,7 @@ if __name__ == "__main__":
             db.session.add(User(name='TEST', email='test@test.com', password='test'))
             db.session.commit()
     except IndexError:       
-        for i in range (6800,6895):
+        for i in range (5703,6800):
             parse_please(f"{i}.xml")
 
 
