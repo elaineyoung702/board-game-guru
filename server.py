@@ -58,7 +58,6 @@ def register_new_user():
         return render_template('favorites.html') ### REDIRECT THIS
 
 
-
 @app.route('/logout', methods=["POST"])
 def logout_user():
     """Log User Out and Clear Session Data."""
@@ -100,13 +99,9 @@ def show_favorites():
 
         if request.method == 'POST':
             bg_id = request.form.get('bg_id')
-            
             bg = BoardGame.query.get(bg_id)
-
             user.favorites.append(bg)
-
             db.session.commit()
-
         
         bg_obj_list = user.favorites
 

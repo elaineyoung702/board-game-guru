@@ -3,6 +3,12 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <style>
+      tr {
+        line-height: 15px; 
+        min-height: 15px; 
+        height: 15px;}
+      </style> -->
     <!-- <style>table, th, td {border: 1px solid black;}</style> -->
 </head>
 <body>
@@ -37,7 +43,7 @@
 
   <!-- This is where the main content goes. -->
   {% block body %}
-      <img src="https://placekitten.com/900/500">
+      <div class="container"><img src="https://placekitten.com/1000/500"></div>
   {% endblock %}
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
