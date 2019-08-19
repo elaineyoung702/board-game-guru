@@ -10,23 +10,32 @@
     <h1 class="display-5">Welcome to the Board Game Guru Website!</h1>
     </div></div>
     <br>
-    <h2 class="homepage">What would you like to do?</h2>
-    <br>
-    <a href='/favorites'>Receive a board game suggestion based on user favorites - 
-                Must have user account </a>
-        <br><br>
-        <form action='/login' method='POST'>
-            <b>Email: <input type="email" name="email" required></b><br><br>
-            <b>Password: <input type="password" name="password" required></b><br><br>
-            <input type="submit" value="Login">
-        </form>
-    <br><br>
-    <a href='/search'>Receive a board game suggestion from answering a couple questions</a>
-    <br><br>
-    <br><br>
-    <a href='/database'>View Board Game Guru's database of board games</a>
-        <br><br>
+    <div class="container"><h2>What would you like to do?</h2></div>
+    <br><br><br>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                Login and receive board game suggestions based on your favorites<br><br>
+                <form action='/login' method='POST'>
+                    <b>Email: <input type="email" name="email" required></b><br><br>
+                    <b>Password: <input type="password" name="password" required></b><br><br>
+                    <a href='/favorites'><button type="submit" class="btn btn-primary">Login</button></a>
+                </form>
+                <br><br>
+            </div>
 
+            <div class="col-4">
+                Receive a board game suggestion from answering a couple questions<br><br>
+                <a href='/search'><button type="button" class="btn btn-secondary">Search</button></a><br><br>
+            </div>
+
+            <div class="col-4">
+                View Board Game Guru's database of board games<br><br>
+                <a href='/database'><button type="button" class="btn btn-success">Database</button></a><br><br>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
