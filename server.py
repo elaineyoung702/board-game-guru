@@ -15,14 +15,14 @@ app.jinja_env.undefinted = StrictUndefined
 
 @app.route('/')
 def index():
-    """Homepage."""
+    """Display Homepage."""
 
     return render_template("homepage.html")
 
 
 @app.route('/login', methods=["POST"])
-def show_login_page():
-    """Show Login Form."""
+def login_user():
+    """Login User or Redirect to Registration Form."""
 
     email = request.form.get("email")   #get email provided in form
     password = request.form.get('password') #get passwork provided in form
@@ -36,11 +36,32 @@ def show_login_page():
         return redirect('/favorites')
     except AttributeError:
         print("no login") #Debugging prints
-        return render_template("login.html")
+        return render_template("register.html")
+
+
+@app.route('/register', methods=["POST"])
+def register_new_user():
+    """Create New User Account."""
+
+    name = request.form.get('name')
+    email = request.form.get("email")   #get email provided in form
+    password = request.form.get('password')
+
+    if (email,) in db.session.query(User.email).all():
+        print("there is already an account with this email address")
+        return render_template('register.html')
+    else:
+        user = User(name=name, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        print(User.query.all())
+        return render_template('register.html')
+
 
 
 @app.route('/logout', methods=["POST"])
-def log_user_out():
+def logout_user():
+    """Log User Out and Clear Session Data."""
 
     session.clear()
     print(session)
@@ -59,7 +80,6 @@ def show_boardgame_info(bg_id):
         return render_template('boardgame.html', boardgame=boardgame, user=user)
     else:
         return render_template('boardgame.html', boardgame=boardgame)
-
 
 
 @app.route('/database')
@@ -92,7 +112,7 @@ def show_favorites():
 
         return render_template('favorites.html',bg_obj_list=bg_obj_list)
     else:
-        return render_template('login.html')
+        return render_template('register.html')
 
 
 @app.route('/search')
