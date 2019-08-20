@@ -36,7 +36,11 @@ def login_user():
         return redirect('/favorites')
     except AttributeError:
         print("no login") #Debugging prints
+<<<<<<< HEAD
         return render_template("register.html") ### REDIRECT THIS
+=======
+        return render_template("register.html")
+>>>>>>> ecb26279a2e25314fd753b626056c7ca7bca0c7d
 
 
 @app.route('/register', methods=["POST"])
@@ -49,13 +53,22 @@ def register_new_user():
 
     if (email,) in db.session.query(User.email).all():
         print("there is already an account with this email address")
+<<<<<<< HEAD
         return render_template('register.html')### REDIRECT THIS
+=======
+        return render_template('register.html')
+>>>>>>> ecb26279a2e25314fd753b626056c7ca7bca0c7d
     else:
         user = User(name=name, email=email, password=password)
         db.session.add(user)
         db.session.commit()
         print(User.query.all())
+<<<<<<< HEAD
         return render_template('favorites.html') ### REDIRECT THIS
+=======
+        return render_template('register.html')
+
+>>>>>>> ecb26279a2e25314fd753b626056c7ca7bca0c7d
 
 
 @app.route('/logout', methods=["POST"])
