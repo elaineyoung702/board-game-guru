@@ -80,6 +80,8 @@ def parse_please(path):
         else:
             designer = "Uncredited"
 
+############ ADD PUBLISHER!!! #############
+
     boardgame = BoardGame(bg_id=bg_id, bg_name=name, thumbnail_url=thumbnail, 
                 image_url=image, description=description, playtime=playtime, 
                 min_time=min_time, max_time=max_time, year_published=year_published, 
