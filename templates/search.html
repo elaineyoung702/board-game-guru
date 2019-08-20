@@ -8,7 +8,7 @@
 
 <div class="container">
 <br><br>
-<form>
+<form action='/results'>
     Board Game Name: <input type="text" name="bg_name"><br><br>
 
     Number of Players: <input type="number" name="num_players" min="1" max="100"><br><br>
@@ -17,12 +17,13 @@
     
     Board Game Designer: <select name="designer">
         {% for designer in designer_list %}
-            <option value=designer>{{designer}}</option>
+            <option value='{{designer}}'>{{designer}}</option>
         {% endfor %}
-    <button type="submit" class="btn btn-primary">Search</button>
+        <br><br>
+    <input type="submit" class="btn btn-primary" value="Search">
 
 </form>
-
+<br><br><br><br><br><br>
 </div>
 
 {% endblock %}
