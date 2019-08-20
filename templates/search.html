@@ -2,8 +2,12 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container, jumbotron">
+<h2>Below you can search for a specific board game by name or you can search for criteria on what sort of board game you can play with the amount of players and time you have!</h2>
+</div>
 
+<div class="container">
+<br><br>
 <form>
     Board Game Name: <input type="text" name="bg_name"><br><br>
 
@@ -11,9 +15,10 @@
 
     Playtime in Minutes: <input type="number" name="playtime" min="1" max="60000"><br><br>
     
-    <!-- {% for designer in designer_list %} -->
-    Board Game Designer: <input type="text" name="designer"><br><br>
-    <!-- {% endfor %} -->
+    Board Game Designer: <select name="designer">
+        {% for designer in designer_list %}
+            <option value=designer>{{designer}}</option>
+        {% endfor %}
     <button type="submit" class="btn btn-primary">Search</button>
 
 </form>
