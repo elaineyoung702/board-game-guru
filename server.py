@@ -36,11 +36,7 @@ def login_user():
         return redirect('/favorites')
     except AttributeError:
         print("no login") #Debugging prints
-<<<<<<< HEAD
         return render_template("register.html") ### REDIRECT THIS
-=======
-        return render_template("register.html")
->>>>>>> ecb26279a2e25314fd753b626056c7ca7bca0c7d
 
 
 @app.route('/register', methods=["POST"])
@@ -53,22 +49,13 @@ def register_new_user():
 
     if (email,) in db.session.query(User.email).all():
         print("there is already an account with this email address")
-<<<<<<< HEAD
         return render_template('register.html')### REDIRECT THIS
-=======
-        return render_template('register.html')
->>>>>>> ecb26279a2e25314fd753b626056c7ca7bca0c7d
     else:
         user = User(name=name, email=email, password=password)
         db.session.add(user)
         db.session.commit()
         print(User.query.all())
-<<<<<<< HEAD
         return render_template('favorites.html') ### REDIRECT THIS
-=======
-        return render_template('register.html')
-
->>>>>>> ecb26279a2e25314fd753b626056c7ca7bca0c7d
 
 
 @app.route('/logout', methods=["POST"])
@@ -123,17 +110,53 @@ def show_favorites():
         return render_template('register.html')
 
 
-@app.route('/search')
+@app.route('/search-form')
 def show_search_form():
     """Show Search Form."""
 
-    designer_list = BoardGame.query.filter(BoardGame.designer !='(Undefined)').all()
+    designer_set = set()
+
+    bg_list = BoardGame.query.filter(BoardGame.designer !='(Uncredited)').all()
+    for item in bg_list:
+        designer = item.designer
+        designer_set.add(designer)
+    designer_list = (sorted(list(designer_set)))
+    print("****************")
+
 
     return render_template('search.html', designer_list=designer_list)
 
 
+@app.route('/results')
+def show_results():
+    """Show User Search Results Based on Inputs from Search Form."""
+
+    #write inner functions that are called for form gets
+    #for items which are True/exist, execute the inner function. define f above all
 
 
+    def get_by_bg_name(bg_name):
+        bg_name = bg_name.title()
+        bg_name = bg_name.replace(" ", "%")
+        bg_name = f'%{bg_name}%'
+        name_results = BoardGame.query.filter(bg_name=bg_name)
+        print (name_results)
+
+
+
+
+
+
+
+
+
+
+    return render_template('base.html')
+
+
+
+
+##############################################################
 if __name__ == "__main__":
     app.debug = True
     # app.jijna_env.auto_reload = app.debug

@@ -74,6 +74,16 @@ class Favorite(db.Model):
         return f"<Favorite fav_id={self.fav_id}, user_id={self.user_id}, bg_id={self.bg_id}>"
 
 
+def get_by_bg_name(bg_name):
+        bg_name = bg_name.title().replace(" ", "%")
+        # bg_name = bg_name.replace(" ", "%")
+        bg_name_cat = f'%{bg_name}%'
+        print(bg_name_cat)
+        name_results = BoardGame.query.filter(BoardGame.bg_name.like(f"{bg_name_cat}")).all()
+        print (name_results)
+
+
+
 #########################################################################
 # Helper Functions
 
