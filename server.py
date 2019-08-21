@@ -13,6 +13,11 @@ app.secret_key = "s00persekret"
 app.jinja_env.undefinted = StrictUndefined
 
 
+BG_ATTR_LIST = ['bg_name', 'thumbnail_url', 'image_url', 'description', 'playtime', 
+        'min_time', 'max_time', 'year_published', 'min_players', 'max_players', 
+        'suggested_players', 'designer', 'publisher']
+
+
 @app.route('/')
 def index():
     """Display Homepage."""
@@ -85,10 +90,18 @@ def show_boardgame_info(bg_id):
 def show_database():
     """Show Board Game Database."""
 
+    # sort_by = request.args.get('sort_col')
+
+    # if sort_by:  ##### ATTEMPT TO REFACTOR TO SIMPLIFY
+    #     bg_obj_lsit = BoardGame.query.filter(BoardGame.bg_name.like(f"{sort_by}")).all()
+
+
     if request.args.get('sort_col') == "playtime":
         bg_obj_list = BoardGame.query.order_by(BoardGame.playtime.desc()).all()  
+
     elif request.args.get('sort_col') == "min_players":
-        bg_obj_list = BoardGame.query.order_by(BoardGame.min_players.asc()).all()  
+        bg_obj_list = BoardGame.query.order_by(BoardGame.min_players.desc()).all()
+    
     else:
         bg_obj_list = BoardGame.query.all()
 
@@ -197,7 +210,7 @@ def get_by_designer(designer):
         print("no match")
         return redirect('/search-form')
 
-        
+
 ###### WIP to combine search results instead of doing only one search on 1 criteria
 ###### WIP to display results to user on a results page
 ###### WIP refactor designer dropdown to be input text with SQL LIKE query because the dropdown is out of control
