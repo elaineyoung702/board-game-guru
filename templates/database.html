@@ -7,14 +7,14 @@
     <thead>
         <tr>
             <th class="th-sm">Thumbnail</th>
-            <th class="th-sm">Board Game Name</th>
-            <th class="th-sm">Minimum Players</th>
-            <th class="th-sm">Maximum Players</th>
-            <th class="th-sm">Suggested Players</th>
-            <th class="th-sm">Playtime</th>
+            <th data-sort-attr="bg_name" class="th-sm sortable">Board Game Name</th>
+            <th data-sort-attr="min_players" class="th-sm sortable">Minimum Players</th>
+            <th data-sort-attr="max_players" class="th-sm sortable">Maximum Players</th>
+            <th data-sort-attr="suggested_players" class="th-sm sortable">Suggested Players</th>
+            <th data-sort-attr="playtime" class="th-sm sortable">Playtime</th>
             <th class="th-sm">Description</th>
-            <th class="th-sm">Year Published</th>
-            <th class="th-sm">Designer</th>
+            <th data-sort-attr="year_published" class="th-sm sortable">Year Published</th>
+            <th data-sort-attr="designer" class="th-sm sortable">Designer</th>
         </tr>
     </thead>
     <tbody>
@@ -47,5 +47,15 @@
     </tfoot>
 
 </table>
+
+<script>
+    const sortableHeaders = $('th.sortable');
+    
+    sortableHeaders.on('click', function(event) {
+        const sortBy = event.currentTarget.dataset.sortAttr;
+        window.location = `/database?sort_col=${sortBy}`;
+        // window.location = '/database?sort_col=playtime';
+    });
+</script>
 
 {% endblock %}

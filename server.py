@@ -85,7 +85,12 @@ def show_boardgame_info(bg_id):
 def show_database():
     """Show Board Game Database."""
 
-    bg_obj_list = BoardGame.query.all()
+    if request.args.get('sort_col') == "playtime":
+        bg_obj_list = BoardGame.query.order_by(BoardGame.playtime.desc()).all()  
+    elif request.args.get('sort_col') == "min_players":
+        bg_obj_list = BoardGame.query.order_by(BoardGame.min_players.asc()).all()  
+    else:
+        bg_obj_list = BoardGame.query.all()
 
     return render_template('database.html', bg_obj_list=bg_obj_list)
 
@@ -134,6 +139,8 @@ def show_results():
     num_players = request.args.get('num_players')
     playtime = request.args.get('playtime')
     designer = request.args.get('designer')
+
+    # sort_col = request.args.get('sort_col')
 
     if bg_name:
         results = get_by_bg_name(bg_name)
