@@ -71,14 +71,22 @@ def parse_please(path):
 
     # Obtain Board Game Designer
     link_fam = soup.find_all('link')    #find all link tags
-
+    
     for item in link_fam:   #for each item with link tag
         link_type = (item['type'])  #index type tag within link tag and set variable
+        if link_type == 'boardgamepublisher':
+            publisher = item['value']
         if link_type == 'boardgamedesigner':    #search each type tag to find match
             designer = item['value'] #set value to designer variable
-            break
-        else:
-            designer = "Uncredited"
+    #     if publisher and designer:
+    #         break
+    
+    # if designer is None:
+    #     designer = 'Uncredited'
+    # if publisher == None:
+    #     publisher = 'IDK BRO'
+        
+        
 
 ############ ADD PUBLISHER!!! #############
 
@@ -86,7 +94,7 @@ def parse_please(path):
                 image_url=image, description=description, playtime=playtime, 
                 min_time=min_time, max_time=max_time, year_published=year_published, 
                 min_players=min_players, max_players=max_players, 
-                suggested_players=suggested_players, designer=designer)
+                suggested_players=suggested_players, designer=designer, publisher=publisher)
 
     db.session.add(boardgame)
     db.session.commit()
@@ -106,7 +114,7 @@ if __name__ == "__main__":
             db.session.add(User(name='TEST', email='test@test.com', password='test'))
             db.session.commit()
     except IndexError:       
-        for i in range (5703,6800):
+        for i in range (1,3):
             parse_please(f"{i}.xml")
 
 
