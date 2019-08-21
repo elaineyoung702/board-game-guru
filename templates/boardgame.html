@@ -13,41 +13,35 @@
       <input id="fav_button" type="submit" name="fav_button" value="Favorite">
   </form>
 
-<div id="bg_page" class="container bg-secondary text-light">
+<div id="bg_page" class="container-fluid bg-secondary text-light">
   <div class="row">
-    <div class="col-3">
+    <div class="col-sm-3">
       <br><br>
       <img src={{boardgame.thumbnail_url}}>
-      <br><br>
     </div>
-
-      Playtime: {{boardgame.playtime}} minutes
+    <div class="col-sm-4">
       <br>
-      Minimum Playtime: {{boardgame.min_time}} minutes
-      <br>
-      Maximum Playtime: {{boardgame.max_time}} minutes
-      <br>
-      Year Published: {{boardgame.year_published}}
-      <br>
-      Minimum Players: {{boardgame.min_players}} players
-      <br>
-      Maximum Players: {{boardgame.max_players}} players
-      <br>
-      Suggested Players: {{boardgame.suggested_players}} players
-      <br>
-      Board Game Designer: {{boardgame.designer}}
-      <br>
-      Board Game Publisher: {{boardgame.publisher}}
+      <u>Playtime</u>: {{boardgame.playtime}} minutes<br><br>
+      <u>Minimum Playtime</u>: {{boardgame.min_time}} minutes<br><br>
+      <u>Maximum Playtime</u>: {{boardgame.max_time}} minutes<br><br>
+      <u>Year Published</u>: {{boardgame.year_published}}<br><br>
+      <u>Publisher</u>: {{boardgame.publisher}}<br><br>
     </div>
-
-
+    <div class="col-sm-5">
+      <br>
+      <u>Suggested Players</u>: {{boardgame.suggested_players}} players<br><br>
+      <u>Minimum Players</u>: {{boardgame.min_players}} players<br><br>
+      <u>Maximum Players</u>: {{boardgame.max_players}} players<br><br>
+      <u>Designer</u>: {{boardgame.designer}}<br><br>
+    </div></div>
 
   <div class="row">
     <div class="col-10 offset-1">
+      <br><br>
     <u>Description</u>: {{boardgame.description}}
-      <br><br></div>
+      <br><br><br><br>
+    </div>
   </div>
-<br><br><br><br><br>
 </div>
 <!-- Image: <img src={{boardgame.image_url}}> -->
 
