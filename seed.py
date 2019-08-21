@@ -65,10 +65,6 @@ def parse_please(path):
         print("No suggested players. Skipping...")
         return
 
-    # if "+" not in suggested_players:
-    #     if int(suggested_players) < int(min_players):
-    #         suggested_players = min_players
-
     # Obtain Board Game Designer
     link_fam = soup.find_all('link')    #find all link tags
     designer = 'Uncredited'
@@ -85,8 +81,8 @@ def parse_please(path):
             break
         
         
-    boardgame = BoardGame(bg_id=bg_id, bg_name=name, thumbnail_url=thumbnail, 
-                image_url=image, description=description, playtime=playtime, 
+    boardgame = BoardGame(bg_id=bg_id, bg_name=bg_name, thumbnail_url=thumbnail_url, 
+                image_url=image_url, description=description, playtime=playtime, 
                 min_time=min_time, max_time=max_time, year_published=year_published, 
                 min_players=min_players, max_players=max_players, 
                 suggested_players=suggested_players, designer=designer, publisher=publisher)
