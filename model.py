@@ -48,6 +48,7 @@ class BoardGame(db.Model):
     suggested_players = db.Column(db.Integer, nullable=True)
 
     designer = db.Column(db.String(100), nullable=False)
+    publisher = db.Column(db.String, nullable=False)
 
 
     def __repr__(self):
