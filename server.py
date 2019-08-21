@@ -13,9 +13,9 @@ app.secret_key = "s00persekret"
 app.jinja_env.undefinted = StrictUndefined
 
 
-BG_ATTR_LIST = ['bg_name', 'thumbnail_url', 'image_url', 'description', 'playtime', 
-        'min_time', 'max_time', 'year_published', 'min_players', 'max_players', 
-        'suggested_players', 'designer', 'publisher']
+# BG_ATTR_LIST = ['bg_name', 'thumbnail_url', 'image_url', 'description', 'playtime', 
+#         'min_time', 'max_time', 'year_published', 'min_players', 'max_players', 
+#         'suggested_players', 'designer', 'publisher']
 
 
 @app.route('/')
@@ -97,28 +97,20 @@ def show_database():
 
     if request.args.get('sort_col') == "playtime":
         bg_obj_list = BoardGame.query.order_by(BoardGame.playtime.asc()).all()  
-
     elif request.args.get('sort_col') == "min_players":
         bg_obj_list = BoardGame.query.order_by(BoardGame.min_players.asc()).all()
-
     elif request.args.get('sort_col') == "max_players":
         bg_obj_list = db.session.query(BoardGame).order_by(BoardGame.max_players.desc()).all()
-
     elif request.args.get('sort_col') == "bg_name":
         bg_obj_list = BoardGame.query.order_by(BoardGame.bg_name.asc()).all()
-
     elif request.args.get('sort_col') == "suggested_players":
         bg_obj_list = BoardGame.query.order_by(BoardGame.suggested_players.asc()).all()
-
     elif request.args.get('sort_col') == "publisher":
         bg_obj_list = BoardGame.query.order_by(BoardGame.publisher.asc()).all()
-
     elif request.args.get('sort_col') == "designer":
         bg_obj_list = BoardGame.query.order_by(BoardGame.designer.asc()).all()
-
     elif request.args.get('sort_col') == "year_published":
         bg_obj_list = BoardGame.query.order_by(BoardGame.year_published.desc()).all()
-    
     else:
         bg_obj_list = BoardGame.query.all()
 
@@ -169,6 +161,7 @@ def show_results():
     num_players = request.args.get('num_players')
     playtime = request.args.get('playtime')
     designer = request.args.get('designer')
+    publisher = request.args.get('publisher')
 
     # sort_col = request.args.get('sort_col')
 
@@ -178,6 +171,8 @@ def show_results():
         results = get_by_num_players(num_players)
     elif playtime:
         results = get_by_playtime(playtime)
+    elif publisher:
+        results = get_by_publisher(publisher)
     elif designer:
         results = get_by_designer(designer)
 
@@ -226,6 +221,15 @@ def get_by_designer(designer):
     else:
         print("no match")
         return redirect('/search-form')
+
+def get_by_publisher(publisher):
+    publisher = publisher.title().replace(" ", "%")
+    publisher_cat = f'%{publisher}%'
+    print(publisher_cat)
+    name_search_results = BoardGame.query.filter(BoardGame.publisher.like(f"{publisher_cat}")).all()
+    print (f'publisher Name Match: {name_search_results}')
+    return name_search_results
+
 
 
 ###### WIP to combine search results instead of doing only one search on 1 criteria

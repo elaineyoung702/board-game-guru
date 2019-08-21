@@ -104,7 +104,7 @@ if __name__ == "__main__":
             db.session.add(User(name='TEST', email='test@test.com', password='test'))
             db.session.commit()
     except IndexError:       
-        for i in range (6150,6200):
+        for i in range (6000,6250):
             parse_please(f"{i}.xml")
 
 
