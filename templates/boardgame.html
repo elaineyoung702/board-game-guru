@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{boardgame.bg_name}}{% endblock %}
 {% block body %}
+<!-- Board Game ID: {{boardgame.bg_id}} -->
 
 
 <!-- BG Object: {{boardgame}} -->
@@ -12,32 +13,43 @@
       <input id="fav_button" type="submit" name="fav_button" value="Favorite">
   </form>
 
+<div id="bg_page" class="container bg-secondary text-light">
+  <div class="row">
+    <div class="col-3">
+      <br><br>
+      <img src={{boardgame.thumbnail_url}}>
+      <br><br>
+    </div>
 
-<br><br>
-Board Game ID: {{boardgame.bg_id}}
-<br><br>
-Image: <img src={{boardgame.image_url}}>
-<br><br>
-Thumbnail: <img src={{boardgame.thumbnail_url}}>
-<br><br>
-Description: {{boardgame.description}}
-<br><br>
-Playtime: {{boardgame.playtime}} minutes
-<br><br>
-Minimum Playtime: {{boardgame.min_time}} minutes
-<br><br>
-Maximum Playtime: {{boardgame.max_time}} minutes
-<br><br>
-Year Published: {{boardgame.year_published}}
-<br><br>
-Minimum Players: {{boardgame.min_players}} players
-<br><br>
-Maximum Players: {{boardgame.max_players}} players
-<br><br>
-Suggested Players: {{boardgame.suggested_players}} players
-<br><br>
-Board Game Designer: {{boardgame.designer}}
-<br><br><br><br><br><br><br><br>
+      Playtime: {{boardgame.playtime}} minutes
+      <br>
+      Minimum Playtime: {{boardgame.min_time}} minutes
+      <br>
+      Maximum Playtime: {{boardgame.max_time}} minutes
+      <br>
+      Year Published: {{boardgame.year_published}}
+      <br>
+      Minimum Players: {{boardgame.min_players}} players
+      <br>
+      Maximum Players: {{boardgame.max_players}} players
+      <br>
+      Suggested Players: {{boardgame.suggested_players}} players
+      <br>
+      Board Game Designer: {{boardgame.designer}}
+      <br>
+      Board Game Publisher: {{boardgame.publisher}}
+    </div>
+
+
+
+  <div class="row">
+    <div class="col-10 offset-1">
+    <u>Description</u>: {{boardgame.description}}
+      <br><br></div>
+  </div>
+<br><br><br><br><br>
+</div>
+<!-- Image: <img src={{boardgame.image_url}}> -->
 
 <script>
   "use strict";

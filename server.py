@@ -233,7 +233,6 @@ def get_by_publisher(publisher):
 
 
 ###### WIP to combine search results instead of doing only one search on 1 criteria
-###### WIP to display results to user on a results page
 ###### WIP refactor designer dropdown to be input text with SQL LIKE query because the dropdown is out of control
         #######if time permits, then try to create an auto complete function
 
