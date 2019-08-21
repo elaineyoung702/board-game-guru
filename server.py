@@ -123,7 +123,6 @@ def show_search_form():
     designer_list = (sorted(list(designer_set)))
     print("****************")
 
-
     return render_template('search.html', designer_list=designer_list)
 
 
@@ -131,65 +130,70 @@ def show_search_form():
 def show_results():
     """Show User Search Results Based on Inputs from Search Form."""
 
-    def get_by_bg_name(bg_name):
-        bg_name = bg_name.title().replace(" ", "%")
-        bg_name_cat = f'%{bg_name}%'
-        print(bg_name_cat)
-        name_search_results = BoardGame.query.filter(BoardGame.bg_name.like(f"{bg_name_cat}")).all()
-        print (f'BG Name Match: {name_search_results}')
-        return name_search_results
-
-    def get_by_num_players(num_players):
-        best_fit = BoardGame.query.filter(BoardGame.suggested_players == num_players).all()
-        print(f'Num Player Best Fit: {best_fit}')
-        print("*******************")
-        print()
-        print()
-        if best_fit:
-            return best_fit
-        else:
-            match_players = BoardGame.query.filter(BoardGame.min_players <= num_players,
-                BoardGame.max_players >= num_players).all()
-            print(f'Other Matches: {match_players}')
-            return match_players
-
-    def get_by_playtime(time):
-        best_fit = BoardGame.query.filter(BoardGame.playtime == time).all()
-        print(f'Playtime Best Fit: {best_fit}')
-        if best_fit:
-            return best_fit
-        else:
-            match_playtime = BoardGame.query.filter(BoardGame.min_time <= time,
-                    BoardGame.max_time >= time).all()
-            print(f'Other Matches: {match_playtime}')
-            return match_playtime
-
-    def get_by_designer(designer):
-        match = BoardGame.query.filter(BoardGame.designer == designer).all()
-        if match:
-            print(match)
-            return match
-        else:
-            print("no match")
-            return redirect('/search-form')
-
     bg_name = request.args.get('bg_name')
     num_players = request.args.get('num_players')
     playtime = request.args.get('playtime')
     designer = request.args.get('designer')
 
     if bg_name:
-        get_by_bg_name(bg_name)
+        results = get_by_bg_name(bg_name)
     elif num_players:
-        get_by_num_players(num_players)
+        results = get_by_num_players(num_players)
     elif playtime:
-        get_by_playtime(playtime)
+        results = get_by_playtime(playtime)
     elif designer:
-        get_by_designer(designer)
+        results = get_by_designer(designer)
+
+    return render_template('results.html', results=results)
 
 
 
-    return render_template('base.html')
+def get_by_bg_name(bg_name):
+    bg_name = bg_name.title().replace(" ", "%")
+    bg_name_cat = f'%{bg_name}%'
+    print(bg_name_cat)
+    name_search_results = BoardGame.query.filter(BoardGame.bg_name.like(f"{bg_name_cat}")).all()
+    print (f'BG Name Match: {name_search_results}')
+    return name_search_results
+
+def get_by_num_players(num_players):
+    best_fit = BoardGame.query.filter(BoardGame.suggested_players == num_players).all()
+    print(f'Num Player Best Fit: {best_fit}')
+    print("*******************")
+    print()
+    print()
+    if best_fit:
+        return best_fit
+    else:
+        match_players = BoardGame.query.filter(BoardGame.min_players <= num_players,
+            BoardGame.max_players >= num_players).all()
+        print(f'Other Matches: {match_players}')
+        return match_players
+
+def get_by_playtime(time):
+    best_fit = BoardGame.query.filter(BoardGame.playtime == time).all()
+    print(f'Playtime Best Fit: {best_fit}')
+    if best_fit:
+        return best_fit
+    else:
+        match_playtime = BoardGame.query.filter(BoardGame.min_time <= time,
+                BoardGame.max_time >= time).all()
+        print(f'Other Matches: {match_playtime}')
+        return match_playtime
+
+def get_by_designer(designer):
+    match = BoardGame.query.filter(BoardGame.designer == designer).all()
+    if match:
+        print(match)
+        return match
+    else:
+        print("no match")
+        return redirect('/search-form')
+###### WIP to combine search results instead of doing only one search on 1 criteria
+###### WIP to display results to user on a results page
+###### WIP refactor designer dropdown to be input text with SQL LIKE query because the dropdown is out of control
+        #######if time permits, then try to create an auto complete function
+
 
 
 
