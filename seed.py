@@ -65,11 +65,10 @@ def parse_please(path):
         print("No suggested players. Skipping...")
         return
 
-    # Obtain Board Game Designer
+    # Obtain Board Game Designer and Publisher
     link_fam = soup.find_all('link')    #find all link tags
     designer = 'Uncredited'
     publisher = 'Uncredited'
-
 
     for item in link_fam:   #for each item with link tag
         link_type = (item['type'])  #index type tag within link tag and set variable
