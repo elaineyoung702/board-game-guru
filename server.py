@@ -196,6 +196,8 @@ def get_by_designer(designer):
     else:
         print("no match")
         return redirect('/search-form')
+
+        
 ###### WIP to combine search results instead of doing only one search on 1 criteria
 ###### WIP to display results to user on a results page
 ###### WIP refactor designer dropdown to be input text with SQL LIKE query because the dropdown is out of control

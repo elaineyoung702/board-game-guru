@@ -13,6 +13,7 @@
             <th data-sort-attr="suggested_players" class="th-sm sortable">Suggested Players</th>
             <th data-sort-attr="playtime" class="th-sm sortable">Playtime</th>
             <th class="th-sm">Description</th>
+            <th data-sort-attr="publisher" class="th-sm sortable">Publisher</th>
             <th data-sort-attr="year_published" class="th-sm sortable">Year Published</th>
             <th data-sort-attr="designer" class="th-sm sortable">Designer</th>
         </tr>
@@ -27,12 +28,13 @@
         <td>suggested {{bg.suggested_players}} players</td>
         <td>{{bg.playtime}} minutes</td>
         <td>{{bg.description}}</td>
+        <td>Publisher: {{bg.publisher}}</td>
         <td>published in {{bg.year_published}}</td>
         <td>Designer: {{bg.designer}}</td>
     </tr>
     {% endfor %}
     </tbody>
-    <tfoot>
+    <!-- <tfoot>
         <tr>
             <th>Thumbnail</th>
             <th>Board Game Name</th>
@@ -44,13 +46,13 @@
             <th>Year Published</th>
             <th>Designer</th>
         </tr>
-    </tfoot>
+    </tfoot> -->
 
 </table>
 
 <script>
     const sortableHeaders = $('th.sortable');
-    
+
     sortableHeaders.on('click', function(event) {
         const sortBy = event.currentTarget.dataset.sortAttr;
         window.location = `/database?sort_col=${sortBy}`;
