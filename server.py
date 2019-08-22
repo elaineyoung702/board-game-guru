@@ -35,6 +35,7 @@ def login_user():
     try:
         user = db.session.query(User).filter(User.email==email, User.password==password).first() # check this syntax
         session['user_id'] = user.user_id   #set session user_id
+        session['user_name'] = user.name.title()
         session['email'] = user.email   #set session email (maybe get rid of this?)
         print(f"SESSION USER EMAIL: {session['email']}") #Debugging prints
         print(f"Session User ID: {session['user_id']}") #Debugging prints
