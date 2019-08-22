@@ -2,21 +2,12 @@
 {% block title %}{{boardgame.bg_name}}{% endblock %}
 {% block body %}
 <!-- Board Game ID: {{boardgame.bg_id}} -->
-
-
 <!-- BG Object: {{boardgame}} -->
-  <form action="/favorites" method='POST'>
-      <input type="text" name="bg_id" value={{boardgame.bg_id}} hidden>
-      {% if session %}
-      <input type="text" name="user_id" value={{user.user_id}} hidden>
-      {% endif %}
-      <input id="fav_button" type="submit" name="fav_button" value="Favorite">
-  </form>
 
 <div id="bg_page" class="container-fluid bg-secondary text-light">
   <div class="row">
     <div class="col-sm-3">
-      <br><br>
+      <br><br><br><br>
       <img src={{boardgame.thumbnail_url}}>
     </div>
     <div class="col-sm-4">
@@ -25,27 +16,35 @@
       <u>Minimum Playtime</u>: {{boardgame.min_time}} minutes<br><br>
       <u>Maximum Playtime</u>: {{boardgame.max_time}} minutes<br><br>
       <u>Year Published</u>: {{boardgame.year_published}}<br><br>
-      <u>Publisher</u>: {{boardgame.publisher}}<br><br>
+      <form action="/favorites" method='POST'>
+        <input type="text" name="bg_id" value={{boardgame.bg_id}} hidden>
+        {% if session %}
+        <input type="text" name="user_id" value={{user.user_id}} hidden>
+        {% endif %}
+        <input id="fav_button" type="submit" name="fav_button" value="Favorite">
+      </form>
     </div>
     <div class="col-sm-5">
       <br>
       <u>Suggested Players</u>: {{boardgame.suggested_players}} players<br><br>
       <u>Minimum Players</u>: {{boardgame.min_players}} players<br><br>
       <u>Maximum Players</u>: {{boardgame.max_players}} players<br><br>
+      <u>Publisher</u>: {{boardgame.publisher}}<br><br>
       <u>Designer</u>: {{boardgame.designer}}<br><br>
     </div></div>
 
   <div class="row">
     <div class="col-10 offset-1">
       <br><br>
-    <u>Description</u>: {{boardgame.description}}
-      <br><br><br><br>
+    <u>Description</u>:<br>
+        {{boardgame.description}}<br><br><br><br>
     </div>
   </div>
 </div>
 <!-- Image: <img src={{boardgame.image_url}}> -->
 
-<script>
+<!-- JAVASCRIPT CODE FROM PREVIOUS PROJECT -->
+<!-- <script>
   "use strict";
   const favButton = document.querySelector('#signIn');
   function changeButton() {
@@ -56,6 +55,6 @@
     }
   }
   favButton.addEventListener('click', changeButton);
-</script>
+</script> -->
 
 {% endblock %}
