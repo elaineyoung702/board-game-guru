@@ -113,7 +113,8 @@ def show_database():
     elif request.args.get('sort_col') == "year_published":
         bg_obj_list = BoardGame.query.order_by(BoardGame.year_published.desc()).all()
     else:
-        bg_obj_list = BoardGame.query.all()
+        bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).all()
+        # bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).offset(5).limit(5).all()
 
     return render_template('database.html', bg_obj_list=bg_obj_list)
 

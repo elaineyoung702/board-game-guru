@@ -47,6 +47,11 @@
         const sortBy = event.currentTarget.dataset.sortAttr;
         window.location = `/database?sort_col=${sortBy}`;
     });
+
+    $(document).ready(function () {
+      $('#database').DataTable();
+    });
+
 </script>
 
 {% endblock %}
