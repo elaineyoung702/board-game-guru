@@ -1,5 +1,5 @@
 from flask import Flask, request, session
-from flask import render_template, redirect, flash
+from flask import render_template, redirect, flash, jsonify
 # from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, BoardGame, User, Favorite
@@ -90,10 +90,38 @@ def show_boardgame_info(bg_id):
 @app.route('/database')
 def show_database():
     """Show Board Game Database."""
+    i = 0
 
-    bg_obj_list = BoardGame.query.all()
-   
+    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).offset(i).limit(50).all()
+
+    if 'user_id' in session:
+        user = User.query.get(session['user_id'])
+        user_id = user.user_id
+        return render_template('database.html', bg_obj_list=bg_obj_list, user_id=user_id)
+
     return render_template('database.html', bg_obj_list=bg_obj_list)
+
+
+# @app.route('/api/games') #### THIS IS FOR PAGINATION OPTIMIZATION
+# def get_games():
+
+#     if 'limit' in request.args:
+#         limit = request.args['limit']
+#     else:
+#         limit = 50
+
+#     bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).limit(limit).all()
+
+#     bg_result = []
+#     for bg in bg_obj_list:
+#         bg_result.append({
+#             'bg_name': bg.bg_name,
+#             'thumbnail_url': bg.thumbnail_url
+#         })
+#### NEED TO INCORPORATE OFFSET FOR THIS FOR PAGINATION TO WORK AND BE OPTIMIZED
+
+#     return jsonify(bg_result)
+
 
 
 @app.route('/favorites', methods=['GET', 'POST'])
@@ -106,7 +134,7 @@ def show_favorites():
         if request.method == 'POST':
             bg_id = request.form.get('bg_id')
             bg = BoardGame.query.get(bg_id)
-            user.favorites.extend(bg)
+            user.favorites.append(bg)
             db.session.commit()
         
         bg_obj_list = user.favorites
