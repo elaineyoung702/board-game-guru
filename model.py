@@ -75,55 +75,6 @@ class Favorite(db.Model):
         return f"<Favorite fav_id={self.fav_id}, user_id={self.user_id}, bg_id={self.bg_id}>"
 
 
-
-
-
-############### TESTING INNER FUNCTIONS FOR SEARCH ROUTE IN SERVER.PY
-def get_by_bg_name(bg_name):
-    bg_name = bg_name.title().replace(" ", "%")
-    bg_name_cat = f'%{bg_name}%'
-    print(bg_name_cat)
-    name_search_results = BoardGame.query.filter(BoardGame.bg_name.like(f"{bg_name_cat}")).all()
-    print (name_search_results)
-
-def get_by_num_players(num_players):
-    best_fit = BoardGame.query.filter(BoardGame.suggested_players == num_players).all()
-    print(f'Best Fit: {best_fit}')
-    print("*******************")
-    print()
-    print()
-    if best_fit:
-        return best_fit
-    else:
-        match_players = BoardGame.query.filter(BoardGame.min_players <= num_players,
-            BoardGame.max_players >= num_players).all()
-        print(f'Other Matches: {match_players}')
-        return match_players
-
-def get_by_playtime(time):
-    best_fit = BoardGame.query.filter(BoardGame.playtime == time).all()
-    print(f'Best Fit: {best_fit}')
-    if best_fit:
-        return best_fit
-    else:
-        match_playtime = BoardGame.query.filter(BoardGame.min_time <= time,
-                BoardGame.max_time >= time).all()
-        print(f'Other Matches: {match_playtime}')
-        return match_playtime
-
-def get_by_designer(designer):
-        match = BoardGame.query.filter(BoardGame.designer == designer).all()
-        if match:
-            return match
-        else:
-            return None
-
-
-
-
-
-
-
 #########################################################################
 # Helper Functions
 

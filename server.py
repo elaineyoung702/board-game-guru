@@ -92,31 +92,7 @@ def show_database():
     """Show Board Game Database."""
 
     bg_obj_list = BoardGame.query.all()
-    # sort_by = request.args.get('sort_col')
-
-    # if sort_by:  ##### ATTEMPT TO REFACTOR TO SIMPLIFY
-    #     bg_obj_lsit = BoardGame.query.filter(BoardGame.bg_name.like(f"{sort_by}")).all()
-
-    # if request.args.get('sort_col') == "playtime":
-    #     bg_obj_list = BoardGame.query.order_by(BoardGame.playtime.asc()).all()  
-    # elif request.args.get('sort_col') == "min_players":
-    #     bg_obj_list = BoardGame.query.order_by(BoardGame.min_players.asc()).all()
-    # elif request.args.get('sort_col') == "max_players":
-    #     bg_obj_list = db.session.query(BoardGame).order_by(BoardGame.max_players.desc()).all()
-    # elif request.args.get('sort_col') == "bg_name":
-    #     bg_obj_list = BoardGame.query.order_by(BoardGame.bg_name.asc()).all()
-    # elif request.args.get('sort_col') == "suggested_players":
-    #     bg_obj_list = BoardGame.query.order_by(BoardGame.suggested_players.asc()).all()
-    # elif request.args.get('sort_col') == "publisher":
-    #     bg_obj_list = BoardGame.query.order_by(BoardGame.publisher.asc()).all()
-    # elif request.args.get('sort_col') == "designer":
-    #     bg_obj_list = BoardGame.query.order_by(BoardGame.designer.asc()).all()
-    # elif request.args.get('sort_col') == "year_published":
-    #     bg_obj_list = BoardGame.query.order_by(BoardGame.year_published.desc()).all()
-    # else:
-        # bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).all()
-        # bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).offset(5).limit(5).all()
-
+   
     return render_template('database.html', bg_obj_list=bg_obj_list)
 
 
@@ -130,7 +106,7 @@ def show_favorites():
         if request.method == 'POST':
             bg_id = request.form.get('bg_id')
             bg = BoardGame.query.get(bg_id)
-            user.favorites.append(bg)
+            user.favorites.extend(bg)
             db.session.commit()
         
         bg_obj_list = user.favorites
@@ -166,18 +142,24 @@ def show_results():
     designer = request.args.get('designer')
     publisher = request.args.get('publisher')
 
-    # sort_col = request.args.get('sort_col')
+    results = []
 
     if bg_name:
-        results = get_by_bg_name(bg_name)
-    elif num_players:
-        results = get_by_num_players(num_players)
-    elif playtime:
-        results = get_by_playtime(playtime)
-    elif publisher:
-        results = get_by_publisher(publisher)
+        name_results = get_by_bg_name(bg_name)
+        results.extend(name_results)
+    if num_players:
+        num_results = get_by_num_players(num_players)
+        results.extend(num_results)
+    if playtime:
+        time_results = get_by_playtime(playtime)
+        results.extend(time_results)
+    if publisher:
+        pub_results = get_by_publisher(publisher)
+        results.extend(pub_results)
     elif designer:
-        results = get_by_designer(designer)
+        des_results = get_by_designer(designer)
+        results.extend(des_results)
+
 
     return render_template('results.html', results=results)
 
