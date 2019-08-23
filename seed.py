@@ -22,14 +22,14 @@ def parse_please(path):
     bg_id = (soup.item['id']) #Board Game ID
 
     game_attr = soup.find("name").attrs
-    name = (game_attr["value"]) # board game name (primary name)
+    bg_name = (game_attr["value"]) # board game name (primary name)
 
     try:
-        thumbnail = (soup.thumbnail.text) #thumbnail img link
-        image = (soup.image.text) # fill img link
+        thumbnail_url = (soup.thumbnail.text) #thumbnail img link
+        image_url = (soup.image.text) # fill img link
     except AttributeError:
-        thumbnail = '/static/image/placeholder.png'
-        image = '/static/image/placeholder.png'
+        thumbnail_url = '/static/image/placeholder.png'
+        image_url = '/static/image/placeholder.png'
 
     description = html.unescape(soup.description.text) # board game description
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
             db.session.add(User(name='TEST', email='test@test.com', password='test'))
             db.session.commit()
     except IndexError:       
-        for i in range (6000,6250):
+        for i in range (5703,11670):
             parse_please(f"{i}.xml")
 
 
