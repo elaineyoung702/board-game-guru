@@ -8,7 +8,8 @@
 <table id="database" class="table table-striped table-bordered table-sm">
     <thead>
         <tr>
-            <th>Thumbnail</th>
+            <!-- remove sortable class if found unnecessary -->
+            <th id="thumb">Thumbnail</th>
             <th data-sort-attr="bg_name" class="sortable">Board Game Name</th>
             <th data-sort-attr="min_players" class="sortable">Minimum Players</th>
             <th data-sort-attr="max_players" class="sortable">Maximum Players</th>
@@ -41,16 +42,20 @@
 </div>
 
 <script>
-    const sortableHeaders = $('th.sortable');
+    // makes headers sortable (this has been nullified now that pagination implemented)
+    // const sortableHeaders = $('th.sortable');
 
-    sortableHeaders.on('click', function(event) {
-        const sortBy = event.currentTarget.dataset.sortAttr;
-        window.location = `/database?sort_col=${sortBy}`;
-    });
+    // sortableHeaders.on('click', function(event) {
+    //     const sortBy = event.currentTarget.dataset.sortAttr;
+    //     window.location = `/database?sort_col=${sortBy}`;
+    // });
 
+    // applies pagination to database table
     $(document).ready(function () {
       $('#database').DataTable();
     });
+
+    $('#thumb').removeClass("sorting");
 
 </script>
 
