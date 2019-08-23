@@ -91,29 +91,30 @@ def show_boardgame_info(bg_id):
 def show_database():
     """Show Board Game Database."""
 
+    bg_obj_list = BoardGame.query.all()
     # sort_by = request.args.get('sort_col')
 
     # if sort_by:  ##### ATTEMPT TO REFACTOR TO SIMPLIFY
     #     bg_obj_lsit = BoardGame.query.filter(BoardGame.bg_name.like(f"{sort_by}")).all()
 
-    if request.args.get('sort_col') == "playtime":
-        bg_obj_list = BoardGame.query.order_by(BoardGame.playtime.asc()).all()  
-    elif request.args.get('sort_col') == "min_players":
-        bg_obj_list = BoardGame.query.order_by(BoardGame.min_players.asc()).all()
-    elif request.args.get('sort_col') == "max_players":
-        bg_obj_list = db.session.query(BoardGame).order_by(BoardGame.max_players.desc()).all()
-    elif request.args.get('sort_col') == "bg_name":
-        bg_obj_list = BoardGame.query.order_by(BoardGame.bg_name.asc()).all()
-    elif request.args.get('sort_col') == "suggested_players":
-        bg_obj_list = BoardGame.query.order_by(BoardGame.suggested_players.asc()).all()
-    elif request.args.get('sort_col') == "publisher":
-        bg_obj_list = BoardGame.query.order_by(BoardGame.publisher.asc()).all()
-    elif request.args.get('sort_col') == "designer":
-        bg_obj_list = BoardGame.query.order_by(BoardGame.designer.asc()).all()
-    elif request.args.get('sort_col') == "year_published":
-        bg_obj_list = BoardGame.query.order_by(BoardGame.year_published.desc()).all()
-    else:
-        bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).all()
+    # if request.args.get('sort_col') == "playtime":
+    #     bg_obj_list = BoardGame.query.order_by(BoardGame.playtime.asc()).all()  
+    # elif request.args.get('sort_col') == "min_players":
+    #     bg_obj_list = BoardGame.query.order_by(BoardGame.min_players.asc()).all()
+    # elif request.args.get('sort_col') == "max_players":
+    #     bg_obj_list = db.session.query(BoardGame).order_by(BoardGame.max_players.desc()).all()
+    # elif request.args.get('sort_col') == "bg_name":
+    #     bg_obj_list = BoardGame.query.order_by(BoardGame.bg_name.asc()).all()
+    # elif request.args.get('sort_col') == "suggested_players":
+    #     bg_obj_list = BoardGame.query.order_by(BoardGame.suggested_players.asc()).all()
+    # elif request.args.get('sort_col') == "publisher":
+    #     bg_obj_list = BoardGame.query.order_by(BoardGame.publisher.asc()).all()
+    # elif request.args.get('sort_col') == "designer":
+    #     bg_obj_list = BoardGame.query.order_by(BoardGame.designer.asc()).all()
+    # elif request.args.get('sort_col') == "year_published":
+    #     bg_obj_list = BoardGame.query.order_by(BoardGame.year_published.desc()).all()
+    # else:
+        # bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).all()
         # bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).offset(5).limit(5).all()
 
     return render_template('database.html', bg_obj_list=bg_obj_list)
