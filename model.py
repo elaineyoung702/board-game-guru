@@ -97,9 +97,11 @@ class BgTag(db.Model):
 class Tag(db.Model):
     """A list of tags that can be applied to a board game."""
 
+    __tablename__ = "tags"
+
     tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     tag_name = db.Column(db.String(75), nullable=False)
-    tag_description = db.Column(db.Test, nullable-False)
+    tag_description = db.Column(db.Text, nullable=False)
 
 
     def __repr__(self):
