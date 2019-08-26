@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from sqlalchemy import func
 # from model import app
 from model import connect_to_db, db
-from model import BoardGame, User
+from model import BoardGame, User, Tag
 
 from server import app
 
@@ -95,22 +95,40 @@ def parse_please(path):
 def instantiate_tags():
     """Instantiating Predetermined Tags/Categories for Board Games."""
 
-Tag(tag_name="Competitive", tag_description="Player direct conflict")
-Tag(tag_name="Co-op", tag_description="Player cooperation towards same goal")
-Tag(tag_name="Euro", tag_description="Players compete for resources")
+    tag = Tag(tag_name="Competitive", tag_description="Players play against each other and compete to win via direct conflict")
+    db.session.add(tag)
+    
+    tag = Tag(tag_name="Cooperative", tag_description="Players usually play against the game and work together towards the same goal")
+    db.session.add(tag)
+    
+    tag = Tag(tag_name="Eurogame", tag_description="Players compete to win with indirect conflict, emphasizing individual development and comparative achievement")
+    db.session.add(tag)
 
-Tag(tag_name="Light Strategy", tag_description="Easy strategy")
-Tag(tag_name="Medium Strategy", tag_description="Medium strategy")
-Tag(tag_name="Heavy Strategy", tag_description="Heavy strategy - not for the lighthearted")
+    tag = Tag(tag_name="Light Strategy", tag_description="Easy strategy")
+    db.session.add(tag)
+    
+    tag = Tag(tag_name="Medium Strategy", tag_description="Medium strategy")
+    db.session.add(tag)
+    
+    tag = Tag(tag_name="Heavy Strategy", tag_description="Heavy strategy - not for the lighthearted!")
+    db.session.add(tag)
 
-Tag(tag_name="Classic", tag_description="Classic Board Game")
+    tag = Tag(tag_name="Classic", tag_description="Classic Board Game")
+    db.session.add(tag)
 
-Tag(tag_name="Family", tag_description="Good for kids of all ages")
-Tag(tag_name="Mature/Adult", tag_description="For mature audiences only")
+    tag = Tag(tag_name="Family", tag_description="Good for kids and parents of all ages")
+    db.session.add(tag)
+    
+    tag = Tag(tag_name="Mature/Adult", tag_description="Suggested for mature audiences only")
+    db.session.add(tag)
 
-Tag(tag_name="Legacy", tag_description="Legacy incoporates changing board and ongoing changes")
-Tag(tag_name="Expansion", tag_description="Expansion of an original game")
+    tag = Tag(tag_name="Legacy", tag_description="Legacy games incoporate a changing board and ongoing story changes")
+    db.session.add(tag)
+    
+    tag = Tag(tag_name="Expansion", tag_description="Expansion of an original game")
+    db.session.add(tag)
 
+    db.session.commit()
 
 
 
@@ -121,6 +139,7 @@ if __name__ == "__main__":
 
     connect_to_db(app)
     db.create_all()
+    instantiate_tags()
 
     try:
         if sys.argv[1] == '--create-user':
