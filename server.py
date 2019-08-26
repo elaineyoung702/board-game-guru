@@ -64,7 +64,6 @@ def register_new_user():
         session['user_id'] = user.user_id   #set session user_id
         session['user_name'] = user.name.title()
         session['email'] = user.email 
-        print(User.query.all())
         return render_template('favorites.html') ### REDIRECT THIS
 
 

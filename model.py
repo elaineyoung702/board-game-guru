@@ -99,14 +99,13 @@ class Tag(db.Model):
 
     tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     tag_name = db.Column(db.String(75), nullable=False)
+    tag_description = db.Column(db.Test, nullable-False)
 
 
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
 
         return f"<Tag tag_id={self.tag_id}, tag_name={self.tag_name}>"
-
-
 
 
 #########################################################################

@@ -91,6 +91,29 @@ def parse_please(path):
 
     print(f'Successfully added: {boardgame}')
 
+
+def instantiate_tags():
+    """Instantiating Predetermined Tags/Categories for Board Games."""
+
+Tag(tag_name="Competitive", tag_description="Player direct conflict")
+Tag(tag_name="Co-op", tag_description="Player cooperation towards same goal")
+Tag(tag_name="Euro", tag_description="Players compete for resources")
+
+Tag(tag_name="Light Strategy", tag_description="Easy strategy")
+Tag(tag_name="Medium Strategy", tag_description="Medium strategy")
+Tag(tag_name="Heavy Strategy", tag_description="Heavy strategy - not for the lighthearted")
+
+Tag(tag_name="Classic", tag_description="Classic Board Game")
+
+Tag(tag_name="Family", tag_description="Good for kids of all ages")
+Tag(tag_name="Mature/Adult", tag_description="For mature audiences only")
+
+Tag(tag_name="Legacy", tag_description="Legacy incoporates changing board and ongoing changes")
+Tag(tag_name="Expansion", tag_description="Expansion of an original game")
+
+
+
+
 ##############################################################
 
 if __name__ == "__main__":
