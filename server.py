@@ -164,6 +164,19 @@ def show_search_form():
     return render_template('search.html', designer_list=designer_list)
 
 
+@app.route('/bg-tagged', methods=['POST'])
+def tag_a_board_game():
+    print("ARE WE EVEN IN FLASK FUNCTION YET?! D;")
+
+    tag_name = request.form.get("tag_name")
+    print(tag_name)
+    (tag_id,) = db.session.query(Tag.tag_id).filter(tag_name==tag_name).first()
+    print(tag_id)
+
+    return("Alert message or whatever")
+
+
+
 @app.route('/results')
 def show_results():
     """Show User Search Results Based on Inputs from Search Form."""
@@ -194,7 +207,6 @@ def show_results():
 
 
     return render_template('results.html', results=results)
-
 
 
 def get_by_bg_name(bg_name):
