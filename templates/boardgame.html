@@ -38,6 +38,19 @@
         {{boardgame.description}}<br><br><br><br>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-12">
+      <span class="label label-success">
+      {% for tag in tags %}
+        
+        {{tag.tag_name}}
+
+      {% endfor %}
+      </span>
+    </div><br><br><br><br>
+  </div>
+
 </div>
 
 <!-- Image: <img src={{boardgame.image_url}}> -->
