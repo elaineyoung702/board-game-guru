@@ -60,6 +60,10 @@ def register_new_user():
         user = User(name=name, email=email, password=password)
         db.session.add(user)
         db.session.commit()
+        user = db.session.query(User).filter(User.email==email, User.password==password).first() # check this syntax
+        session['user_id'] = user.user_id   #set session user_id
+        session['user_name'] = user.name.title()
+        session['email'] = user.email 
         print(User.query.all())
         return render_template('favorites.html') ### REDIRECT THIS
 
