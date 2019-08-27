@@ -47,7 +47,7 @@
     <div class="col-12">
       {% for tag in tags %}
         <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
-        <span class="badge">NUM</span>
+        <span class="badge">{{tag_dict[tag.tag_id]}}</span>
         </button>
       {% endfor %}
     </div><br><br><br><br>
