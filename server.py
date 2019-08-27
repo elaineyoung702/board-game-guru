@@ -83,10 +83,21 @@ def show_boardgame_info(bg_id):
 
     boardgame = BoardGame.query.get(bg_id)
     tags = Tag.query.all()
+    tag_dict = {}
+    # print(tags)
+    # BgTag.query.filter(BgTag.bg_id==11416).all()
+    #  BgTag.query.filter(BgTag.bg_id==11416).count()
+    for tag in tags:
+        tag_id = tag.tag_id
+        print(tag_id)
+        count = BgTag.query.filter(BgTag.bg_id==bg_id,BgTag.tag_id==tag_id).count()
+        tag_dict[tag_id] = count
+
+    print(tag_dict)
 
     if session:
         user = db.session.query(User).filter_by(user_id=session['user_id']).one()
-        return render_template('boardgame.html', boardgame=boardgame, user=user, tags=tags)
+        return render_template('boardgame.html', boardgame=boardgame, user=user, tags=tags, tag_dict=tag_dict)
     else:
         return render_template('boardgame.html', boardgame=boardgame, tags=tags)
 
@@ -169,8 +180,6 @@ def tag_a_board_game():
     print("ARE WE EVEN IN FLASK FUNCTION YET?! D;")
 
     tag_id = request.form.get("tag_id")
-    # print(tag_name)
-    # (tag_id,) = db.session.query(Tag.tag_id).filter(tag_name==tag_name).first()
     print(tag_id)
     user_id = session['user_id']
     print(user_id)
