@@ -2,7 +2,7 @@ from flask import Flask, request, session
 from flask import render_template, redirect, flash, jsonify
 # from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
-from model import connect_to_db, db, BoardGame, User, Favorite, Tag
+from model import connect_to_db, db, BoardGame, User, Favorite, Tag, BgTag
 
 
 
@@ -168,10 +168,21 @@ def show_search_form():
 def tag_a_board_game():
     print("ARE WE EVEN IN FLASK FUNCTION YET?! D;")
 
-    tag_name = request.form.get("tag_name")
-    print(tag_name)
-    (tag_id,) = db.session.query(Tag.tag_id).filter(tag_name==tag_name).first()
+    tag_id = request.form.get("tag_id")
+    # print(tag_name)
+    # (tag_id,) = db.session.query(Tag.tag_id).filter(tag_name==tag_name).first()
     print(tag_id)
+    user_id = session['user_id']
+    print(user_id)
+    bg_id = request.form.get("bg_id")
+    print(bg_id)
+
+    bgtag = BgTag(user_id=user_id, bg_id=bg_id, tag_id=tag_id)
+
+    db.session.add(bgtag)
+    db.session.commit()
+
+    print(f'WOOOOO! Added {bgtag}')
 
     return("Alert message or whatever")
 

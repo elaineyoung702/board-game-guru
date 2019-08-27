@@ -39,14 +39,14 @@
     </div>
   </div>
 <!-- TEST BUTTON TO PROOF OF CONCEPT -->
-  <button type="button" class="btn btn-success" id="family-btn">Family</button>
+  <button type="button" class="btn btn-success" id="family-btn" value={{boardgame.bg_id}}>Family</button>
   <br><br>
 
 
   <div class="row">
     <div class="col-12">
       {% for tag in tags %}
-        <button type="button" class="btn btn-dark btn-sm" id=tag-id-{{tag.tag_id}}>{{tag.tag_name}}
+        <button type="button" class="btn btn-dark btn-sm" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
         <span class="badge">NUM</span>
         </button>
       {% endfor %}
@@ -65,14 +65,15 @@
   function testFunction(evt){
     console.log("PLEASE WORK");
     const inputs = {
-      'tag_name' : $('#family-btn').text(),
+      'tag_id' : $('#3').val(),
+      'bg_id' : {{boardgame.bg_id}},
     };
     console.log(inputs);
 
     $.post('/bg-tagged', inputs, sendAlert);
   }
 
-  $('#family-btn').on('click', testFunction);
+  $('#3').on('click', testFunction);
 
 
 // attempting proof of concept above
@@ -107,24 +108,6 @@ if the user clicks the co-op tag button...
 jquery will select the *ID* of the button
 on event of click > eventListener applied to each button
 if clicked... send request to flask to instantiate a BgTag with user_id, bg_id, and tag_id
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
