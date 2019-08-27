@@ -70,9 +70,10 @@
 
   function testFunction(evt){
     console.log(evt);
+    console.log(evt.target.id);
     console.log("PLEASE WORK");
     const inputs = {
-      'tag_id' : $('#3').val(),
+      'tag_id' : evt.target.id,
       'bg_id' : {{boardgame.bg_id}},
     };
     console.log(inputs);
