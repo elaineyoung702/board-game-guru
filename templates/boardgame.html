@@ -46,7 +46,7 @@
   <div class="row">
     <div class="col-12">
       {% for tag in tags %}
-        <button type="button" class="btn btn-dark btn-sm" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
+        <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
         <span class="badge">NUM</span>
         </button>
       {% endfor %}
@@ -56,13 +56,20 @@
 </div>
 
 
+
+
+
 <script>
+
+
+
   // below is a proof of concept to add a tag to a board game
   function sendAlert(response){
     alert(response);
   }
 
   function testFunction(evt){
+    console.log(evt);
     console.log("PLEASE WORK");
     const inputs = {
       'tag_id' : $('#3').val(),
@@ -73,26 +80,8 @@
     $.post('/bg-tagged', inputs, sendAlert);
   }
 
-  $('#3').on('click', testFunction);
+  $('.bgtag').on('click', testFunction);
 
-
-// attempting proof of concept above
-//   function sendAlert(alertMsg){
-//     alert(alertMsg)
-//   }
-
-
-//   function someFunction(evt) {
-//     evt.preventDefault();
-
-//     const inputs = {
-//       'tag' = $('tag-id-1').val()
-//     };
-//     $.post('/bg-tagged', inputs, sendAlert)
-//   }
-
-
-// $('#tag-id-1').on('click', someFunction);
 
 
 
@@ -109,7 +98,9 @@ jquery will select the *ID* of the button
 on event of click > eventListener applied to each button
 if clicked... send request to flask to instantiate a BgTag with user_id, bg_id, and tag_id
 
-
+if the user clicks the co-op tag button...
+jquery will select by the ckass to open a modal
+when the modal opens, it will
 
  -->
 
