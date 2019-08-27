@@ -50,6 +50,8 @@ class BoardGame(db.Model):
     designer = db.Column(db.String(100), nullable=False)
     publisher = db.Column(db.String, nullable=False)
 
+    bg_tags = db.relationship("Tag", secondary="bg_tags",
+                                    backref="boardgames")
 
     def __repr__(self):
         """Provide helpful BoardGame info when printed."""
