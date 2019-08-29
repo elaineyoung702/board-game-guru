@@ -39,11 +39,12 @@
     </div>
   </div>
 <!-- TEST BUTTON TO PROOF OF CONCEPT -->
-  <button type="button" class="btn btn-success" id="family-btn" value={{boardgame.bg_id}}>Family</button>
-  <br><br>
+<!--   <button type="button" class="btn btn-success" id="family-btn" value={{boardgame.bg_id}}>Family</button>
+  <br><br> -->
 
 
   <div class="row">
+    <div class="col-8 offset-4"><h3> Apply Tags to {{boardgame.bg_name}}! </h3></div>
     <div class="col-12">
       {% for tag in tags %}
         <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
@@ -64,8 +65,10 @@
 
 
   // below is a proof of concept to add a tag to a board game
-  function sendAlert(response){
-    alert(response);
+  function updateVotes(response){
+    // if (response == "Success")
+    console.log(response);
+    // alert(response);
   }
 
   function testFunction(evt){
@@ -78,7 +81,7 @@
     };
     console.log(inputs);
 
-    $.post('/bg-tagged', inputs, sendAlert);
+    $.post('/bg-tagged', inputs, updateVotes);
   }
 
   $('.bgtag').on('click', testFunction);
