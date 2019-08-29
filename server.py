@@ -81,17 +81,15 @@ def logout_user():
 def show_boardgame_info(bg_id):
     """Show Board Game Info Page."""
 
-    boardgame = BoardGame.query.get(bg_id)
-    tags = Tag.query.all()
-    tag_dict = {}
-    # print(tags)
-    # BgTag.query.filter(BgTag.bg_id==11416).all()
-    #  BgTag.query.filter(BgTag.bg_id==11416).count()
-    for tag in tags:
+    boardgame = BoardGame.query.get(bg_id) # get bg object to pass into jinja
+    tags = Tag.query.all() # get all tags to pass into jinja and for interation
+    tag_dict = {} #creating dict to pass into jinja with bg/tag counts
+
+    for tag in tags: # for each tag, get tag_id and count for matching bg_id
         tag_id = tag.tag_id
         print(tag_id)
         count = BgTag.query.filter(BgTag.bg_id==bg_id,BgTag.tag_id==tag_id).count()
-        tag_dict[tag_id] = count
+        tag_dict[tag_id] = count # add to dict for passing into jinja for displaying
 
     print(tag_dict)
 
@@ -170,14 +168,12 @@ def show_search_form():
         designer = item.designer
         designer_set.add(designer)
     designer_list = (sorted(list(designer_set)))
-    print("****************")
 
     return render_template('search.html', designer_list=designer_list)
 
 
 @app.route('/bg-tagged', methods=['POST'])
 def tag_a_board_game():
-    print("ARE WE EVEN IN FLASK FUNCTION YET?! D;")
 
     tag_id = request.form.get("tag_id")
     print(tag_id)
@@ -193,7 +189,7 @@ def tag_a_board_game():
 
     print(f'WOOOOO! Added {bgtag}')
 
-    return("Alert message or whatever")
+    return (bgtag)
 
 
 
@@ -240,9 +236,7 @@ def get_by_bg_name(bg_name):
 def get_by_num_players(num_players):
     best_fit = BoardGame.query.filter(BoardGame.suggested_players == num_players).all()
     print(f'Num Player Best Fit: {best_fit}')
-    print("*******************")
-    print()
-    print()
+
     if best_fit:
         return best_fit
     else:
