@@ -175,6 +175,7 @@ def show_search_form():
 @app.route('/bg-tagged', methods=['POST'])
 def tag_a_board_game():
 
+    # add in a try/except for whether the user has tagged bg with tag already
     tag_id = request.form.get("tag_id")
     print(tag_id)
     user_id = session['user_id']
@@ -189,7 +190,7 @@ def tag_a_board_game():
 
     print(f'WOOOOO! Added {bgtag}')
 
-    return (bgtag)
+    return jsonify( {"tag_id" : tag_id })
 
 
 
