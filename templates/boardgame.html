@@ -59,8 +59,9 @@
     <div class="col-sm-12"><br><br>
       {% for tag in tags %}
         <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
-        <span class="badge" value={{tag_dict[tag.tag_id]}}>{{tag_dict[tag.tag_id]}}</span><br>
+        <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
         </button>
+        <!-- target innerTEXT -->
       {% endfor %}
     </div>
     </div><br><br><br><br>
@@ -84,17 +85,24 @@
 
     let tag_id = response.tag_id;
 
-    console.log($(`#${tag_id}`));
+    // $(`#badge${tag_id}`).text = ('test');
 
-    console.log($(`#${tag_id}:first-child`));
-    console.log($(`#${tag_id}:first-child`).value);
+    let num = $('#badge2').text();
+    num = Number(num);
+    console.log("num is printing below");
+    num += 1;
+    console.log(num);
+    
+    $('#badge2').text(`${num}`);
+
+    // $(`#badge${tag_id}`).text(innerText+1);
 
 
 
 
-    console.log("*****");
-    console.log(tag_id);
-    console.log("*****");
+    // console.log("*****");
+    // console.log(tag_id);
+    // console.log("*****");
 
     alert(`tag id is ${response.tag_id}`);
   }
