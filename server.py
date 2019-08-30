@@ -87,15 +87,22 @@ def show_boardgame_info(bg_id):
 
     for tag in tags: # for each tag, get tag_id and count for matching bg_id
         tag_id = tag.tag_id
-        print(tag_id)
+        # print(tag_id)
         count = BgTag.query.filter(BgTag.bg_id==bg_id,BgTag.tag_id==tag_id).count()
         tag_dict[tag_id] = count # add to dict for passing into jinja for displaying
 
-    print(tag_dict)
+    # print(tag_dict)
 
     if session:
         user = db.session.query(User).filter_by(user_id=session['user_id']).one()
-        return render_template('boardgame.html', boardgame=boardgame, user=user, tags=tags, tag_dict=tag_dict)
+        user_id = user.user_id
+        tag_check = db.session.query(BgTag.tag_id).filter(BgTag.user_id==user_id, BgTag.bg_id==bg_id).all()
+        if tags:
+            bg_tagged = []
+            for tag_tuple in tag_check:
+                (tagged, ) = tag_tuple
+                bg_tagged.append(tagged)
+        return render_template('boardgame.html', boardgame=boardgame, user=user, tags=tags, tag_dict=tag_dict, bg_tagged=bg_tagged)
     else:
         return render_template('boardgame.html', boardgame=boardgame, tags=tags)
 
