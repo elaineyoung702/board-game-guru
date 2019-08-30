@@ -78,31 +78,19 @@
 
 
   // below is a proof of concept to add a tag to a board game
-  function updateVotes(response){
-    // if (response == "Success")
-    console.log(response)
-    // console.log(response["tag_id"]);
+  function updateTagNum(response){
+
+    // console.log(response)
 
     let tag_id = response.tag_id;
 
-    // $(`#badge${tag_id}`).text = ('test');
-
-    let num = $('#badge2').text();
-    num = Number(num);
-    console.log("num is printing below");
-    num += 1;
+    let num = $(`#badge${tag_id}`).text();
     console.log(num);
+
+    num = Number(num);
+    num += 1;
     
-    $('#badge2').text(`${num}`);
-
-    // $(`#badge${tag_id}`).text(innerText+1);
-
-
-
-
-    // console.log("*****");
-    // console.log(tag_id);
-    // console.log("*****");
+    $(`#badge${tag_id}`).text(`${num}`);
 
     alert(`tag id is ${response.tag_id}`);
   }
@@ -110,14 +98,13 @@
   function tagBoardGame(evt){
     console.log(evt);
     // console.log(evt.target.id);
-    // console.log("PLEASE WORK");
     const inputs = {
       'tag_id' : evt.target.id,
       'bg_id' : {{boardgame.bg_id}},
     };
     // console.log(inputs);
 
-    $.post('/bg-tagged', inputs, updateVotes);
+    $.post('/bg-tagged', inputs, updateTagNum);
   }
 
   $('.bgtag').on('click', tagBoardGame);
