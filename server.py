@@ -190,14 +190,25 @@ def tag_a_board_game():
     bg_id = request.form.get("bg_id")
     print(bg_id)
 
-    bgtag = BgTag(user_id=user_id, bg_id=bg_id, tag_id=tag_id)
+    bg_exist = db.session.query(BgTag).filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id, BgTag.bg_id==bg_id).first()
+    print(bg_exist)
 
-    db.session.add(bgtag)
-    db.session.commit()
+    if bg_exist:
+        tagged_bg_id = bg_exist.tagged_bg_id
+        print(tagged_bg_id)
+        BgTag.query.filter(BgTag.tagged_bg_id==tagged_bg_id).delete()
+        test = db.session.query(BgTag).filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id, BgTag.bg_id==bg_id).first()
+        print(test)
+        return ("FALSO")
+    else:
+        bgtag = BgTag(user_id=user_id, bg_id=bg_id, tag_id=tag_id)
 
-    print(f'WOOOOO! Added {bgtag}')
+        db.session.add(bgtag)
+        db.session.commit()
 
-    return jsonify( {"tag_id" : tag_id })
+        print(f'WOOOOO! Added {bgtag}')
+
+        return jsonify( {"tag_id" : tag_id })
 
 
 
