@@ -197,9 +197,9 @@ def tag_a_board_game():
         tagged_bg_id = bg_exist.tagged_bg_id
         print(tagged_bg_id)
         BgTag.query.filter(BgTag.tagged_bg_id==tagged_bg_id).delete()
-        test = db.session.query(BgTag).filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id, BgTag.bg_id==bg_id).first()
-        print(test)
-        return ("FALSO")
+        db.session.query(BgTag).filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id, BgTag.bg_id==bg_id).first()
+        db.session.commit()
+        return jsonify( {"deleted" : "true", "tag_id" : tag_id })
     else:
         bgtag = BgTag(user_id=user_id, bg_id=bg_id, tag_id=tag_id)
 
@@ -208,7 +208,7 @@ def tag_a_board_game():
 
         print(f'WOOOOO! Added {bgtag}')
 
-        return jsonify( {"tag_id" : tag_id })
+        return jsonify( {"deleted" : "false", "tag_id" : tag_id })
 
 
 
