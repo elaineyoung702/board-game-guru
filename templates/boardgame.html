@@ -58,10 +58,16 @@
 
     <div class="col-sm-12"><br><br>
       {% for tag in tags %}
-        <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
-        <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
-        </button>
-        <!-- target innerTEXT -->
+        {% if tag.tag_id in bg_tagged %}
+          <button type="button" class="btn btn-success btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
+          <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
+          </button>
+        {% else %}
+          <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
+          <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
+          </button>
+
+        {% endif %}
       {% endfor %}
     </div>
     </div><br><br><br><br>
@@ -70,30 +76,29 @@
 </div>
 
 
-
-
-
 <script>
-
-
 
   // below is a proof of concept to add a tag to a board game
   function updateTagNum(response){
-
+    if (response === "FALSO") {
+      alert('BAD JOB BRO');
+    }
     // console.log(response)
+    else {
+      let tag_id = response.tag_id;
+      $(`#${tag_id}`).removeClass('btn-dark');
+      $(`#${tag_id}`).addClass('btn-success');
 
-    let tag_id = response.tag_id;
+      let num = $(`#badge${tag_id}`).text();
+      // console.log(num);
 
-    let num = $(`#badge${tag_id}`).text();
-    console.log(num);
+      num = Number(num);
+      num += 1;
+      
+      $(`#badge${tag_id}`).text(`${num}`);
 
-    num = Number(num);
-    num += 1;
-    
-    $(`#badge${tag_id}`).text(`${num}`);
-
-    alert(`tag id is ${response.tag_id}`);
-  }
+      confirm(`You have tagged this board game`);
+    }}
 
   function tagBoardGame(evt){
     console.log(evt);
@@ -102,7 +107,9 @@
       'tag_id' : evt.target.id,
       'bg_id' : {{boardgame.bg_id}},
     };
-    // console.log(inputs);
+
+    // let tag_id = (inputs['tag_id']);  #### This was initially to handle untagging a bg, but going to try with SQL query first
+    // console.log(tag_id);
 
     $.post('/bg-tagged', inputs, updateTagNum);
   }
