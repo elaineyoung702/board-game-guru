@@ -48,7 +48,7 @@
     <div class="col-12">
       {% for tag in tags %}
         <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
-        <span class="badge">{{tag_dict[tag.tag_id]}}</span>
+        <span class="badge" value={{tag_dict[tag.tag_id]}}>{{tag_dict[tag.tag_id]}}</span>
         </button>
       {% endfor %}
     </div><br><br><br><br>
@@ -68,15 +68,23 @@
   function updateVotes(response){
     // if (response == "Success")
     console.log(response)
-    console.log(response["tag_id"]);
+    // console.log(response["tag_id"]);
 
-    // const tag_id = {
-    //   ${response.tag_id}
-    // };
+    let tag_id = response.tag_id;
+
+    console.log($(`#${tag_id}`));
+
+    console.log($(`#${tag_id}:first-child`));
+    console.log($(`#${tag_id}:first-child`).value);
+
+
+
+
     console.log("*****");
-    console.log(response.tag_id)
+    console.log(tag_id);
+    console.log("*****");
 
-    alert(`${response.tag_id}`);
+    alert(`tag id is ${response.tag_id}`);
   }
 
   function tagBoardGame(evt){
