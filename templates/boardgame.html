@@ -78,26 +78,37 @@
 
 <script>
 
-  // below is a proof of concept to add a tag to a board game
   function updateTagNum(response){
-    if (response === "FALSO") {
-      alert('BAD JOB BRO');
+
+    let deleted = response.deleted;
+    // console.log(deleted);
+    let tag_id = response.tag_id;
+    // console.log(tag_id);
+
+    if (deleted === "true") {
+      $(`#${tag_id}`).removeClass('btn-success');
+      $(`#${tag_id}`).addClass('btn-dark');
+
+      let num = $(`#badge${tag_id}`).text();
+      num = Number(num);
+      num -= 1;
+      
+      $(`#badge${tag_id}`).text(`${num}`);
+
+      alert('Tag Removed');
     }
-    // console.log(response)
+
     else {
-      let tag_id = response.tag_id;
       $(`#${tag_id}`).removeClass('btn-dark');
       $(`#${tag_id}`).addClass('btn-success');
 
       let num = $(`#badge${tag_id}`).text();
-      // console.log(num);
-
       num = Number(num);
       num += 1;
       
       $(`#badge${tag_id}`).text(`${num}`);
 
-      confirm(`You have tagged this board game`);
+      alert(`Board Game Tagged`);
     }}
 
   function tagBoardGame(evt){
@@ -109,9 +120,6 @@
     };
 
     console.log(inputs);
-
-    // let tag_id = (inputs['tag_id']);  #### This was initially to handle untagging a bg, but going to try with SQL query first
-    // console.log(tag_id);
 
     $.post('/bg-tagged', inputs, updateTagNum);
   }
