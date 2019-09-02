@@ -3,15 +3,19 @@
 
 {% block body %}
 
-
-To take full advantage of our site's features, please create a Board Game Guru User account.
 <br><br>
-
-<form action='/register' method='POST'>
-    Name: <input type="text" name="name" required><br>
-    Email: <input type="email" name="email" required><br>
-    Password: <input type="password" name="password" required><br>
-    <input type="submit" value="Register">
-</form>
+<div class="row">
+    <br><br>
+    <div class=" col-sm-8 offset-2">
+        <h3>To take full advantage of our site's features, please create a Board Game Guru User account.</h3><br><br>
+        <form action='/register' method='POST'>
+            <div class="form-group">
+                Name: <input type="text" class="form-control" name="name" required><br>
+                Email: <input class="form-control" type="email" name="email" required><br>
+                Password: <input class="form-control" type="password" name="password" required><br>
+                <input type="submit" value="Register">
+            </div>
+        </form>
+    </div></div>
 
 {% endblock %}
