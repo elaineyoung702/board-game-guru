@@ -146,9 +146,12 @@ if __name__ == "__main__":
             db.session.add(User(name='TEST', email='test@test.com', password='test'))
             db.session.commit()
     except IndexError:       
-        for i in range (5703,11670):
+        for i in range (1,5701):
             parse_please(f"{i}.xml")
 
+
+# 1 - 5701
+# 5703, 11670
 
 
 
