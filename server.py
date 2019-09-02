@@ -13,11 +13,6 @@ app.secret_key = "s00persekret"
 app.jinja_env.undefinted = StrictUndefined
 
 
-# BG_ATTR_LIST = ['bg_name', 'thumbnail_url', 'image_url', 'description', 'playtime', 
-#         'min_time', 'max_time', 'year_published', 'min_players', 'max_players', 
-#         'suggested_players', 'designer', 'publisher']
-
-
 @app.route('/')
 def index():
     """Display Homepage."""
@@ -104,7 +99,7 @@ def show_boardgame_info(bg_id):
                 bg_tagged.append(tagged)
         return render_template('boardgame.html', boardgame=boardgame, user=user, tags=tags, tag_dict=tag_dict, bg_tagged=bg_tagged)
     else:
-        return render_template('boardgame.html', boardgame=boardgame, tags=tags)
+        return render_template('boardgame.html', boardgame=boardgame, tags=tags, tag_dict=tag_dict)
 
 
 @app.route('/database')
@@ -112,8 +107,8 @@ def show_database():
     """Show Board Game Database."""
     i = 0
 
-    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).offset(i).limit(250).all()
-
+    # bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).offset(i).limit(250).all()
+    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).all()
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
         user_id = user.user_id
