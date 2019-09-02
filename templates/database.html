@@ -8,7 +8,7 @@
 <table id="database" class="table table-striped table-bordered table-sm">
     <thead>
         <tr>
-            <th id="thumb">Thumbnail</th>
+            <th></th>
             <th data-sort-attr="bg_name">Board Game Name</th>
             <th data-sort-attr="min_players">Minimum Players</th>
             <th data-sort-attr="max_players">Maximum Players</th>
@@ -23,7 +23,7 @@
     <tbody>
     {% for bg in bg_obj_list %}
     <tr>
-        <td><img src={{bg.thumbnail_url}}>
+        <td><img src={{bg.thumbnail_url}}><br><br>
             <form action="/favorites" method='POST'>
                 <input type="text" name="bg_id" value={{bg.bg_id}} hidden>
                 {% if session %}
@@ -37,7 +37,7 @@
         <td>maximum {{bg.max_players}} players</td>
         <td>suggested {{bg.suggested_players}} players</td>
         <td>{{bg.playtime}} minutes</td>
-        <td>{{bg.description|truncate(20, False, '...', 0)}}</td>
+        <td>{{bg.description|truncate(200, False, '...', 0)}}</td>
         <td>Publisher: {{bg.publisher}}</td>
         <td>published in {{bg.year_published}}</td>
         <td>Designer: {{bg.designer}}</td>
@@ -49,22 +49,12 @@
 </div>
 
 <script>
-    // makes (this has been nullified now that pagination implemented)
-    /eaders );
-eaders.on('click', function(event) {
-    //     const sortBy = event.currentTarget.dataset.sortAttr;
-    //     window.location = `/database?sort_col=${sortBy}`;
-    // });
 
     // applies pagination to database table
     $(document).ready(function () {
       $('#database').DataTable({
-        // "pageLength": 50
       });
     });
-
-    // attempt to remove sorting from thumbnail column header
-    $('#thumb').removeClass("sorting");
 
 </script>
 

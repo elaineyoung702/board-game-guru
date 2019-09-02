@@ -117,28 +117,6 @@ def show_database():
     return render_template('database.html', bg_obj_list=bg_obj_list)
 
 
-# @app.route('/api/games') #### THIS IS FOR PAGINATION OPTIMIZATION
-# def get_games():
-
-#     if 'limit' in request.args:
-#         limit = request.args['limit']
-#     else:
-#         limit = 50
-
-#     bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.asc()).limit(limit).all()
-
-#     bg_result = []
-#     for bg in bg_obj_list:
-#         bg_result.append({
-#             'bg_name': bg.bg_name,
-#             'thumbnail_url': bg.thumbnail_url
-#         })
-#### NEED TO INCORPORATE OFFSET FOR THIS FOR PAGINATION TO WORK AND BE OPTIMIZED
-
-#     return jsonify(bg_result)
-
-
-
 @app.route('/favorites', methods=['GET', 'POST'])
 def show_favorites():
     """Show User's Favorite Board Games."""
@@ -177,34 +155,31 @@ def show_search_form():
 @app.route('/bg-tagged', methods=['POST'])
 def tag_a_board_game():
 
-    # add in a try/except for whether the user has tagged bg with tag already
     tag_id = request.form.get("tag_id")
-    print(tag_id)
+    # print(tag_id)
     user_id = session['user_id']
-    print(user_id)
+    # print(user_id)
     bg_id = request.form.get("bg_id")
-    print(bg_id)
+    # print(bg_id)
 
     bg_exist = db.session.query(BgTag).filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id, BgTag.bg_id==bg_id).first()
-    print(bg_exist)
+    # print(bg_exist)
 
     if bg_exist:
         tagged_bg_id = bg_exist.tagged_bg_id
-        print(tagged_bg_id)
+        # print(tagged_bg_id)
         BgTag.query.filter(BgTag.tagged_bg_id==tagged_bg_id).delete()
         db.session.query(BgTag).filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id, BgTag.bg_id==bg_id).first()
         db.session.commit()
         return jsonify( {"deleted" : "true", "tag_id" : tag_id })
     else:
         bgtag = BgTag(user_id=user_id, bg_id=bg_id, tag_id=tag_id)
-
         db.session.add(bgtag)
         db.session.commit()
 
         print(f'WOOOOO! Added {bgtag}')
 
         return jsonify( {"deleted" : "false", "tag_id" : tag_id })
-
 
 
 @app.route('/results')
@@ -234,7 +209,6 @@ def show_results():
     elif designer:
         des_results = get_by_designer(designer)
         results.extend(des_results)
-
 
     return render_template('results.html', results=results)
 
