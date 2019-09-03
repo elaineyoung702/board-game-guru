@@ -125,6 +125,48 @@ def connect_to_db(app):
     db.init_app(app)
 
 
+def example_data():
+    """Create sample data for databse tests."""
+
+    User.query.delete()
+    BoardGame.query.delete()
+    Tags.query.delete()
+
+    jack = User(name="Jack", email="jack@test.com", password="test")
+    vonny = User(name="Vonny", email="vonny@test.com", password="test")
+    romain = User(name="Romain", email="romain@test.com", password="test")
+
+    pandemic = BoardGame(bg_id=9000, bg_name="Pandemic Legacy, Season 1", 
+                thumbnail_url="https://cf.geekdo-images.com/itemrep/img/n8626bWQOoE_1nqvLUXi_6QfYO0=/fit-in/246x300/pic2452831.png", 
+                image_url="https://cf.geekdo-images.com/itemrep/img/n8626bWQOoE_1nqvLUXi_6QfYO0=/fit-in/246x300/pic2452831.png", 
+                description="Pandemic is an awesome co-op game battling diseases!", playtime=260, 
+                min_time=150, max_time=500, year_published=2018, min_players=2, max_players=4, 
+                suggested_players=4, designer="Designer1", publisher="Publisher1")
+    monopoly = BoardGame(bg_id=8633, bg_name="Monopoly: Disney", 
+                thumbnail_url="https://cf.geekdo-images.com/thumb/img/MUM8GIWh7cs_Oc22kxGEaNkoEqo=/fit-in/200x150/pic55937.jpg", 
+                image_url="https://cf.geekdo-images.com/thumb/img/MUM8GIWh7cs_Oc22kxGEaNkoEqo=/fit-in/200x150/pic55937.jpg", 
+                description="DISNEY MONOPOLY!", playtime=60, min_time=60, max_time=100, 
+                year_published=2001, min_players=2, max_players=8, suggested_players=5, 
+                designer="Designer2", publisher="Publisher2")
+    dominion = BoardGame(bg_id=36218, bg_name="dominion", 
+                thumbnail_url="https://cf.geekdo-images.com/itemrep/img/7mkW_JrUx0PSa4Ame3zzsLE0BVY=/fit-in/246x300/pic394356.jpg", 
+                image_url="https://cf.geekdo-images.com/itemrep/img/7mkW_JrUx0PSa4Ame3zzsLE0BVY=/fit-in/246x300/pic394356.jpg", 
+                description="Dominion is a game where you compete to win using various strategies.", 
+                playtime=60, min_time=20, max_time=95, year_published=2008, min_players=2, 
+                max_players=6, suggested_players=4, designer="Designer3", publisher="Publisher3")
+    
+    coop = Tag(tag_name="Cooperative", tag_description="Players usually play against the game and work together towards the same goal")
+    classic = Tag(tag_name="Classic", tag_description="Classic Board Game")
+    family = Tag(tag_name="Family", tag_description="Good for kids and parents of all ages")
+    legacy = Tag(tag_name="Legacy", tag_description="Legacy games incoporate a changing board and ongoing story changes")
+
+
+    db.session.add_all([jack, vonny, romain, pandemic, monopoly, dominion, coop, classic, family, legacy])
+    db.session.commit()
+
+
+
+
 if __name__ == "__main__":
     from flask import Flask
     app = Flask(__name__)

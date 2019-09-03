@@ -5,7 +5,6 @@ from jinja2 import StrictUndefined
 from model import connect_to_db, db, BoardGame, User, Favorite, Tag, BgTag
 
 
-
 app = Flask(__name__)
 
 app.secret_key = "s00persekret"
@@ -286,15 +285,13 @@ def get_by_publisher(publisher):
 
 
 
-###### WIP to combine search results instead of doing only one search on 1 criteria
 ###### WIP refactor designer dropdown to be input text with SQL LIKE query because the dropdown is out of control
         #######if time permits, then try to create an auto complete function
 
-
-
-
-
 ##############################################################
+
+
+
 if __name__ == "__main__":
     app.debug = True
     # app.jijna_env.auto_reload = app.debug
@@ -304,3 +301,6 @@ if __name__ == "__main__":
     # DebugToolbarExtension(app)
 
     app.run(port=5000, host="0.0.0.0")
+
+
+
