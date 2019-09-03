@@ -97,7 +97,10 @@ def show_boardgame_info(bg_id):
             for tag_tuple in tag_check:
                 (tagged, ) = tag_tuple
                 bg_tagged.append(tagged)
-        return render_template('boardgame.html', boardgame=boardgame, user=user, tags=tags, tag_dict=tag_dict, bg_tagged=bg_tagged)
+        fav_exist = db.session.query(Favorite).filter(Favorite.user_id==user_id, Favorite.bg_id==bg_id).first()
+        print(fav_exist)
+    
+        return render_template('boardgame.html', boardgame=boardgame, user=user, tags=tags, tag_dict=tag_dict, bg_tagged=bg_tagged, fav_exist=fav_exist)
     else:
         return render_template('boardgame.html', boardgame=boardgame, tags=tags, tag_dict=tag_dict)
 
@@ -118,13 +121,10 @@ def show_database():
 
 # ######################################
 
-@app.route('/check-fav')
-def check_for_fav_id():
+@app.route('/new-favorite', methods=["POST"])
+def check_favorites_table():
 
-    if 'user_id' not in session:
-        return render_template('register.html')
-
-    else:
+    try:
         bg_id = request.form.get("bg_id")
         user = User.query.get(session['user_id'])
         user_id = user.user_id
@@ -136,34 +136,23 @@ def check_for_fav_id():
             Favorite.query.filter(Favorite.fav_id==fav_id).delete()
             db.session.query(Favorite).filter(Favorite.user_id==user_id, Favorite.bg_id==bg_id).first()
             db.session.commit()
-            bg_obj_list = user.favorites
-            return jsonify( {"deleted" : "true"}) #how do we wanna return from this?
+            return jsonify( {"favorited" : "false"}) #how do we wanna return from this?
         else:
             bg_id = request.form.get('bg_id')
             bg = BoardGame.query.get(bg_id)
             user.favorites.append(bg)
             db.session.commit()
-            bg_obj_list = user.favorites
-        return render_template('favorites.html',bg_obj_list=bg_obj_list) #how do we wanna return from this?
+            return jsonify( {"favorited" : "true"}) #how do we wanna return from this?
+    except KeyError:
+        return render_template('register.html')
 
 
-
-@app.route('/favorites', methods=['GET', 'POST'])
-def show_favorites():
+@app.route('/favorites')
+def show_user_favorites():
     """Show User's Favorite Board Games."""
-
-    bg_id = request.form.get("bg_id")
-    # print(bg_id)
 
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
-
-        if request.method == 'POST':
-            bg_id = request.form.get('bg_id')
-            bg = BoardGame.query.get(bg_id)
-            user.favorites.append(bg)
-            db.session.commit()
-        
         bg_obj_list = user.favorites
 
         return render_template('favorites.html',bg_obj_list=bg_obj_list)
