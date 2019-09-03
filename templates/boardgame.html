@@ -24,7 +24,8 @@
         {% if session %}
         <input type="text" name="user_id" value={{user.user_id}} hidden>
         {% endif %}
-        <input id="fav_button" type="submit" name="fav_button" value="Favorite">
+        <span style="color: Tomato;"><i class="fas fa-heart"></i></span><input id="fav_button" type="submit" name="fav_button" value=Favorite>
+
       </form>
     </div>
     <div class="col-sm-4">
@@ -38,7 +39,6 @@
 
     </div>
 
-
   <div class="row">
     <div class="col-10 offset-1">
       <br><br>
@@ -46,10 +46,6 @@
         {{boardgame.description}}<br><br><br><br>
     </div>
   </div>
-<!-- TEST BUTTON TO PROOF OF CONCEPT -->
-<!--   <button type="button" class="btn btn-success" id="family-btn" value={{boardgame.bg_id}}>Family</button>
-  <br><br> -->
-
 
   <div class="row">
     <div class="col-sm-12">
@@ -66,7 +62,6 @@
           <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
           <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
           </button>
-
         {% endif %}
       {% endfor %}
     </div>
@@ -125,10 +120,6 @@
   }
 
   $('.bgtag').on('click', tagBoardGame);
-
-
-
-
 
 
 </script>
