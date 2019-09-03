@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{boardgame.bg_name}}{% endblock %}
-{% block body %}
 
+{% block body %}
 <div id="bg_page" class="container-fluid bg-secondary text-light">
   <div class="row">
     <div class="col-sm-12">
@@ -19,24 +19,13 @@
       <u>Minimum Playtime</u>: {{boardgame.min_time}} minutes<br><br>
       <u>Maximum Playtime</u>: {{boardgame.max_time}} minutes<br><br>
       <u>Year Published</u>: {{boardgame.year_published}}<br><br>
-      <form action="/favorites" method='POST'>
-        <input type="text" name="bg_id" value={{boardgame.bg_id}} hidden>
-        {% if session %}
-        <input type="text" name="user_id" value={{user.user_id}} hidden>
-        {% endif %}
-
-        <span style="color: Tomato;">
-          <i class="fas fa-heart"></i></span>
-          <i class="fa fa-heart-o" aria-hidden="true"></i>
-
-        <input id="fav_button" type="submit" name="fav_button" value=Favorite>
-      </form>
-
-      <button type="button" id="fav_button" class="btn btn-light">Favorite <i class="fa fa-heart-o" aria-hidden="true"></i></button>
-
-
+      {% if fav_exist == None %}
+        <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart-o" aria-hidden="true"></i></button>
+      {% else %}
+        <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart"></i></button>
+        <style> #heart {color : red;}</style>
+      {% endif %}
     </div>
-
 
     <div class="col-sm-4">
       <br>
@@ -46,7 +35,6 @@
       <u>Publisher</u>: {{boardgame.publisher}}<br><br>
       <u>Designer</u>: {{boardgame.designer}}<br><br>
     </div>
-
     </div>
 
   <div class="row">
@@ -80,9 +68,44 @@
 
 </div>
 
+<script src="https://kit.fontawesome.com/6f41ffb181.js"></script>
 
 <script>
 
+  function changeFavButton(response){
+
+    let favorited = response.favorited;
+    console.log(favorited);
+    let heart = document.querySelector('#heart');
+
+    if (favorited === "true") {
+      $('#heart').removeClass("fa-heart-o");
+      $('#heart').addClass("fa-heart");
+      heart.style.color = 'red';
+    }
+
+    else {
+      $('#heart').removeClass("fa-heart");
+      $('#heart').addClass("fa-heart-o");
+      $('#heart').attr("aria-hidden", "true");
+      heart.style.color = 'black';
+    }
+  }
+  
+
+  function favBoardGame(evt){
+    console.log(evt);
+    // console.log(evt.target.id);
+    const inputs = {
+      'bg_id' : {{boardgame.bg_id}},
+    };
+
+    console.log(inputs);
+
+    $.post('/new-favorite', inputs, changeFavButton);
+  }
+
+  $('#fav_button').on('click', favBoardGame);
 
 
 /////// functions below handle tagging/untagging board games
@@ -116,7 +139,7 @@
       
       $(`#badge${tag_id}`).text(`${num}`);
 
-      alert(`Board Game  Tagged`);
+      alert(`Board Game Tagged`);
     }}
 
   function tagBoardGame(evt){
