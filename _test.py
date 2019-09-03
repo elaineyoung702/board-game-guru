@@ -1,7 +1,7 @@
 import unittest
 
 from server import app
-from model import db, connect_to_db
+from model import db, connect_to_db, example_data
 
 
 class BoardGameGuruTests(unittest.TestCase):
@@ -23,12 +23,20 @@ class BoardGameGuruDatabase(unittest.TestCase):
         self.client = app.test_client()
         app.config['TESTING'] = True
 
-        connect_to_db(app, "postgreql:///testdb")
+        connect_to_db(app, "postgresql:///testdb")
         db.create_all()
         example_data()
 
     def tearDown(self):
-        self.name = name #placeholder
+        print("idk man")
+        db.session.close()
+        db.drop_all()
+
+
+    def test_db_page(self):
+        result = self.client.get("/database")
+        self.assertIn(b"Column Headers", result.data)
+
 
 
 if __name__ == "__main__":

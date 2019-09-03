@@ -115,22 +115,22 @@ class Tag(db.Model):
 #########################################################################
 # Helper Functions
 
-def connect_to_db(app):
+def connect_to_db(app, db_uri="postgresql:///boardgames"):
     """Connect the databse to our Flask app"""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///boardgames' ####CHECK THIS
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
 
 
 def example_data():
-    """Create sample data for databse tests."""
+    """Create sample data for database tests."""
 
     User.query.delete()
     BoardGame.query.delete()
-    Tags.query.delete()
+    Tag.query.delete()
 
     jack = User(name="Jack", email="jack@test.com", password="test")
     vonny = User(name="Vonny", email="vonny@test.com", password="test")
