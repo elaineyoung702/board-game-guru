@@ -72,6 +72,7 @@
 
 <script>
 
+///// following two functions handle user favoriting/unfavoriting board games
   function changeFavButton(response){
 
     let favorited = response.favorited;
@@ -162,32 +163,4 @@
 
 {% endblock %}
 
-<!-- PSEUDO CODE FOR TAGS
-
-if the user clicks the co-op tag button...
-jquery will select the *ID* of the button
-on event of click > eventListener applied to each button
-if clicked... send request to flask to instantiate a BgTag with user_id, bg_id, and tag_id
-
-if the user clicks the co-op tag button...
-jquery will select by the ckass to open a modal
-when the modal opens, it will
-
- -->
-
-<!-- Image: <img src={{boardgame.image_url}}> -->
-
-<!-- JAVASCRIPT CODE FROM PREVIOUS PROJECT -->
-<!-- <script>
-  "use strict";
-  const favButton = document.querySelector('#signIn');
-  function changeButton() {
-    if (favButton.innerText === 'Favorite') {
-      favButton.innerText = 'Favorited';
-    } else {
-      favButton.innerText = 'Not a Favorite';
-    }
-  }
-  favButton.addEventListener('click', changeButton);
-</script> -->
 

@@ -1,5 +1,5 @@
 from flask import Flask, request, session
-from flask import render_template, redirect, flash, jsonify
+from flask import render_template, redirect, jsonify
 # from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, BoardGame, User, Favorite, Tag, BgTag
@@ -110,8 +110,8 @@ def show_database():
     """Show Board Game Database."""
     i = 0
 
-    # bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).offset(i).limit(250).all()
-    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).all()
+    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).offset(i).limit(50).all()
+    # bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).all()
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
         user_id = user.user_id
