@@ -24,17 +24,20 @@
         {% if session %}
         <input type="text" name="user_id" value={{user.user_id}} hidden>
         {% endif %}
+
         <span style="color: Tomato;">
           <i class="fas fa-heart"></i></span>
           <i class="fa fa-heart-o" aria-hidden="true"></i>
-        <input id="fav_button" type="submit" name="fav_button" value=Favorite>
 
+        <input id="fav_button" type="submit" name="fav_button" value=Favorite>
       </form>
 
-      <button type="button" class="btn btn-light">Favorite <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+      <button type="button" id="fav_button" class="btn btn-light">Favorite <i class="fa fa-heart-o" aria-hidden="true"></i></button>
 
 
     </div>
+
+
     <div class="col-sm-4">
       <br>
       <u>Suggested Players</u>: {{boardgame.suggested_players}} players<br><br>
@@ -80,6 +83,9 @@
 
 <script>
 
+
+
+/////// functions below handle tagging/untagging board games
   function updateTagNum(response){
 
     let deleted = response.deleted;
@@ -125,7 +131,7 @@
 
     $.post('/bg-tagged', inputs, updateTagNum);
   }
-
+// jquery call for tagging/untagging board game
   $('.bgtag').on('click', tagBoardGame);
 
 

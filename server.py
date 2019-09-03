@@ -116,10 +116,44 @@ def show_database():
 
     return render_template('database.html', bg_obj_list=bg_obj_list)
 
+# ######################################
+
+@app.route('/check-fav')
+def check_for_fav_id():
+
+    if 'user_id' not in session:
+        return render_template('register.html')
+
+    else:
+        bg_id = request.form.get("bg_id")
+        user = User.query.get(session['user_id'])
+        user_id = user.user_id
+        fav_exist = db.session.query(Favorite).filter(Favorite.user_id==user_id, Favorite.bg_id==bg_id).first()
+        # print(fav_exist)
+        if fav_exist:
+            fav_id = fav_exist.fav_id
+            # print(tagged_bg_id)
+            Favorite.query.filter(Favorite.fav_id==fav_id).delete()
+            db.session.query(Favorite).filter(Favorite.user_id==user_id, Favorite.bg_id==bg_id).first()
+            db.session.commit()
+            bg_obj_list = user.favorites
+            return jsonify( {"deleted" : "true"}) #how do we wanna return from this?
+        else:
+            bg_id = request.form.get('bg_id')
+            bg = BoardGame.query.get(bg_id)
+            user.favorites.append(bg)
+            db.session.commit()
+            bg_obj_list = user.favorites
+        return render_template('favorites.html',bg_obj_list=bg_obj_list) #how do we wanna return from this?
+
+
 
 @app.route('/favorites', methods=['GET', 'POST'])
 def show_favorites():
     """Show User's Favorite Board Games."""
+
+    bg_id = request.form.get("bg_id")
+    # print(bg_id)
 
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
