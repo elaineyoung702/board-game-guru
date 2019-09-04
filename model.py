@@ -25,7 +25,7 @@ class User(db.Model):
         return f"<User user_id={self.user_id}, name={self.name}, email={self.email}>"
 
     def get_tags_by_bg(self, bg_id):
-        """Get user's tags for board game by board game id."""
+        """Get user"s tags for board game by board game id."""
 
         tag_ids = db.session.query(BgTag.tag_id
                                    ).filter(BgTag.user_id == self.user_id,
@@ -44,7 +44,7 @@ class BoardGame(db.Model):
     bg_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     bg_name = db.Column(db.String, nullable=False)
-    thumbnail_url = db.Column(db.String, nullable=False, default='/static/image/placeholder.png')
+    thumbnail_url = db.Column(db.String, nullable=False, default="/static/image/placeholder.png")
     image_url = db.Column(db.String, nullable=False)
     description = db.Column(db.Text, nullable=False)
 
@@ -70,7 +70,7 @@ class BoardGame(db.Model):
         return f"<BoardGame bg_id={self.bg_id}, bg_name={self.bg_name}>"
 
     def count_tags(self, tag_id):
-        """Return count of tags with the given `tag_id`."""
+        """Return count of tags with the given tag_id."""
 
         tags = [tag for tag in self.bg_tags if tag.tag_id == tag_id]
 
@@ -81,12 +81,12 @@ class Favorite(db.Model):
     """A collection of user's favorite board games."""
 
     __tablename__ = "favorites"
-    __table_args__ = (db.UniqueConstraint('user_id', 'bg_id'),)
+    __table_args__ = (db.UniqueConstraint("user_id", "bg_id"),)
 
     fav_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    bg_id = db.Column(db.Integer, db.ForeignKey('boardgames.bg_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    bg_id = db.Column(db.Integer, db.ForeignKey("boardgames.bg_id"))
 
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
@@ -98,13 +98,13 @@ class BgTag(db.Model):
     """A collection of a board games's tags/categories."""
 
     __tablename__ = "bg_tags"
-    __table_args__ = (db.UniqueConstraint('user_id', 'bg_id', 'tag_id'),)
+    __table_args__ = (db.UniqueConstraint("user_id", "bg_id", "tag_id"),)
 
     tagged_bg_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    bg_id = db.Column(db.Integer, db.ForeignKey('boardgames.bg_id'))
-    tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    bg_id = db.Column(db.Integer, db.ForeignKey("boardgames.bg_id"))
+    tag_id = db.Column(db.Integer, db.ForeignKey("tags.tag_id"))
 
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
@@ -134,8 +134,8 @@ def connect_to_db(app, db_uri="postgresql:///boardgames"):
     """Connect the databse to our Flask app"""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
 
