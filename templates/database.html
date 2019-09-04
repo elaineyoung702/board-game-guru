@@ -24,13 +24,13 @@
     {% for bg in bg_obj_list %}
     <tr>
         <td><img src={{bg.thumbnail_url}}><br><br>
-            <form action="/favorites" method='POST'>
+<!--             <form action="/new-favorite" method='POST'>
                 <input type="text" name="bg_id" value={{bg.bg_id}} hidden>
                 {% if session %}
                 <input type="text" name="user_id" value={{user_id}} hidden>
                 {% endif %}
                 <input id="fav_button" type="submit" name="fav_button" value="Favorite">
-            </form>
+            </form> -->
         </td>
         <td><a href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}</a></td>
         <td>minimum {{bg.min_players}} players</td>
