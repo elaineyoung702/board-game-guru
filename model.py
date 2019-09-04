@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-# from server import app
 
 db = SQLAlchemy()
 
@@ -17,12 +16,24 @@ class User(db.Model):
 
     favorites = db.relationship("BoardGame", secondary="favorites",
                                     backref="users")
-
+    bg_tags = db.relationship("Tag", secondary="bg_tags",
+                                    backref="users")
 
     def __repr__(self):
         """Provide helpful User info when printed."""
 
         return f"<User user_id={self.user_id}, name={self.name}, email={self.email}>"
+
+    def get_tags_by_bg(self, bg_id):
+        """Get user's tags for board game by board game id."""
+
+        tag_ids = db.session.query(BgTag.tag_id
+                                   ).filter(BgTag.user_id == self.user_id,
+                                            BgTag.bg_id == bg_id).all()
+
+        tags = [Tag.query.get(t_id) for t_id in tag_ids]
+
+        return tags
 
 
 class BoardGame(db.Model):
@@ -58,6 +69,13 @@ class BoardGame(db.Model):
 
         return f"<BoardGame bg_id={self.bg_id}, bg_name={self.bg_name}>"
 
+    def count_tags(self, tag_id):
+        """Return count of tags with the given `tag_id`."""
+
+        tags = [tag for tag in self.bg_tags if tag.tag_id == tag_id]
+
+        return len(tags)
+
 
 class Favorite(db.Model):
     """A collection of user's favorite board games."""
@@ -69,7 +87,6 @@ class Favorite(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     bg_id = db.Column(db.Integer, db.ForeignKey('boardgames.bg_id'))
-
 
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
@@ -89,7 +106,6 @@ class BgTag(db.Model):
     bg_id = db.Column(db.Integer, db.ForeignKey('boardgames.bg_id'))
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
 
-
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
 
@@ -105,7 +121,6 @@ class Tag(db.Model):
     tag_name = db.Column(db.String(75), nullable=False)
     tag_description = db.Column(db.Text, nullable=False)
 
-
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
 
@@ -113,7 +128,7 @@ class Tag(db.Model):
 
 
 #########################################################################
-# Helper Functions
+
 
 def connect_to_db(app, db_uri="postgresql:///boardgames"):
     """Connect the databse to our Flask app"""
@@ -165,7 +180,7 @@ def example_data():
     db.session.commit()
 
 
-
+#############################################
 
 if __name__ == "__main__":
     from flask import Flask
