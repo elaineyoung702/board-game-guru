@@ -1,4 +1,4 @@
-from flask import Flask, request, session, flash
+from flask import Flask, request, session
 from flask import render_template, redirect, jsonify
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, BoardGame, User, Favorite, Tag, BgTag
@@ -55,7 +55,6 @@ def register_new_user():
 
     if User.query.filter(User.email == email).first():
         print("there is already an account with this email address")
-        flash("An account already exists for this email address.")
 
         return redirect("/")
 
@@ -96,33 +95,38 @@ def show_boardgame_info(bg_id):
         # print(tag_id)
         count = boardgame.count_tags(tag_id)
         tag_dict[tag_id] = count # add to dict for passing into jinja for displaying
+        
+    try:
+        if session["user_id"]:
+            user = User.query.get(session["user_id"])
 
-    if session:
-        user = User.query.get(session["user_id"])
+            user_id = user.user_id
+            users_tags = set(user.get_tags_by_bg(bg_id))
+            print (users_tags)
 
-        user_id = user.user_id
-        users_tags = set(user.get_tags_by_bg(bg_id))
+            if all_tags:
+                for tag in all_tags:
+                    tag.tagged_by_user = tag in users_tags
 
-        if all_tags:
-            for tag in all_tags:
-                tag.tagged_by_user = tag in users_tags
+            fav_exist = Favorite.query.filter(Favorite.user_id == user_id,
+                                              Favorite.bg_id == bg_id).first()
+            print(fav_exist)
+        
+            return render_template("boardgame.html",
+                                   boardgame=boardgame,
+                                   user=user,
+                                   tags=all_tags,
+                                   tag_dict=tag_dict,
+                                   fav_exist=fav_exist)
+        
+    except KeyError:
 
-        fav_exist = Favorite.query.filter(Favorite.user_id == user_id,
-                                          Favorite.bg_id == bg_id).first()
-    
         return render_template("boardgame.html",
-                               boardgame=boardgame,
-                               user=user,
-                               tags=all_tags,
-                               tag_dict=tag_dict,
-                               fav_exist=fav_exist)
-    
-    else:
+                                   boardgame=boardgame,
+                                   tags=all_tags,
+                                   tag_dict=tag_dict,
+                                   fav_exist=None)
 
-        return render_template("boardgame.html",
-                               boardgame=boardgame,
-                               tags=all_tags,
-                               tag_dict=tag_dict)
 
 
 @app.route("/database")
@@ -318,7 +322,7 @@ def get_by_publisher(publisher):
     publisher_cat = f"%{publisher}%"
     name_search_results = BoardGame.query.filter(BoardGame.publisher.like(f"{publisher_cat}")).all()
     print (f"publisher Name Match: {name_search_results}")
-    
+
     return name_search_results
 
 
