@@ -52,7 +52,7 @@
 
     <div class="col-sm-12"><br><br>
       {% for tag in tags %}
-        {% if tag.tag_id in bg_tagged %}
+        {% if tag.tagged_by_user %}
           <button type="button" class="btn btn-success btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
           <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
           </button>
