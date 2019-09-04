@@ -22,6 +22,8 @@
     <div class="navbar fixed-top navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Board Game Guru</a>
         <a class="nav_text" href="/favorites">Your Favorites</a>
+        <a class="nav_text" href="/database">Database</a>
+        <a class="nav_text" href="/search-form">Search</a>
         <span align="right">
           {% if session %}
             <form class='nav_text' action='/logout' method='POST'>
@@ -41,7 +43,7 @@
 
 
   {% block body %}
-      <div class="container"><img src="https://placekitten.com/1000/500"></div>
+    <!-- page body goes here -->
   {% endblock %}
 
 </body>
