@@ -25,7 +25,7 @@ class User(db.Model):
         return f"<User user_id={self.user_id}, name={self.name}, email={self.email}>"
 
     def get_tags_by_bg(self, bg_id):
-        """Get user"s tags for board game by board game id."""
+        """Get user's tags for board game by board game id."""
 
         tag_ids = db.session.query(BgTag.tag_id
                                    ).filter(BgTag.user_id == self.user_id,
@@ -36,7 +36,7 @@ class User(db.Model):
         return tags
 
     def get_user_favs(self):
-        """"""
+        """Get user's favorite boardgame bg_ids."""
 
         bg_id_tups = db.session.query(Favorite.bg_id).filter(Favorite.user_id == self.user_id).all()
 
@@ -45,7 +45,7 @@ class User(db.Model):
             (bg_id,) = tup
             bg_ids.append(bg_id)
         
-        return set(bg_ids)
+        return bg_ids
 
 
 
