@@ -138,30 +138,16 @@ def show_database():
 
     if "user_id" in session:
         user = User.query.get(session["user_id"])
-        user_id = user.user_id
+        user_id = session["user_id"]
 
-        users_favs = set(Favorite.query.filter(Favorite.user_id==user_id))
-        print(users_favs)
+        user_favs = User.get_user_favs(user)
+        print(user_favs)
 
-
-
-
-        # user_favs = user.favorites
-        # test = db.session.query(Favorite.bg_id).filter(Favorite.user_id==user_id).all()
-        # print(test)
-
-
-        # users_tags = set(user.get_tags_by_bg(bg_id))
-        # print (users_tags)
-
-        # if all_tags:
-        #     for tag in all_tags:
-        #         tag.tagged_by_user = tag in users_tags
-
+        ###### Still need to build conditional to know which fav_button to display
 
         return render_template("database.html",
                                bg_obj_list=bg_obj_list,
-                               user_id=user_id)
+                               user_id=user_id, user_favs=user_favs)
 
     return render_template("database.html",
                            bg_obj_list=bg_obj_list)
