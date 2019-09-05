@@ -23,26 +23,21 @@
     <tbody>
     {% for bg in bg_obj_list %}
     <tr>
-        <td><img src={{bg.thumbnail_url}}><br><br>
-
-
-
-
-<!--             <form action="/new-favorite" method='POST'>
-                <input type="text" name="bg_id" value={{bg.bg_id}} hidden>
-                {% if session %}
-                <input type="text" name="user_id" value={{user_id}} hidden>
-                {% endif %}
-                <input id="fav_button" type="submit" name="fav_button" value="Favorite">
-            </form> -->
-        </td>
+        <td><img src={{bg.thumbnail_url}}><br><br></td>
         <td><a href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}</a><br><br>
 
             {% if bg.bg_id not in user_favs %}
-                <button type="button" id={{bg.bg_id}}bg-id class="btn btn-light heart_btn"> <i id="heart" class="fa fa-heart-o heart_btn" aria-hidden="true"></i></button>
+                <button type="button" id={{bg.bg_id}}bg-id 
+                        class="btn btn-light heart_btn">
+                    <i id={{bg.bg_id}}heart class="fa fa-heart-o black_heart" 
+                    aria-hidden="true"></i>
+                </button>
             {% else %}
-                <button type="button" id={{bg.bg_id}}bg-id class="btn btn-light heart_btn"> <i id="heart" class="fa fa-heart heart_button"></i></button>
-                <style> #heart {color : red;}</style>
+                <button type="button" id={{bg.bg_id}}bg-id 
+                        class="btn btn-light heart_btn">
+                    <i id={{bg.bg_id}}heart class="fa fa-heart red_heart"></i>
+                </button>
+                <style> .red_heart {color : red;}</style>
             {% endif %}
 
         </td>
@@ -61,7 +56,6 @@
 </table>
 </div>
 
-
 <script src="https://kit.fontawesome.com/6f41ffb181.js"></script>
 
 <script>
@@ -72,46 +66,40 @@
       });
     });
 
-////////////////////
-// function changeFavButton(response){
 
-//     let favorited = response.favorited;
-//     console.log(favorited);
-//     let heart = document.querySelector('#heart');
+    // below 2 functions allow favorite heart button to favorite and change color
+    function changeFavButton(response){
 
-//     if (favorited === "true") {
-//       $('#heart').removeClass("fa-heart-o");
-//       $('#heart').addClass("fa-heart");
-//       heart.style.color = 'red';
-//     }
+        let favorited = response.favorited;
+        console.log(favorited);
+        let bg_id = response.bg_id;
+        console.log(bg_id);
 
-//     else {
-//       $('#heart').removeClass("fa-heart");
-//       $('#heart').addClass("fa-heart-o");
-//       $('#heart').attr("aria-hidden", "true");
-//     }
-//   }
+        if (favorited === "true") {
+          $(`#${bg_id}heart`).removeClass("fa-heart-o black_heart");
+          $(`#${bg_id}heart`).addClass("fa-heart red_heart");
+        }
 
-  function favBoardGame(evt){
-    console.log(evt);
-    console.log(evt.target.id);
-    let bg_id = evt.target.id;
-    console.log(bg_id)
-    console.log(bg_id - "bg-id");
-    const inputs = {
+        else {
+          $(`#${bg_id}heart`).removeClass("fa-heart red_heart");
+          $(`#${bg_id}heart`).addClass("fa-heart-o black_heart");
+          $(`#${bg_id}heart`).attr("aria-hidden", "true");
+        }
+      }
 
-    };
+    function favBoardGame(evt){
 
-    console.log(inputs);
+        let evt_bg_id = evt.target.id;
+        let bg_id = evt_bg_id.slice(0,-5);
 
-    // $.post('/new-favorite', inputs, changeFavButton);
-  }
+        const inputs = {
+            "bg_id" : bg_id,
+        };
 
-  $('.heart_btn').on('click', favBoardGame);
+        $.post('/new-favorite', inputs, changeFavButton);
+      }
 
-
-
-
+    $('.heart_btn').on('click', favBoardGame);
 
 </script>
 
