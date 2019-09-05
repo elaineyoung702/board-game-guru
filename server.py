@@ -162,14 +162,14 @@ def check_favorites_table():
         user_id = user.user_id
 
         fav_exist = db.session.query(Favorite).filter(Favorite.user_id==user_id, Favorite.bg_id==bg_id).first()
-
+        print(fav_exist)
         if fav_exist:
             fav_id = fav_exist.fav_id
             Favorite.query.filter(Favorite.fav_id==fav_id).delete()
             db.session.query(Favorite).filter(Favorite.user_id==user_id, Favorite.bg_id==bg_id).first()
             db.session.commit()
 
-            return jsonify( {"favorited" : "false"})
+            return jsonify( {"favorited" : "false", "bg_id" : bg_id})
 
         else:
             bg_id = request.form.get("bg_id")
@@ -177,7 +177,7 @@ def check_favorites_table():
             user.favorites.append(bg)
             db.session.commit()
 
-            return jsonify( {"favorited" : "true"})
+            return jsonify( {"favorited" : "true", "bg_id" : bg_id})
 
     except KeyError:
 
