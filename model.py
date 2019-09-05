@@ -35,6 +35,19 @@ class User(db.Model):
 
         return tags
 
+    def get_user_favs(self):
+        """"""
+
+        bg_id_tups = db.session.query(Favorite.bg_id).filter(Favorite.user_id == self.user_id).all()
+
+        bg_ids = []
+        for tup in bg_id_tups:
+            (bg_id,) = tup
+            bg_ids.append(bg_id)
+        
+        return set(bg_ids)
+
+
 
 class BoardGame(db.Model):
     """Board Game Object."""

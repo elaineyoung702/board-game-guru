@@ -92,7 +92,6 @@ def show_boardgame_info(bg_id):
 
     for tag in all_tags: # for each tag, get tag_id and count for matching bg_id
         tag_id = tag.tag_id
-        # print(tag_id)
         count = boardgame.count_tags(tag_id)
         tag_dict[tag_id] = count # add to dict for passing into jinja for displaying
         
@@ -135,9 +134,30 @@ def show_database():
 
     bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).limit(50).all()
 
+    print(session)
+
     if "user_id" in session:
         user = User.query.get(session["user_id"])
         user_id = user.user_id
+
+        users_favs = set(Favorite.query.filter(Favorite.user_id==user_id))
+        print(users_favs)
+
+
+
+
+        # user_favs = user.favorites
+        # test = db.session.query(Favorite.bg_id).filter(Favorite.user_id==user_id).all()
+        # print(test)
+
+
+        # users_tags = set(user.get_tags_by_bg(bg_id))
+        # print (users_tags)
+
+        # if all_tags:
+        #     for tag in all_tags:
+        #         tag.tagged_by_user = tag in users_tags
+
 
         return render_template("database.html",
                                bg_obj_list=bg_obj_list,
