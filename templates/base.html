@@ -14,7 +14,16 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <!-- for navbar -->
-    <style type="text/css">.nav_text {color: white;}</style>
+    <style type="text/css">
+      .nav_text {
+        color: white;
+      }
+
+      .base-page {
+        top: 70px;
+        position: relative;
+      }
+    </style>
 </head>
 
 <body>
@@ -39,12 +48,12 @@
         </div>
     </div>
     </div>
-    <br><br><br><br>
 
-
-  {% block body %}
+  <div class="container-fluid base-page">
+    {% block body %}
     <!-- page body goes here -->
-  {% endblock %}
+    {% endblock %}
+  </div>
 
 </body>
 </html>
