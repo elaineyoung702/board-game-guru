@@ -54,7 +54,7 @@ def register_new_user():
     password = request.form.get("password")
 
     if User.query.filter(User.email == email).first():
-        print("there is already an account with this email address")
+        print("There is already an account with this email address")
 
         return redirect("/")
 
@@ -121,10 +121,10 @@ def show_boardgame_info(bg_id):
     except KeyError:
 
         return render_template("boardgame.html",
-                                   boardgame=boardgame,
-                                   tags=all_tags,
-                                   tag_dict=tag_dict,
-                                   fav_exist=None)
+                                boardgame=boardgame,
+                                tags=all_tags,
+                               tag_dict=tag_dict,
+                               fav_exist=None)
 
 
 
@@ -140,10 +140,8 @@ def show_database():
         user = User.query.get(session["user_id"])
         user_id = session["user_id"]
 
-        user_favs = User.get_user_favs(user)
+        user_favs = User.get_user_favs(user) ######### Unittest for this
         print(user_favs)
-
-        ###### Still need to build conditional to know which fav_button to display
 
         return render_template("database.html",
                                bg_obj_list=bg_obj_list,
@@ -161,12 +159,12 @@ def check_favorites_table():
         user = User.query.get(session["user_id"])
         user_id = user.user_id
 
-        fav_exist = db.session.query(Favorite).filter(Favorite.user_id==user_id, Favorite.bg_id==bg_id).first()
-        print(fav_exist)
+        fav_exist = Favorite.query.filter(Favorite.user_id==user_id,
+                                          Favorite.bg_id==bg_id).first()
+
         if fav_exist:
             fav_id = fav_exist.fav_id
             Favorite.query.filter(Favorite.fav_id==fav_id).delete()
-            db.session.query(Favorite).filter(Favorite.user_id==user_id, Favorite.bg_id==bg_id).first()
             db.session.commit()
 
             return jsonify( {"favorited" : "false", "bg_id" : bg_id})
@@ -177,7 +175,7 @@ def check_favorites_table():
             user.favorites.append(bg)
             db.session.commit()
 
-            return jsonify( {"favorited" : "true", "bg_id" : bg_id})
+            return jsonify( {"favorited" : True, "bg_id" : bg_id})
 
     except KeyError:
 
@@ -223,12 +221,12 @@ def tag_a_board_game():
     user_id = session["user_id"]
     bg_id = request.form.get("bg_id")
 
-    bg_exist = db.session.query(BgTag).filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id, BgTag.bg_id==bg_id).first()
+    bg_exist = BgTag.query.filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id,
+                                  BgTag.bg_id==bg_id).first()
 
     if bg_exist:
         tagged_bg_id = bg_exist.tagged_bg_id
         BgTag.query.filter(BgTag.tagged_bg_id==tagged_bg_id).delete()
-        db.session.query(BgTag).filter(BgTag.tag_id==tag_id, BgTag.user_id==user_id, BgTag.bg_id==bg_id).first()
         db.session.commit()
 
         return jsonify( {"deleted" : "true", "tag_id" : tag_id })
@@ -276,7 +274,8 @@ def show_results():
 def get_by_bg_name(bg_name):
     bg_name = bg_name.title().replace(" ", "%")
     bg_name_cat = f"%{bg_name}%"
-    name_search_results = BoardGame.query.filter(BoardGame.bg_name.like(f"{bg_name_cat}")).all()
+    name_search_results = BoardGame.query.filter(BoardGame.bg_name.like
+                                                (f"{bg_name_cat}")).all()
     print (f"BG Name Match: {name_search_results}")
 
     return name_search_results
@@ -291,7 +290,7 @@ def get_by_num_players(num_players):
 
     else:
         match_players = BoardGame.query.filter(BoardGame.min_players <= num_players,
-            BoardGame.max_players >= num_players).all()
+                                                BoardGame.max_players >= num_players).all()
         print(f"Other Matches: {match_players}")
 
         return match_players
@@ -326,7 +325,8 @@ def get_by_designer(designer):
 def get_by_publisher(publisher):
     publisher = publisher.title().replace(" ", "%")
     publisher_cat = f"%{publisher}%"
-    name_search_results = BoardGame.query.filter(BoardGame.publisher.like(f"{publisher_cat}")).all()
+    name_search_results = BoardGame.query.filter(BoardGame.publisher.like(
+                                                    f"{publisher_cat}")).all()
     print (f"publisher Name Match: {name_search_results}")
 
     return name_search_results
