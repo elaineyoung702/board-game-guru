@@ -37,9 +37,9 @@ class BoardGameGuruDatabase(unittest.TestCase):
         self.assertIn(b"Column Headers", result.data)
 
     def test_user_query(self):
-        user = User.query.get(1)
-        self.assertEqual(user.name, "Jack")
-        self.assertEqual(user.email, "jack@test.com")
+        user = User.query.get(3)
+        self.assertEqual(user.name, "Romain")
+        self.assertEqual(user.email, "romain@test.com")
         self.assertEqual(user.password, "test")
 
     def test_bg_query(self):
@@ -60,10 +60,9 @@ class BoardGameGuruDatabase(unittest.TestCase):
 
 
     def test_get_tags_by_bg_method(self):
-        user = User.query.get(2)
-        [tag1, tag2] = user.get_tags_by_bg(9000)
-        self.assertIn("Cooperative", tag1.tag_name)
-        self.assertIn("Legacy", tag2.tag_name)
+        user = User.query.get(1)
+        [tag] = user.get_tags_by_bg(36218)
+        self.assertIn("Family", tag.tag_name)
 
     def test_get_user_favs_method(self):
         user = User.query.get(1)
@@ -71,10 +70,22 @@ class BoardGameGuruDatabase(unittest.TestCase):
         self.assertIn(9000, fav_bg_id)
 
 
+    def test_boardgame_bg_tags(self):
+        bg = BoardGame.query.get(9000)
+        [bgtag1, bgtag2] = bg.bg_tags
+        self.assertIs(1, bgtag1.tag_id)
+        self.assertIs(1, bgtag2.tag_id)
 
+
+    def test_count_tags_method(self):
+        bg = BoardGame.query.get(9000)
+        tag = Tag.query.filter(Tag.tag_name=="Cooperative").one()
+        count = bg.count_tags(tag.tag_id)
+        self.assertIs(count, 2)
 
 
 
 
 if __name__ == "__main__":
     unittest.main()
+

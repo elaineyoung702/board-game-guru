@@ -79,8 +79,7 @@ class BoardGame(db.Model):
     designer = db.Column(db.String(100), nullable=False)
     publisher = db.Column(db.String, nullable=False)
 
-    bg_tags = db.relationship("Tag", secondary="bg_tags",
-                                    backref="boardgames")
+    bg_tags = db.relationship("BgTag", backref="boardgames")
 
     def __repr__(self):
         """Provide helpful BoardGame info when printed."""
@@ -168,6 +167,8 @@ def example_data():
     User.query.delete()
     BoardGame.query.delete()
     Tag.query.delete()
+    BgTag.query.delete()
+    Favorite.query.delete()
 
     jack = User(name="Jack", email="jack@test.com", password="test")
     vonny = User(name="Vonny", email="vonny@test.com", password="test")
@@ -199,15 +200,16 @@ def example_data():
 
     jtag1 = BgTag(user=jack, boardgame=dominion, tag=family)
     jtag2 = BgTag(user=jack, boardgame=monopoly, tag=classic)    
-    vtag1 = BgTag(user=vonny, boardgame=pandemic, tag=legacy)
-    vtag2 = BgTag(user=vonny, boardgame=pandemic, tag=coop)
+
+    vtag = BgTag(user=vonny, boardgame=pandemic, tag=coop)
+    rtag = BgTag(user=romain, boardgame=pandemic, tag=coop)
 
     jack.add_fav(dominion)
     jack.add_fav(pandemic)
     vonny.add_fav(pandemic)
 
     db.session.add_all([jack, vonny, romain, pandemic, monopoly, dominion, coop, 
-                        classic, family, legacy, jtag1, jtag2, vtag1, vtag2])
+                        classic, family, legacy, jtag1, jtag2, vtag, rtag])
     db.session.commit()
 
 

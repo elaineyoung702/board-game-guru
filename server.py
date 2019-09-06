@@ -86,6 +86,7 @@ def show_boardgame_info(bg_id):
     """Show Board Game Info Page."""
 
     boardgame = BoardGame.query.options(db.joinedload("bg_tags")).get(bg_id) 
+    # print(boardgame)
                 # get bg object to pass into jinja
     all_tags = Tag.query.all() # get all tags to pass into jinja and for interation
     tag_dict = {} #creating dict to pass into jinja with bg/tag counts
@@ -93,6 +94,8 @@ def show_boardgame_info(bg_id):
     for tag in all_tags: # for each tag, get tag_id and count for matching bg_id
         tag_id = tag.tag_id
         count = boardgame.count_tags(tag_id)
+        # print("~~~~~~~~~~~~~~")
+        # print(tag.tag_name, count)
         tag_dict[tag_id] = count # add to dict for passing into jinja for displaying
         
     try:
