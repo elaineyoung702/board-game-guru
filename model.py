@@ -15,16 +15,16 @@ class User(db.Model):
     password = db.Column(db.String(64), nullable=False)
 
     favorites = db.relationship("BoardGame", secondary="favorites",
-                                    backref="users")
+                                    backref="users") #####
     bg_tags = db.relationship("Tag", secondary="bg_tags",
-                                    backref="users")
+                                    backref="users") ####make sure returns objs
 
     def __repr__(self):
         """Provide helpful User info when printed."""
 
         return f"<User user_id={self.user_id}, name={self.name}, email={self.email}>"
 
-    def get_tags_by_bg(self, bg_id):
+    def get_tags_by_bg(self, bg_id): ### returns correct tags
         """Get user's tags for board game by board game id."""
 
         tag_ids = db.session.query(BgTag.tag_id
@@ -35,7 +35,7 @@ class User(db.Model):
 
         return tags
 
-    def get_user_favs(self):
+    def get_user_favs(self):  ###### returns correct things
         """Get user's favorite boardgame bg_ids."""
 
         bg_id_tups = db.session.query(Favorite.bg_id).filter(Favorite.user_id == self.user_id).all()
@@ -46,6 +46,11 @@ class User(db.Model):
             bg_ids.append(bg_id)
         
         return bg_ids
+
+    def add_fav(self, boardgame):
+        """Instantiates new favorite board game for user."""
+
+        self.favorites.append(boardgame)
 
 
 
@@ -119,6 +124,10 @@ class BgTag(db.Model):
     bg_id = db.Column(db.Integer, db.ForeignKey("boardgames.bg_id"))
     tag_id = db.Column(db.Integer, db.ForeignKey("tags.tag_id"))
 
+    tag = db.relationship("Tag")
+    boardgame = db.relationship("BoardGame")
+    user = db.relationship("User")
+
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
 
@@ -188,8 +197,18 @@ def example_data():
     family = Tag(tag_name="Family", tag_description="Good for kids and parents of all ages")
     legacy = Tag(tag_name="Legacy", tag_description="Legacy games incoporate a changing board and ongoing story changes")
 
+    jtag1 = BgTag(user=jack, boardgame=dominion, tag=family)
+    jtag2 = BgTag(user=jack, boardgame=monopoly, tag=classic)    
+    vtag1 = BgTag(user=vonny, boardgame=pandemic, tag=legacy)
+    vtag2 = BgTag(user=vonny, boardgame=pandemic, tag=coop)
 
-    db.session.add_all([jack, vonny, romain, pandemic, monopoly, dominion, coop, classic, family, legacy])
+    jack.add_fav(dominion)
+    jack.add_fav(pandemic)
+    vonny.add_fav(pandemic)
+    romain.add_fav(monopoly)
+
+    db.session.add_all([jack, vonny, romain, pandemic, monopoly, dominion, coop, 
+                        classic, family, legacy, jtag1, jtag2, vtag1, vtag2])
     db.session.commit()
 
 
