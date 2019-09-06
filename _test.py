@@ -32,33 +32,45 @@ class BoardGameGuruDatabase(unittest.TestCase):
         db.session.close()
         db.drop_all()
 
-
     def test_db_page(self):
         result = self.client.get("/database")
         self.assertIn(b"Column Headers", result.data)
 
-    def test_user_creation(self):
-        robert = User(name="robert", email="robert@test.com", password="test")
-        self.assertIsInstance(robert, User)
+    def test_user_query(self):
+        user = User.query.get(1)
+        self.assertEqual(user.name, "Jack")
+        self.assertEqual(user.email, "jack@test.com")
+        self.assertEqual(user.password, "test")
 
-    def test_boardgame_creation(self):
-        unicorns = BoardGame(bg_id=99999, bg_name="Unstable Unicorns", 
-                thumbnail_url="https://cf.geekdo-images.com/itemrep/img/35yKKOnpi5NTc4fCjrt9hqRA7qM=/fit-in/246x300/pic3912914.jpg", 
-                image_url="https://cf.geekdo-images.com/itemrep/img/35yKKOnpi5NTc4fCjrt9hqRA7qM=/fit-in/246x300/pic3912914.jpg", 
-                description="Unstable Unicorns is a very fun game!", 
-                playtime=30, min_time=30, max_time=45, year_published=2017, min_players=2, 
-                max_players=8, suggested_players=4, designer="Designer8", publisher="Publisher8")
-        self.assertIsInstance(unicorns, BoardGame)
+    def test_bg_query(self):
+        bg = BoardGame.query.get(9000)
+        self.assertEqual(bg.bg_name, "Pandemic Legacy, Season 1")
 
-    def test_user_favorite_bg(self):
-        bg_id = 1
-        user_id = 1
-        fav_test = Favorite(bg_id=bg_id, user_id=user_id)
-        self.assertIsInstance(fav_test, Favorite)
+    def test_user_favorites(self):
+        user = User.query.get(2)
+        [faves] = user.favorites
+        self.assertIs(faves, BoardGame.query.filter(BoardGame.bg_id==9000).one())
+        self.assertIn("Pandemic", faves.bg_name)
 
-    def test_user_tags_bg(self):
-        bgtag_test = BgTag(bg_id=1, user_id=1, tag_id=1)
-        self.assertIsInstance(bgtag_test, BgTag)
+    def test_user_bg_tags(self):
+        user = User.query.get(1)
+        [tag1, tag2] = user.bg_tags
+        self.assertIn("Classic", tag1.tag_name)
+        self.assertIs(3, tag2.tag_id)
+
+
+    def test_get_tags_by_bg_method(self):
+        user = User.query.get(2)
+        [tag1, tag2] = user.get_tags_by_bg(9000)
+        self.assertIn("Cooperative", tag1.tag_name)
+        self.assertIn("Legacy", tag2.tag_name)
+
+    def test_get_user_favs_method(self):
+        user = User.query.get(1)
+        fav_bg_id = user.get_user_favs()
+        self.assertIn(9000, fav_bg_id)
+
+
 
 
 
