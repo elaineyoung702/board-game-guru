@@ -272,6 +272,8 @@ def show_results():
 
 
 def get_by_bg_name(bg_name):
+    """Get board games with matching board game name."""
+
     bg_name = bg_name.title().replace(" ", "%")
     bg_name_cat = f"%{bg_name}%"
     name_search_results = BoardGame.query.filter(BoardGame.bg_name.like
@@ -281,6 +283,8 @@ def get_by_bg_name(bg_name):
     return name_search_results
 
 def get_by_num_players(num_players):
+    """Get board games with matching number of players."""
+
     best_fit = BoardGame.query.filter(BoardGame.suggested_players == num_players).all()
     print(f"Num Player Best Fit: {best_fit}")
 
@@ -296,6 +300,8 @@ def get_by_num_players(num_players):
         return match_players
 
 def get_by_playtime(time):
+    """Get board games with matching playtime."""
+
     best_fit = BoardGame.query.filter(BoardGame.playtime == time).all()
     print(f"Playtime Best Fit: {best_fit}")
 
@@ -311,6 +317,8 @@ def get_by_playtime(time):
         return match_playtime
 
 def get_by_designer(designer):
+    """Get board games with matching board game designer name."""
+
     match = BoardGame.query.filter(BoardGame.designer == designer).all()
 
     if match:
@@ -323,6 +331,8 @@ def get_by_designer(designer):
         return redirect("/search-form")
 
 def get_by_publisher(publisher):
+    """Get board games with matching board game publisher name."""
+
     publisher = publisher.title().replace(" ", "%")
     publisher_cat = f"%{publisher}%"
     name_search_results = BoardGame.query.filter(BoardGame.publisher.like(
