@@ -28,16 +28,13 @@
 
             {% if bg.bg_id not in user_favs %}
                 <button type="button" id={{bg.bg_id}}bg-id 
-                        class="btn btn-light heart_btn">
-                    <i id={{bg.bg_id}}heart class="fa fa-heart-o black_heart" 
-                    aria-hidden="true"></i>
+                    class="btn btn-light heart_btn black_heart fa fa-heart-o">
                 </button>
             {% else %}
                 <button type="button" id={{bg.bg_id}}bg-id 
-                        class="btn btn-light heart_btn">
-                    <i id={{bg.bg_id}}heart class="fa fa-heart red_heart"></i>
+                    class="btn btn-light heart_btn red_heart fa fa-heart">
                 </button>
-                <style> .red_heart {color : red;}</style>
+                
             {% endif %}
 
         </td>
@@ -67,26 +64,6 @@
     });
 
 
-    // below 2 functions allow favorite heart button to favorite and change color
-    function changeFavButton(response){
-
-        let favorited = response.favorited;
-        console.log(favorited);
-        let bg_id = response.bg_id;
-        console.log(bg_id);
-
-        if (favorited === "true") {
-          $(`#${bg_id}heart`).removeClass("fa-heart-o black_heart");
-          $(`#${bg_id}heart`).addClass("fa-heart red_heart");
-        }
-
-        else {
-          $(`#${bg_id}heart`).removeClass("fa-heart red_heart");
-          $(`#${bg_id}heart`).addClass("fa-heart-o black_heart");
-          $(`#${bg_id}heart`).attr("aria-hidden", "true");
-        }
-      }
-
     function favBoardGame(evt){
 
         let evt_bg_id = evt.target.id;
@@ -96,7 +73,17 @@
             "bg_id" : bg_id,
         };
 
-        $.post('/new-favorite', inputs, changeFavButton);
+        $.post('/new-favorite', inputs, (response) => {
+            console.log(response);
+
+            if (response.favorited === true) {
+              $(evt.target).removeClass("black_heart fa-heart-o");
+              $(evt.target).addClass("red_heart fa-heart");
+            } else {
+              $(evt.target).removeClass("fa-heart red_heart");
+              $(evt.target).addClass("fa-heart-o black_heart");
+            }
+        });
       }
 
     $('.heart_btn').on('click', favBoardGame);
