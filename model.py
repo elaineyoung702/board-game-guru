@@ -36,7 +36,7 @@ class User(db.Model):
         return tags
 
     def get_user_favs(self):  ###### returns correct things
-        """Get user's favorite boardgame bg_ids."""
+        """Get user's favorite board game bg_ids."""
 
         bg_id_tups = db.session.query(Favorite.bg_id).filter(Favorite.user_id == self.user_id).all()
 
@@ -205,7 +205,6 @@ def example_data():
     jack.add_fav(dominion)
     jack.add_fav(pandemic)
     vonny.add_fav(pandemic)
-    romain.add_fav(monopoly)
 
     db.session.add_all([jack, vonny, romain, pandemic, monopoly, dominion, coop, 
                         classic, family, legacy, jtag1, jtag2, vtag1, vtag2])
