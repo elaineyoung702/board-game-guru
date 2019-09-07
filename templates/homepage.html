@@ -1,19 +1,49 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Board Game Guru</title>
+    <!-- for bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style type="text/css">
 
-{% block title %}Board Game Guru Homepage{% endblock %}
+      .homepage {
+        background: url(/static/img/board-game-challenge-chess-209728.jpg) no-repeat center center;
+        background-size: cover;
+        padding-top: 70px;
+        padding-bottom: 200px;
+      }
 
-{% block body %}
-        <div class="jumbotron">
+      .hp-text{
+        color: #fff;
+      }
+
+      .hp-box{
+        border-style: solid;
+        border-width: 2px;
+        color: white;
+        margin: 20px;
+        padding-top: 40px;
+        padding-left: 10px;
+        padding-right:10px; 
+      }
+
+      #site-name{
+        font-size: 100px;
+      }
+    </style>
+</head>
+<body>
+
+<div class="homepage hp-text">
         <div class="container">
-        <h1 class="display-5">Welcome to the Board Game Guru Website!</h1>
-        </div></div>
-        <br>
-        <div class="container"><h2>What would you like to do?</h2></div>
-        <br><br><br>
+        <h1 class="col-12 offset-1" id="site-name">Board Game Guru</h1>
+        </div>
+        <br><br><br><br>
         
         <div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-3 hp-box offset-2">
                     Login to favorite board games or tag them in our database!<br><br>
                     <form action='/login' method='POST'>
                         <b>Email: <input type="email" name="email" required></b><br><br>
@@ -23,15 +53,20 @@
                     <br><br>
                 </div>
 
-                <div class="col-4">
+                <div class="col-3 hp-box">
                     Find a specific board game or receive a suggestion with our search engine!<br><br>
                     <a href='/search-form'><button type="button" class="btn btn-secondary">Search</button></a><br><br>
                 </div>
 
-                <div class="col-4">
+                <div class="col-3 hp-box">
                     View Board Game Guru's database of board games<br><br>
                     <a href='/database'><button type="button" class="btn btn-success">Database</button></a><br><br>
                 </div>
             </div>
         </div>
-{% endblock %}
+    </div>
+
+
+
+</body>
+</html>
