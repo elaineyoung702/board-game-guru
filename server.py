@@ -214,7 +214,9 @@ def show_search_form():
 
     designer_list = (sorted(list(designer_set)))
 
-    return render_template("search.html", designer_list=designer_list)
+    tag_list = Tag.query.all()
+
+    return render_template("search.html", designer_list=designer_list, tag_list=tag_list)
 
 
 @app.route("/bg-tagged", methods=["POST"])
@@ -252,12 +254,18 @@ def show_results():
     playtime = request.args.get("playtime")
     designer = request.args.get("designer")
     publisher = request.args.get("publisher")
+    tag_ids = request.args.getlist("bg_tag")
+    print(tag_ids)
 
     results = []
 
     if bg_name:
         name_results = get_by_bg_name(bg_name)
         results.extend(name_results)
+    if tag_ids:
+        bg_tag_results = get_by_bg_tag(tag_ids)
+        print(bg_tag_results)
+        results.extend(bg_tag_results)
     if num_players:
         num_results = get_by_num_players(num_players)
         results.extend(num_results)
@@ -267,7 +275,7 @@ def show_results():
     if publisher:
         pub_results = get_by_publisher(publisher)
         results.extend(pub_results)
-    elif designer:
+    if designer:
         des_results = get_by_designer(designer)
         results.extend(des_results)
 
@@ -343,6 +351,21 @@ def get_by_publisher(publisher):
     print (f"publisher Name Match: {name_search_results}")
 
     return name_search_results
+
+def get_by_bg_tag(tag_ids):
+    """Get board games with matching board game tags."""
+
+    bg_tag_match = set()
+
+    for tag_id in tag_ids:
+        bgtags = db.session.query(BgTag).filter(BgTag.tag_id==tag_id).all()
+        print(bgtags)
+
+    for bgtag in bgtags:
+        bg_id = bgtag.bg_id
+        bg_tag_match.add(BoardGame.query.get(bg_id))
+
+    return list(bg_tag_match)
 
 
 ##############################################################
