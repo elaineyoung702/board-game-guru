@@ -12,10 +12,16 @@ app.jinja_env.undefinted = StrictUndefined
 
 
 @app.route("/")
-def index():
-    """Display Homepage."""
+def show_front_page():
+    """Display Board Game Guru Front Page."""
 
     return render_template("homepage.html")
+
+@app.route("/selection")
+def display_homepage():
+    """Display Homepage."""
+
+    return render_template("selection.html")
 
 
 @app.route("/login", methods=["POST"])
@@ -86,16 +92,13 @@ def show_boardgame_info(bg_id):
     """Show Board Game Info Page."""
 
     boardgame = BoardGame.query.options(db.joinedload("bg_tags")).get(bg_id) 
-    # print(boardgame)
-                # get bg object to pass into jinja
+
     all_tags = Tag.query.all() # get all tags to pass into jinja and for interation
     tag_dict = {} #creating dict to pass into jinja with bg/tag counts
 
     for tag in all_tags: # for each tag, get tag_id and count for matching bg_id
         tag_id = tag.tag_id
         count = boardgame.count_tags(tag_id)
-        # print("~~~~~~~~~~~~~~")
-        # print(tag.tag_name, count)
         tag_dict[tag_id] = count # add to dict for passing into jinja for displaying
         
     try:
@@ -143,7 +146,7 @@ def show_database():
         user = User.query.get(session["user_id"])
         user_id = session["user_id"]
 
-        user_favs = User.get_user_favs(user) ######### Unittest for this
+        user_favs = User.get_user_favs(user)
         print(user_favs)
 
         return render_template("database.html",
@@ -257,27 +260,27 @@ def show_results():
     tag_ids = request.args.getlist("bg_tag")
     print(tag_ids)
 
-    results = []
+    results = set()
 
     if bg_name:
         name_results = get_by_bg_name(bg_name)
-        results.extend(name_results)
+        results.update(set(name_results))
     if tag_ids:
         bg_tag_results = get_by_bg_tag(tag_ids)
         print(bg_tag_results)
-        results.extend(bg_tag_results)
+        results.update(bg_tag_results)
     if num_players:
         num_results = get_by_num_players(num_players)
-        results.extend(num_results)
+        results.update(num_results)
     if playtime:
         time_results = get_by_playtime(playtime)
-        results.extend(time_results)
+        results.update(time_results)
     if publisher:
         pub_results = get_by_publisher(publisher)
-        results.extend(pub_results)
+        results.update(pub_results)
     if designer:
         des_results = get_by_designer(designer)
-        results.extend(des_results)
+        results.update(des_results)
 
     return render_template("results.html", results=results)
 
@@ -291,7 +294,7 @@ def get_by_bg_name(bg_name):
                                                 (f"{bg_name_cat}")).all()
     print (f"BG Name Match: {name_search_results}")
 
-    return name_search_results
+    return set(name_search_results)
 
 def get_by_num_players(num_players):
     """Get board games with matching number of players."""
@@ -301,14 +304,14 @@ def get_by_num_players(num_players):
 
     if best_fit:
 
-        return best_fit
+        return set(best_fit)
 
     else:
         match_players = BoardGame.query.filter(BoardGame.min_players <= num_players,
                                                 BoardGame.max_players >= num_players).all()
         print(f"Other Matches: {match_players}")
 
-        return match_players
+        return set(match_players)
 
 def get_by_playtime(time):
     """Get board games with matching playtime."""
@@ -318,14 +321,14 @@ def get_by_playtime(time):
 
     if best_fit:
 
-        return best_fit
+        return set(best_fit)
 
     else:
         match_playtime = BoardGame.query.filter(BoardGame.min_time <= time,
                 BoardGame.max_time >= time).all()
         print(f"Other Matches: {match_playtime}")
 
-        return match_playtime
+        return set(match_playtime)
 
 def get_by_designer(designer):
     """Get board games with matching board game designer name."""
@@ -334,7 +337,7 @@ def get_by_designer(designer):
 
     if match:
 
-        return match
+        return set(match)
 
     else:
         print("no match")
@@ -350,7 +353,7 @@ def get_by_publisher(publisher):
                                                     f"{publisher_cat}")).all()
     print (f"publisher Name Match: {name_search_results}")
 
-    return name_search_results
+    return set(name_search_results)
 
 def get_by_bg_tag(tag_ids):
     """Get board games with matching board game tags."""
@@ -365,7 +368,7 @@ def get_by_bg_tag(tag_ids):
         bg_id = bgtag.bg_id
         bg_tag_match.add(BoardGame.query.get(bg_id))
 
-    return list(bg_tag_match)
+    return bg_tag_match
 
 
 ##############################################################
