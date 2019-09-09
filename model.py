@@ -127,6 +127,8 @@ class BgTag(db.Model):
     boardgame = db.relationship("BoardGame")
     user = db.relationship("User")
 
+    tags = db.relationship("Tag", backref="bg_tags")
+
     def __repr__(self):
         """Provide helpful Favorite info when printed."""
 
