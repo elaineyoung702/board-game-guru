@@ -96,13 +96,9 @@
   
 
   function favBoardGame(evt){
-    console.log(evt);
-    // console.log(evt.target.id);
     const inputs = {
       'bg_id' : {{boardgame.bg_id}},
     };
-
-    console.log(inputs);
 
     $.post('/new-favorite', inputs, changeFavButton);
   }
@@ -145,14 +141,11 @@
     }}
 
   function tagBoardGame(evt){
-    console.log(evt);
-    // console.log(evt.target.id);
+
     const inputs = {
       'tag_id' : evt.target.id,
       'bg_id' : {{boardgame.bg_id}},
     };
-
-    console.log(inputs);
 
     $.post('/bg-tagged', inputs, updateTagNum);
   }
