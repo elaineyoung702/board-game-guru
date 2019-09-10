@@ -20,30 +20,60 @@
         color: white;
       }
 
+      h1{
+        color: white;
+        padding-top: 50px;
+      }
+
       .base-page {
         top: 56px;
         position: relative;
         padding-top: 50px;
       }
 
+      .navbar{
+        border-style: solid;
+        border-color: grey;
+        border-width: 1px;
+      }
+
       .red_heart, .red_heart:hover {
         color : red;
       }
 
-      .container-fluid. .container {
-        background: url(/static/imgdiagonal-squares.png) no-repeat center center;
-        background-size: cover;
+      .base-page {
+        background: url(/static/img/pattern_smollest.png);
+        background-repeat: repeat;
         margin: 0;
         padding: 0;
+        padding-bottom: 200px;
       }
+
+      .hp-box{
+        border-color: grey;
+        border-style: solid;
+        border-width: 1px;
+        color: white;
+        margin-right: 35px;
+        margin-left: 35px;
+        padding-top: 20px;
+      }
+
+      .select-btn{
+        color: white;
+        border-style: solid;
+        border-color: grey;
+      }
+
+    </style>
 
     </style>
 </head>
 
 <body>
     <div class="container">
-    <div class="navbar fixed-top navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Board Game Guru</a>
+    <div class="navbar fixed-top" style="background-color: black;">
+        <a class="navbar-brand nav_text" href="/">Board Game Guru</a>
         <a class="nav_text" href="/favorites">Your Favorites</a>
         <a class="nav_text" href="/database">Database</a>
         <a class="nav_text" href="/search-form">Search</a>

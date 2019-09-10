@@ -2,32 +2,32 @@
 
 {% block body %}
 
-<div class="homepage hp-text">
+<div class="container-fluid selection">
         <div class="container">
-        <h1 class="col-12 offset-1" id="site-name">Board Game Guru</h1>
+        <h1 class="col-12 offset-1">Select from the below options!</h1>
         </div>
         <br><br><br><br>
         
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-3 hp-box offset-2">
+                <div class="col-3 hp-box">
                     Login to favorite board games or tag them in our database!<br><br>
                     <form action='/login' method='POST'>
                         <b>Email: <input type="email" name="email" required></b><br><br>
                         <b>Password: <input type="password" name="password" required></b><br><br>
-                        <a href='/favorites'><button type="submit" class="btn btn-primary">Login</button></a>
+                        <a href='/favorites'><button type="submit" class="btn select-btn" style="background-color: #4e1857;">Login</button></a>
                     </form>
                     <br><br>
                 </div>
 
                 <div class="col-3 hp-box">
                     Find a specific board game or receive a suggestion with our search engine!<br><br>
-                    <a href='/search-form'><button type="button" class="btn btn-secondary">Search</button></a><br><br>
+                    <a href='/search-form'><button type="button" class="btn select-btn" style="background-color: #8f0404;">Search</button></a><br><br>
                 </div>
 
                 <div class="col-3 hp-box">
                     View Board Game Guru's database of board games<br><br>
-                    <a href='/database'><button type="button" class="btn btn-success">Database</button></a><br><br>
+                    <a href='/database'><button type="button" class="btn select-btn" style="background-color: #ed8f13;">Database</button></a><br><br>
                 </div>
             </div>
         </div>
