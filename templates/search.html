@@ -8,7 +8,7 @@
 
 <div class="container">
 <br><br>
-<form action='/results'>
+<form class="nav_text" action='/results'>
     Board Game Name: <input type="text" name="bg_name"><br><br>
 
     Number of Players: <input type="number" name="num_players" min="1" max="100"><br><br>
@@ -17,7 +17,7 @@
 
     Board Game Categories/Tags:<br>
             {% for tag in tag_list %}
-            &emsp; <input type="checkbox" name="bg_tag" value={{tag.tag_id}}>{{tag.tag_name}}<br>
+            &emsp; <input type="checkbox" name="bg_tag" value={{tag.tag_id}}>{{tag.tag_name}}: <br>&emsp; &emsp; {{tag.tag_description}}<br>
             {% endfor %}
     <br>
     Board Game Publisher: <input type="text" name="publisher"><br><br>
@@ -25,12 +25,12 @@
     Board Game Designer: <select name="designer">
         {% for designer in designer_list %}
             <option value='{{designer}}'>{{designer}}</option><br>
-        {% endfor %} 
-        
+        {% endfor %}
+    </select>
 
-<br><br><br>
-<input type="submit" class="btn btn-primary" value="Search">
-<br><br><br>
+<br><br>        
+<input type="submit" class="btn select-btn" style="background-color: #8f0404;" value="Search">
+
 </form>
 </div>
 
