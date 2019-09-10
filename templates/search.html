@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<div class="container, jumbotron">
+<div class="jumbotron">
 <h2>Below you can search for a specific board game by name or you can search for criteria on what sort of board game you can play with the amount of players and time you have!</h2>
 </div>
 
@@ -24,15 +24,13 @@
 
     Board Game Designer: <select name="designer">
         {% for designer in designer_list %}
-            <option value='{{designer}}'>{{designer}}</option>
-        {% endfor %}
-        <br><br><br>
-
-        
+            <option value='{{designer}}'>{{designer}}</option><br>
+        {% endfor %} 
         
 
-    <input type="submit" class="btn btn-primary" value="Search">
-
+<br><br><br>
+<input type="submit" class="btn btn-primary" value="Search">
+<br><br><br>
 </form>
 </div>
 
