@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{boardgame.bg_name}}{% endblock %}
 {% block body %}
-<div id="bg_page" class="container-fluid bg-secondary text-light">
+<div id="bg_page" class="container-fluid text-light">
   <div class="row">
     <div class="col-sm-12">
       <h1 class="offset-4">{{boardgame.bg_name}}</h1>
@@ -22,7 +22,6 @@
         <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart-o black_heart" aria-hidden="true"></i></button>
       {% else %}
         <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart red_heart"></i></button>
-        <style> #heart {color : rgba(143, 4, 4);}</style>
       {% endif %}
     </div>
 
@@ -53,11 +52,11 @@
     <div class="col-sm-12"><br><br>
       {% for tag in tags %}
         {% if tag.tagged_by_user %}
-          <button type="button" class="btn btn-success btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
+          <button type="button" class="btn org-btn btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
           <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
           </button>
         {% else %}
-          <button type="button" class="btn btn-dark btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
+          <button type="button" class="btn btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
           <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
           </button>
         {% endif %}
@@ -113,8 +112,7 @@
     // console.log(tag_id);
 
     if (deleted === "true") {
-      $(`#${tag_id}`).removeClass('btn-success');
-      $(`#${tag_id}`).addClass('btn-dark');
+      $(`#${tag_id}`).removeClass('org-btn');
 
       let num = $(`#badge${tag_id}`).text();
       num = Number(num);
@@ -126,8 +124,7 @@
     }
 
     else {
-      $(`#${tag_id}`).removeClass('btn-dark');
-      $(`#${tag_id}`).addClass('btn-success');
+      $(`#${tag_id}`).addClass('org-btn');
 
       let num = $(`#badge${tag_id}`).text();
       num = Number(num);

@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <h3>Click on the Column Headers to sort the database!</h3>
 <br><br>
-<table id="database" class="bg-transparent table table-bordered table-sm">
+<table id="database" class="table-responsive table-bordered table-sm">
     <thead>
         <tr>
             <th></th>
@@ -23,15 +23,15 @@
     {% for bg in bg_obj_list %}
     <tr>
         <td><img src={{bg.thumbnail_url}}><br><br></td>
-        <td><a href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}</a><br><br>
+        <td><a class="tbl-link" href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}</a><br><br>
 
             {% if bg.bg_id not in user_favs %}
                 <button type="button" id={{bg.bg_id}}bg-id 
-                    class="btn btn-light heart_btn black_heart fa fa-heart-o">
+                    class="btn btn-light heart-btn black_heart fa fa-heart-o">
                 </button>
             {% else %}
                 <button type="button" id={{bg.bg_id}}bg-id 
-                    class="btn btn-light heart_btn red_heart fa fa-heart">
+                    class="btn btn-light heart-btn red_heart fa fa-heart">
                 </button>
                 
             {% endif %}
@@ -78,7 +78,7 @@
         });
       }
 
-    $('.heart_btn').on('click', favBoardGame);
+    $('.heart-btn').on('click', favBoardGame);
 
 </script>
 

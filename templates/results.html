@@ -25,7 +25,7 @@
             {% for bg in results %}
             <tr>
                 <td><img src={{bg.thumbnail_url}}></td>
-                <td><u><a class="nav_text" href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}<a></u></td>
+                <td><a class="tbl-link" href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}<a></td>
                 <td>minimum {{bg.min_players}} players</td>
                 <td>maximum {{bg.max_players}} players</td>
                 <td>suggested {{bg.suggested_players}} players</td>
