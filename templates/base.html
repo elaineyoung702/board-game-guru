@@ -17,20 +17,20 @@
 <body>
     <div class="container">
     <div class="navbar fixed-top" style="background-color: black;">
-        <a class="navbar-brand nav_text" href="/">Board Game Guru</a>
-        <a class="nav_text" href="/favorites">Your Favorites</a>
-        <a class="nav_text" href="/database">Database</a>
-        <a class="nav_text" href="/search-form">Search</a>
+        <a class="navbar-brand" href="/">Board Game Guru</a>
+        <a href="/favorites">Your Favorites</a>
+        <a href="/database">Database</a>
+        <a href="/search-form">Search</a>
         <span align="right">
           {% if session %}
-            <form class='nav_text' action='/logout' method='POST'>
-              <input class="btn select-btn" style="background-color: #8f0404;" type="submit" value="Logout">
+            <form action='/logout' method='POST'>
+              <input class="btn red-btn" type="submit" value="Logout">
             </form>
           {% else %}
-            <form class='nav_text' action='/login' method='POST'>
+            <form action='/login' method='POST'>
                 Email: <input type="email" name="email" required>
                 Password: <input type="password" name="password" required>
-                <input class="btn select-btn" style="background-color: #4e1857;" type="submit" value="Login">
+                <input class="btn purp-btn" type="submit" value="Login">
                  
             </form>
           {% endif %}
