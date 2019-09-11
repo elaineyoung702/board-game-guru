@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block title %}{{boardgame.bg_name}}{% endblock %}
-
 {% block body %}
 <div id="bg_page" class="container-fluid bg-secondary text-light">
   <div class="row">
@@ -20,9 +19,9 @@
       <u>Maximum Playtime</u>: {{boardgame.max_time}} minutes<br><br>
       <u>Year Published</u>: {{boardgame.year_published}}<br><br>
       {% if fav_exist == None %}
-        <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart-o" aria-hidden="true"></i></button>
+        <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart-o black_heart" aria-hidden="true"></i></button>
       {% else %}
-        <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart"></i></button>
+        <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart red_heart"></i></button>
         <style> #heart {color : rgba(143, 4, 4);}</style>
       {% endif %}
     </div>
@@ -80,22 +79,21 @@
     console.log(favorited);
     let heart = document.querySelector('#heart');
 
-    if (favorited === "true") {
-      $('#heart').removeClass("fa-heart-o");
-      $('#heart').addClass("fa-heart");
-      heart.style.color = rgba(143, 4, 4;
+    if (favorited === true) {
+      $('#heart').removeClass("black_heart fa-heart-o");
+      $('#heart').addClass("red_heart fa-heart");
     }
 
     else {
-      $('#heart').removeClass("fa-heart");
-      $('#heart').addClass("fa-heart-o");
+      $('#heart').removeClass("fa-heart red_heart");
+      $('#heart').addClass("fa-heart-o black_heart");
       $('#heart').attr("aria-hidden", "true");
-      heart.style.color = 'black';
     }
   }
   
 
   function favBoardGame(evt){
+    console.log(evt);
     const inputs = {
       'bg_id' : {{boardgame.bg_id}},
     };
@@ -141,7 +139,7 @@
     }}
 
   function tagBoardGame(evt){
-
+    // console.log(evt);
     const inputs = {
       'tag_id' : evt.target.id,
       'bg_id' : {{boardgame.bg_id}},
