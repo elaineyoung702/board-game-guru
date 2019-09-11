@@ -23,6 +23,7 @@ h1, h2, h3{
   color: white;
   padding-top: 70px;
   text-align: center;
+  margin-bottom: 10%;
 }
 
 .navbar {
@@ -67,7 +68,41 @@ h1, h2, h3{
   border-color: grey;
 }
 
-#results_table, #fav_table, #database {
+
+#fav_table>thead {
+  color: white;
+}
+#fav_table>tbody>tr:nth-child(odd)>td,
+#fav_table>tbody>tr:nth-child(odd)>th {
+  background-color: #4e1857;
+  color: white;
+}
+#fav_table>tbody>tr:nth-child(even)>td,
+#fav_table>tbody>tr:nth-child(even)>th {
+  background-color: transparent;
+  color: white;
+}
+
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: transparent;
+ }
+
+#results_table {
+  background-color: #8f0404;
+  color: white;
+}
+
+
+
+#database {
   background-color: black;
   color: white;
 }
+
+
+
+
+
+
