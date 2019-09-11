@@ -13,67 +13,8 @@
     <!-- for datatable display -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-    <!-- for navbar -->
-    <style type="text/css">
-
-      .nav_text{
-        color: white;
-      }
-
-      h1, h2, h3{
-        color: white;
-        padding-top: 70px;
-        text-align: center;
-      }
-
-      .navbar{
-        border-style: solid;
-        border-color: grey;
-        border-width: 1px;
-      }
-
-      .red_heart, .red_heart:hover {
-        color : red;
-      }
-
-      .selection{
-        text-align: center;
-      }
-
-      .base-page {
-        top: 56px;
-        position: relative;
-        padding-top: 50px;
-        background: url(/static/img/pattern_smollest.png);
-        background-repeat: repeat;
-        margin: 0;
-        padding: 0;
-        padding-bottom: 200px;
-        min-width: 100%;
-      }
-
-      .hp-box{
-        border-color: grey;
-        border-style: solid;
-        border-width: 1px;
-        color: white;
-        margin: 35px;
-        padding-top: 20px;
-        text-align: left;
-      }
-
-      .select-btn{
-        color: white;
-        border-style: solid;
-        border-color: grey;
-      }
-
-    #results_table {
-        background-color: black;
-        color: white;
-    }
-
-    </style>
+    <!-- for Board Game Guru styling -->
+    <link rel="stylesheet" href="/static/css/site.css"/>
 </head>
 
 <body>
@@ -86,7 +27,7 @@
         <span align="right">
           {% if session %}
             <form class='nav_text' action='/logout' method='POST'>
-              <input type="submit" value="Logout">
+              <input class="btn select-btn" style="background-color: #8f0404;" type="submit" value="Logout">
             </form>
           {% else %}
             <form class='nav_text' action='/login' method='POST'>
