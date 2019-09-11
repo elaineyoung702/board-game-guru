@@ -37,8 +37,10 @@ form {
 
 #site-name {
   font-size: 100px;
+  font-weight: bold;
   color: white;
   margin-bottom: 0;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 .navbar {
@@ -51,6 +53,7 @@ form {
   color: white;
   border-style: solid;
   border-color: white;
+  margin-top: 1%;
 }
 
 .heart-btn {
