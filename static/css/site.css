@@ -10,8 +10,9 @@
   text-align: center;
 }
 
-.nav_text {
-  color: white;
+img {
+  border-color: grey;
+  border-style: solid;
 }
 
 h1, h2, h3{
@@ -19,6 +20,19 @@ h1, h2, h3{
   padding-top: 70px;
   text-align: center;
   margin-bottom: 5%;
+}
+
+a {
+  color: white;
+}
+
+.tbl-link {
+  text-decoration: underline;
+  font-size: 150%;
+}
+
+.nav_text {
+  color: white;
 }
 
 #site-name {
@@ -31,6 +45,16 @@ h1, h2, h3{
   border-style: solid;
   border-color: grey;
   border-width: 1px;
+}
+
+.btn {
+  color: white;
+  border-style: solid;
+  border-color: white;
+}
+
+.heart-btn {
+  color: black;
 }
 
 .red_heart, .red_heart:hover {
@@ -63,12 +87,31 @@ h1, h2, h3{
   text-align: left;
 }
 
-.select-btn {
+
+#fav_button {
+  color: black;
+}
+
+.org-btn {
   color: white;
   border-style: solid;
   border-color: grey;
+  background-color: rgba(237, 143, 19);
 }
 
+.purp-btn {
+  color: white;
+  border-style: solid;
+  border-color: grey;
+  background-color: rgba(78, 24,87);
+}
+
+.red-btn {
+  color: white;
+  border-style: solid;
+  border-color: grey;
+  background-color: rgba(143, 4, 4);
+}
 
 #fav_table>thead {
   color: white;
