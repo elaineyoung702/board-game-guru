@@ -10,11 +10,6 @@
   text-align: center;
 }
 
-#site-name {
-  font-size: 100px;
-  color: white;
-}
-
 .nav_text {
   color: white;
 }
@@ -23,7 +18,13 @@ h1, h2, h3{
   color: white;
   padding-top: 70px;
   text-align: center;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
+}
+
+#site-name {
+  font-size: 100px;
+  color: white;
+  margin-bottom: 0;
 }
 
 .navbar {
@@ -33,7 +34,7 @@ h1, h2, h3{
 }
 
 .red_heart, .red_heart:hover {
-  color : red;
+  color : rgba(143, 4, 4, 0.9);
 }
 
 .selection {
@@ -83,21 +84,32 @@ h1, h2, h3{
   color: white;
 }
 
-
-.table-striped>tbody>tr:nth-child(odd)>td, 
-.table-striped>tbody>tr:nth-child(odd)>th {
-   background-color: transparent;
- }
-
-#results_table {
-  background-color: #8f0404;
+#results_table>thead {
+  color: white;
+}
+#results_table>tbody>tr:nth-child(odd)>td,
+#results_table>tbody>tr:nth-child(odd)>th {
+  background-color: rgba(143, 4, 4, 0.6);
+  color: white;
+}
+#results_table>tbody>tr:nth-child(even)>td,
+#results_table>tbody>tr:nth-child(even)>th {
+  background-color: transparent;
   color: white;
 }
 
 
-
-#database {
-  background-color: black;
+#database>thead {
+  color: white;
+}
+#database>tbody>tr:nth-child(odd)>td,
+#database>tbody>tr:nth-child(odd)>th {
+  background-color: rgba(237, 143, 19, 0.6);
+  color: white;
+}
+#database>tbody>tr:nth-child(even)>td,
+#database>tbody>tr:nth-child(even)>th {
+  background-color: transparent;
   color: white;
 }
 
