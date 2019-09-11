@@ -23,7 +23,7 @@
         <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart-o" aria-hidden="true"></i></button>
       {% else %}
         <button type="button" id="fav_button" class="btn btn-light">Favorite <i id="heart" class="fa fa-heart"></i></button>
-        <style> #heart {color : red;}</style>
+        <style> #heart {color : rgba(143, 4, 4);}</style>
       {% endif %}
     </div>
 
@@ -83,7 +83,7 @@
     if (favorited === "true") {
       $('#heart').removeClass("fa-heart-o");
       $('#heart').addClass("fa-heart");
-      heart.style.color = 'red';
+      heart.style.color = rgba(143, 4, 4;
     }
 
     else {
