@@ -52,11 +52,11 @@
     <div class="col-sm-12"><br><br>
       {% for tag in tags %}
         {% if tag.tagged_by_user %}
-          <button type="button" class="btn org-btn btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
+          <button type="button" class="btn org-btn btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}} data-toggle="tooltip" data-placement="top" title="Remove {{tag.tag_name}} tag from this board game">{{tag.tag_name}}
           <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
           </button>
         {% else %}
-          <button type="button" class="btn btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}}>{{tag.tag_name}}
+          <button type="button" class="btn btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}} data-toggle="tooltip" data-placement="top" title="Tag this board game as {{tag.tag_name}} - {{tag.tag_description}}">{{tag.tag_name}}
           <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
           </button>
         {% endif %}
@@ -68,8 +68,9 @@
 </div>
 
 <script src="https://kit.fontawesome.com/6f41ffb181.js"></script>
-
-<script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script><script>
 
 ///// following two functions handle user favoriting/unfavoriting board games
   function changeFavButton(response){
@@ -146,6 +147,20 @@
   }
 // jquery call for tagging/untagging board game
   $('.bgtag').on('click', tagBoardGame);
+
+
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+
+  $('.bgtag').on('mouseover', function(evt) {
+    console.log(evt);
+    console.log(evt.target.id);
+    let tag_id = evt.target.id;
+    $(`#${tag_id}`).tooltip('show');
+  });
 
 
 </script>
