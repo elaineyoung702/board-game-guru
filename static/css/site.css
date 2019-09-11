@@ -74,7 +74,7 @@ h1, h2, h3{
 }
 #fav_table>tbody>tr:nth-child(odd)>td,
 #fav_table>tbody>tr:nth-child(odd)>th {
-  background-color: #4e1857;
+  background-color: rgba(78, 24, 87, 0.6);
   color: white;
 }
 #fav_table>tbody>tr:nth-child(even)>td,
