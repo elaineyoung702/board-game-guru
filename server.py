@@ -138,7 +138,7 @@ def show_boardgame_info(bg_id):
 def show_database():
     """Show Board Game Database."""
 
-    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).limit(50).all()
+    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).all()
 
     print(session)
 
