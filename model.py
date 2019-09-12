@@ -35,7 +35,7 @@ class User(db.Model):
 
         return tags
 
-    def get_user_favs(self):  ###### returns correct things
+    def get_user_favs(self):
         """Get user's favorite board game bg_ids."""
 
         bg_id_tups = db.session.query(Favorite.bg_id).filter(Favorite.user_id == self.user_id).all()
@@ -221,7 +221,6 @@ if __name__ == "__main__":
     from flask import Flask
     app = Flask(__name__)
 
-    # from server import app
     connect_to_db(app)
     print("Connected to DB.")
 
