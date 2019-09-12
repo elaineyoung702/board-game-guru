@@ -1,61 +1,61 @@
 {% extends 'base.html' %}
+
 {% block title %}Board Game Database{% endblock %}
+
 {% block body %}
 <div class="container-fluid">
-    <h3>Click on the Column Headers to sort the database!</h3>
-<br><br>
+    <h3>View Board Game Guru's database below</h3>
+
 <table id="database" class="table-responsive table-bordered table-sm">
     <thead>
         <tr>
             <th></th>
-            <th data-sort-attr="bg_name">Board Game Name</th>
-            <th data-sort-attr="min_players">Minimum Players</th>
-            <th data-sort-attr="max_players">Maximum Players</th>
-            <th data-sort-attr="suggested_players">Suggested Players</th>
-            <th data-sort-attr="playtime">Playtime</th>
+            <th>Board Game Name</th>
+            <th>Minimum Players</th>
+            <th>Maximum Players</th>
+            <th>Suggested Players</th>
+            <th>Playtime</th>
             <th>Description</th>
-            <th data-sort-attr="publisher">Publisher</th>
-            <th data-sort-attr="year_published">Year Published</th>
-            <th data-sort-attr="designer">Designer</th>
+            <th>Publisher</th>
+            <th>Year Published</th>
+            <th>Designer</th>
         </tr>
     </thead>
     <tbody>
-    {% for bg in bg_obj_list %}
-    <tr>
-        <td><img src={{bg.thumbnail_url}}><br><br></td>
-        <td><a class="tbl-link" href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}</a><br><br>
-
-            {% if bg.bg_id not in user_favs %}
-                <button type="button" id={{bg.bg_id}}bg-id 
-                    class="btn btn-light heart-btn black_heart fa fa-heart-o">
-                </button>
-            {% else %}
-                <button type="button" id={{bg.bg_id}}bg-id 
-                    class="btn btn-light heart-btn red_heart fa fa-heart">
-                </button>
-                
-            {% endif %}
-
-        </td>
-        <td>minimum {{bg.min_players}} players</td>
-        <td>maximum {{bg.max_players}} players</td>
-        <td>suggested {{bg.suggested_players}} players</td>
-        <td>{{bg.playtime}} minutes</td>
-        <td>{{bg.description|truncate(200, False, '...', 0)}}</td>
-        <td>Publisher: {{bg.publisher}}</td>
-        <td>published in {{bg.year_published}}</td>
-        <td>Designer: {{bg.designer}}</td>
-    </tr>
-    {% endfor %}
+        {% for bg in bg_obj_list %}
+        <tr>
+            <td><a href="/boardgame/{{bg.bg_id}}"><img src={{bg.thumbnail_url}}></a></td>
+            <td><a class="tbl-link" href="/boardgame/{{bg.bg_id}}">{{bg.bg_name}}</a><br><br>
+                {% if bg.bg_id not in user_favs %}
+                    <button type="button" id={{bg.bg_id}}bg-id 
+                        class="btn btn-light heart-btn black_heart fa fa-heart-o">
+                    </button>
+                {% else %}
+                    <button type="button" id={{bg.bg_id}}bg-id 
+                        class="btn btn-light heart-btn red_heart fa fa-heart">
+                    </button>
+                {% endif %}
+            </td>
+            <td>minimum {{bg.min_players}} players</td>
+            <td>maximum {{bg.max_players}} players</td>
+            <td>suggested {{bg.suggested_players}} players</td>
+            <td>{{bg.playtime}} minutes</td>
+            <td>{{bg.description|truncate(200, False, '...', 0)}}</td>
+            <td>Publisher: {{bg.publisher}}</td>
+            <td>published in {{bg.year_published}}</td>
+            <td>Designer: {{bg.designer}}</td>
+        </tr>
+        {% endfor %}
     </tbody>
-
 </table>
 </div>
 
+<!-- for heart icon -->
 <script src="https://kit.fontawesome.com/6f41ffb181.js"></script>
 
 <script>
 
+    //below function handle quick-heart/favorite button on database page
     function favBoardGame(evt){
 
         let evt_bg_id = evt.target.id;
@@ -66,7 +66,6 @@
         };
 
         $.post('/new-favorite', inputs, (response) => {
-            console.log(response);
 
             if (response.favorited === true) {
               $(evt.target).removeClass("black_heart fa-heart-o");
