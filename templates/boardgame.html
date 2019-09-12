@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% block title %}{{boardgame.bg_name}}{% endblock %}
+
 {% block body %}
 <div id="bg_page" class="container-fluid text-light">
   <div class="row">
@@ -12,7 +14,6 @@
       <img src={{boardgame.thumbnail_url}}>
     </div>
     <div class="col-sm-4">
-      <br>
       <u>Playtime</u>: {{boardgame.playtime}} minutes<br><br>
       <u>Minimum Playtime</u>: {{boardgame.min_time}} minutes<br><br>
       <u>Maximum Playtime</u>: {{boardgame.max_time}} minutes<br><br>
@@ -32,48 +33,44 @@
       <u>Publisher</u>: {{boardgame.publisher}}<br><br>
       <u>Designer</u>: {{boardgame.designer}}<br><br>
     </div>
-    </div>
 
   <div class="row">
     <div class="col-10 offset-1">
       <br><br>
     <u>Description</u>:<br>
-        {{boardgame.description}}<br><br><br><br>
+        {{boardgame.description}}
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm-12">
-      <h5> Have you played {{boardgame.bg_name}} before? Help other users by categorizing it with the tag buttons below! </h5>
+      <h3> Have you played {{boardgame.bg_name}} before? Help other users by categorizing it with the tag buttons below! </h3>
     </div>
 
-    <div class="col-sm-12"><br><br>
+    <div class="col-sm-12">
       {% for tag in tags %}
         {% if tag.tagged_by_user %}
           <button type="button" class="btn org-btn btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}} data-toggle="tooltip" data-placement="top" title="Remove {{tag.tag_name}} tag from this board game">{{tag.tag_name}}
-          <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
+          <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span>
           </button>
         {% else %}
           <button type="button" class="btn btn-sm bgtag" id={{tag.tag_id}} value={{tag.tag_id}} data-toggle="tooltip" data-placement="top" title="Tag this board game as {{tag.tag_name}} - {{tag.tag_description}}">{{tag.tag_name}}
-          <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span><br>
+          <span class="badge" id=badge{{tag.tag_id}}>{{tag_dict[tag.tag_id]}}</span>
           </button>
         {% endif %}
       {% endfor %}
-    </div>
     </div></div>
 
-</div>
-
+<!-- for heart icons -->
 <script src="https://kit.fontawesome.com/6f41ffb181.js"></script>
+<!-- for popper.js to allow tooltips -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script><script>
 
-///// following two functions handle user favoriting/unfavoriting board games
+
+// following two functions handle user favoriting/unfavoriting board games
   function changeFavButton(response){
 
     let favorited = response.favorited;
-    console.log(favorited);
-    let heart = document.querySelector('#heart');
 
     if (favorited === true) {
       $('#heart').removeClass("black_heart fa-heart-o");
@@ -86,10 +83,9 @@
       $('#heart').attr("aria-hidden", "true");
     }
   }
-  
 
   function favBoardGame(evt){
-    console.log(evt);
+
     const inputs = {
       'bg_id' : {{boardgame.bg_id}},
     };
@@ -100,13 +96,11 @@
   $('#fav_button').on('click', favBoardGame);
 
 
-/////// functions below handle tagging/untagging board games
+// below 2 functions handle tagging/untagging board games
   function updateTagNum(response){
 
     let deleted = response.deleted;
-    // console.log(deleted);
     let tag_id = response.tag_id;
-    // console.log(tag_id);
 
     if (deleted === "true") {
       $(`#${tag_id}`).removeClass('org-btn');
@@ -133,7 +127,7 @@
     }}
 
   function tagBoardGame(evt){
-    // console.log(evt);
+
     const inputs = {
       'tag_id' : evt.target.id,
       'bg_id' : {{boardgame.bg_id}},
@@ -141,23 +135,21 @@
 
     $.post('/bg-tagged', inputs, updateTagNum);
   }
-// jquery call for tagging/untagging board game
+
   $('.bgtag').on('click', tagBoardGame);
 
 
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-
+// below functions handle tooltips to show tag descriptions
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 
   $('.bgtag').on('mouseover', function(evt) {
-    console.log(evt);
-    console.log(evt.target.id);
+
     let tag_id = evt.target.id;
     $(`#${tag_id}`).tooltip('show');
-  });
 
+  });
 
 </script>
 
