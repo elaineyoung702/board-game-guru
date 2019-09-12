@@ -36,19 +36,16 @@ def login_user():
                                  User.password == password
                                  ).first()
 
-        session["user_id"] = user.user_id   #set session[user]
+        session["user_id"] = user.user_id
         session["user_name"] = user.name.title()
         session["email"] = user.email
-
-        print(f"SESSION USER EMAIL: {session['email']}") #Debugging prints
-        print(f"Session User ID: {session['user_id']}") #Debugging prints
 
         return redirect("/favorites")
 
     except AttributeError:
-        print("no login") #Debugging prints
+        print("no login")
 
-        return render_template("register.html") ### REDIRECT THIS
+        return render_template("register.html")
 
 
 @app.route("/register", methods=["POST"])
@@ -56,7 +53,7 @@ def register_new_user():
     """Create New User Account."""
 
     name = request.form.get("name")
-    email = request.form.get("email")   #get email provided in form
+    email = request.form.get("email")
     password = request.form.get("password")
 
     if User.query.filter(User.email == email).first():
@@ -82,7 +79,6 @@ def logout_user():
     """Log User Out and Clear Session Data."""
 
     session.clear()
-    print(session)
 
     return redirect("/")
 
@@ -107,7 +103,6 @@ def show_boardgame_info(bg_id):
 
             user_id = user.user_id
             users_tags = set(user.get_tags_by_bg(bg_id))
-            print (users_tags)
 
             if all_tags:
                 for tag in all_tags:
@@ -115,7 +110,6 @@ def show_boardgame_info(bg_id):
 
             fav_exist = Favorite.query.filter(Favorite.user_id == user_id,
                                               Favorite.bg_id == bg_id).first()
-            print(fav_exist)
         
             return render_template("boardgame.html",
                                    boardgame=boardgame,
@@ -140,14 +134,11 @@ def show_database():
 
     bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).all()
 
-    print(session)
-
     if "user_id" in session:
         user = User.query.get(session["user_id"])
         user_id = session["user_id"]
 
         user_favs = User.get_user_favs(user)
-        print(user_favs)
 
         return render_template("database.html",
                                bg_obj_list=bg_obj_list,
@@ -173,7 +164,7 @@ def check_favorites_table():
             Favorite.query.filter(Favorite.fav_id==fav_id).delete()
             db.session.commit()
 
-            return jsonify( {"favorited" : "false", "bg_id" : bg_id})
+            return jsonify( {"favorited" : False, "bg_id" : bg_id})
 
         else:
             bg_id = request.form.get("bg_id")
@@ -243,7 +234,6 @@ def tag_a_board_game():
         bgtag = BgTag(user_id=user_id, bg_id=bg_id, tag_id=tag_id)
         db.session.add(bgtag)
         db.session.commit()
-        print(f"Added {bgtag}")
 
         return jsonify( {"deleted" : "false", "tag_id" : tag_id })
 
@@ -258,26 +248,29 @@ def show_results():
     designer = request.args.get("designer")
     publisher = request.args.get("publisher")
     tag_ids = request.args.getlist("bg_tag")
-    print(tag_ids)
 
     results = set()
 
     if bg_name:
         name_results = get_by_bg_name(bg_name)
         results.update(set(name_results))
+
     if tag_ids:
         bg_tag_results = get_by_bg_tag(tag_ids)
-        print(bg_tag_results)
         results.update(bg_tag_results)
+
     if num_players:
         num_results = get_by_num_players(num_players)
         results.update(num_results)
+
     if playtime:
         time_results = get_by_playtime(playtime)
         results.update(time_results)
+
     if publisher:
         pub_results = get_by_publisher(publisher)
         results.update(pub_results)
+
     if designer:
         des_results = get_by_designer(designer)
         results.update(des_results)
@@ -290,17 +283,18 @@ def get_by_bg_name(bg_name):
 
     bg_name = bg_name.title().replace(" ", "%")
     bg_name_cat = f"%{bg_name}%"
+
     name_search_results = BoardGame.query.filter(BoardGame.bg_name.like
                                                 (f"{bg_name_cat}")).all()
-    print (f"BG Name Match: {name_search_results}")
 
     return set(name_search_results)
+
 
 def get_by_num_players(num_players):
     """Get board games with matching number of players."""
 
-    best_fit = BoardGame.query.filter(BoardGame.suggested_players == num_players).all()
-    print(f"Num Player Best Fit: {best_fit}")
+    best_fit = BoardGame.query.filter(BoardGame.suggested_players == 
+                                        num_players).all()
 
     if best_fit:
 
@@ -309,15 +303,14 @@ def get_by_num_players(num_players):
     else:
         match_players = BoardGame.query.filter(BoardGame.min_players <= num_players,
                                                 BoardGame.max_players >= num_players).all()
-        print(f"Other Matches: {match_players}")
 
         return set(match_players)
+
 
 def get_by_playtime(time):
     """Get board games with matching playtime."""
 
     best_fit = BoardGame.query.filter(BoardGame.playtime == time).all()
-    print(f"Playtime Best Fit: {best_fit}")
 
     if best_fit:
 
@@ -326,9 +319,9 @@ def get_by_playtime(time):
     else:
         match_playtime = BoardGame.query.filter(BoardGame.min_time <= time,
                 BoardGame.max_time >= time).all()
-        print(f"Other Matches: {match_playtime}")
 
         return set(match_playtime)
+
 
 def get_by_designer(designer):
     """Get board games with matching board game designer name."""
@@ -340,20 +333,21 @@ def get_by_designer(designer):
         return set(match)
 
     else:
-        print("no match")
 
         return redirect("/search-form")
+
 
 def get_by_publisher(publisher):
     """Get board games with matching board game publisher name."""
 
     publisher = publisher.title().replace(" ", "%")
     publisher_cat = f"%{publisher}%"
+
     name_search_results = BoardGame.query.filter(BoardGame.publisher.like(
                                                     f"{publisher_cat}")).all()
-    print (f"publisher Name Match: {name_search_results}")
 
     return set(name_search_results)
+
 
 def get_by_bg_tag(tag_ids):
     """Get board games with matching board game tags."""
@@ -362,7 +356,6 @@ def get_by_bg_tag(tag_ids):
 
     for tag_id in tag_ids:
         bgtags = db.session.query(BgTag).filter(BgTag.tag_id==tag_id).all()
-        print(bgtags)
 
     for bgtag in bgtags:
         bg_id = bgtag.bg_id
@@ -371,14 +364,12 @@ def get_by_bg_tag(tag_ids):
     return bg_tag_match
 
 
+
 ##############################################################
 
 if __name__ == "__main__":
-    app.debug = True
 
     connect_to_db(app)
-
-    from flask_debugtoolbar import DebugToolbarExtension; DebugToolbarExtension(app)
 
     app.run(port=5000, host="0.0.0.0")
 
