@@ -2,11 +2,11 @@ from flask import Flask, request, session
 from flask import render_template, redirect, jsonify
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, BoardGame, User, Favorite, Tag, BgTag
-
+import os
 
 app = Flask(__name__)
 
-app.secret_key = "s00persekret"
+app.secret_key = os.environ.get('FLASK_SECRET_KEY')
 
 app.jinja_env.undefinted = StrictUndefined
 
@@ -375,7 +375,6 @@ def get_by_bg_tag(tag_ids):
 
 if __name__ == "__main__":
     app.debug = True
-    # app.jijna_env.auto_reload = app.debug
 
     connect_to_db(app)
 
