@@ -1,4 +1,4 @@
-/* Style for Board Game Guru Website */
+/* Styling for Board Game Guru Website */
 
 body * {
   font-family: 'Roboto', sans-serif;
@@ -18,7 +18,7 @@ img {
   margin-top: 10%;
 }
 
-h1, h2, h3{
+h1, h2, h3 {
   color: white;
   padding-top: 70px;
   text-align: center;
@@ -50,7 +50,6 @@ form {
 .navbar-brand {
   font-family: 'Josefin Sans', sans-serif;
 }
-
 
 .navbar {
   border-style: solid;
@@ -98,7 +97,6 @@ form {
   padding-top: 20px;
   text-align: left;
 }
-
 
 #fav_button {
   color: black;
@@ -152,7 +150,6 @@ form {
   background-color: transparent;
   color: white;
 }
-
 
 #database>thead {
   color: white;
