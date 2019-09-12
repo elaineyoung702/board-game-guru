@@ -15,16 +15,16 @@ class User(db.Model):
     password = db.Column(db.String(64), nullable=False)
 
     favorites = db.relationship("BoardGame", secondary="favorites",
-                                    backref="users") #####
+                                    backref="users")
     bg_tags = db.relationship("Tag", secondary="bg_tags",
-                                    backref="users") ####make sure returns objs
+                                    backref="users")
 
     def __repr__(self):
         """Provide helpful User info when printed."""
 
         return f"<User user_id={self.user_id}, name={self.name}, email={self.email}>"
 
-    def get_tags_by_bg(self, bg_id): ### returns correct tags
+    def get_tags_by_bg(self, bg_id):
         """Get user's tags for board game by board game id."""
 
         tag_ids = db.session.query(BgTag.tag_id
@@ -70,7 +70,7 @@ class BoardGame(db.Model):
     min_time = db.Column(db.Integer, nullable=False)
     max_time = db.Column(db.Integer, nullable=False)
 
-    year_published = db.Column(db.Integer, nullable=False) #maybe do datetime for learning!
+    year_published = db.Column(db.Integer, nullable=False)
 
     min_players = db.Column(db.Integer, nullable=False)
     max_players = db.Column(db.Integer, nullable=False)
