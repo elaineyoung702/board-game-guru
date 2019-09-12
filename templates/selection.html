@@ -1,36 +1,32 @@
 {% extends 'base.html' %}
 
+{% block title %}Board Game Guru Options{% endblock %}
+
 {% block body %}
 
 <div class="container-fluid selection">
-        <div class="container">
-        <h1>Select your adventure path</h1>
+    <h1>Select your adventure path</h1>
+    <div class="row">
+        <div class="col-3 hp-box">
+            Login and favorite the best board games! Tag/Categorize them in our database for other users!<br><br>
+            <form action='/login' method='POST'>
+                <b>Email: <input type="email" name="email" required></b><br><br>
+                <b>Password: <input type="password" name="password" required></b><br><br>
+                <a href='/favorites'><button type="submit" class="btn purp-btn">Login</button></a>
+            </form>
+            <br><br>
         </div>
-        
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-3 hp-box">
-                    Login and favorite the best board games! Tag/Categorize them in our database for other users!<br><br>
-                    <form action='/login' method='POST'>
-                        <b>Email: <input type="email" name="email" required></b><br><br>
-                        <b>Password: <input type="password" name="password" required></b><br><br>
-                        <a href='/favorites'><button type="submit" class="btn purp-btn">Login</button></a>
-                    </form>
-                    <br><br>
-                </div>
 
-                <div class="col-3 hp-box">
-                    Find a specific board game or discover a new favorite board game with our search engine!<br><br>
-                    <a href='/search-form'><button type="button" class="btn red-btn">Search</button></a><br><br>
-                </div>
+        <div class="col-3 hp-box">
+            Find a specific board game or discover a new favorite board game with our search engine!<br><br>
+            <a href='/search-form'><button type="button" class="btn red-btn">Search</button></a>
+        </div>
 
-                <div class="col-3 hp-box">
-                    Traverse our database of board games! <br><br>
-                    <a href='/database'><button type="button" class="btn org-btn">Database</button></a><br><br>
-                </div>
-
-            </div>
+        <div class="col-3 hp-box">
+            Traverse our database of board games!<br><br>
+            <a href='/database'><button type="button" class="btn org-btn">Database</button></a>
         </div>
     </div>
+</div>
 
 {% endblock %}
