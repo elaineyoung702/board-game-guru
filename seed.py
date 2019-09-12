@@ -138,37 +138,64 @@ def instantiate_test_users():
     romain = User(name="Romain", email="romain@test.com", password="test")
     ashley = User(name="Ashley", email="ashley@test.com", password="test")
     jay = User(name="Jay", email="jay@test.com", password="test")
+    meggie = User(name="Meggie", email="meggie@test.com", password="test")
     jeff = User(name="Jeff", email="jeff@test.com", password="test")
     chance = User(name="Chance", email="chance@test.com", password="test")
     natalie = User(name="Natalie", email="natalie@test.com", password="test")
     shadi = User(name="Shadi", email="shadi@test.com", password="test")
     alyssa = User(name="Alyssa", email="alyssa@test.com", password="test")
-
-
+    danners = User(name="Danners", email="danners@test.com", password="test")
+    steph = User(name="Steph", email="steph@test.com", password="test")
+    kiko = User(name="kiko", email="kiko@test.com", password="test")
+    cj = User(name="CJ", email="cj@test.com", password="test")
 
 
     db.session.add_all([elaine, jack, vonny, romain, ashley, jay, jeff, chance, 
-                        natalie, shadi, alyssa])
+                        natalie, shadi, alyssa, meggie, steph, kiko, cj])
 
+    lst = ["Mario Speedwagon","Petey Cruiser","Anna Sthesia","Paul Molive",
+            "Anna Mull","Gail Forcewind","Paige Turner","Bob Frapples",
+            "Walter Melon","Nick R. Bocker","Barb Ackue","Buck Kinnear","Greta Life",
+            "Ira Membrit","Shonda Leer","Brock Lee","Maya Didas","Pete Sariya",
+            "Monty Carlo","Sal Monella","Sue Vaneer","Cliff Hanger","Barb Dwyer",
+            "Terry Aki","Cory Ander","Robin Banks","Jimmy Changa","Barry Wine",
+            "Wilma Mumduya","Buster Hyman","Poppa Cherry","Zack Lee","Don Stairs",
+            "Saul T. Balls","Peter Pants","Hal Appeno ","Otto Matic","Moe Fugga",
+            "Graham Cracker","Tom Foolery","Al Dente","Bud Wiser","Polly Tech",
+            "Holly Graham","Frank N. Stein","Cam L. Toe","Pat Agonia","Tara Zona",
+            "Barry Cade","Phil Anthropist ","Marvin Gardens","Phil Harmonic ",
+            "Arty Ficial","Will Power","Donatella Nobatti","Juan Annatoo",
+            "Stew Gots","Anna Rexia","Bill Emia","Curt N. Call","Max Emum",
+            "Minnie Mum","Bill Yerds","Hap E. Birthday","Matt Innae","Polly Science",
+            "Tara Misu","Ed U. Cation","Gerry Atric","Kerry Oaky","Midge Itz",
+            "Gabe Lackmen","Mary Christmas","Dan Druff","Jim Nasium","Angie O. Plasty",
+            "Ella Vator","Sal Vidge","Bart Ender","Artie Choke","Hans Olo",
+            "Hugh Briss","Gene Poole","Ty Tanic","Manuel Labor","Lynn Guini",
+            "Claire Voyant","Peg Leg","Jack E. Sack","Marty Graw","Ash Wednesday",
+            "Olive Yu","Gene Jacket","Tom Atoe","Doug Out","Sharon Needles",
+            "Beau Tie","Serj Protector"]
+
+    for name in lst:
+        email = name.replace(" ", "_")
+        email = email + "@test.com"
+        user = User(name=name, email=email, password="test")
+        db.session.add(user)
+        db.session.commit()
 
 
 ##############################################################
 
 if __name__ == "__main__":
-    import sys
 
     connect_to_db(app)
     db.create_all()
+
     instantiate_tags()
 
-    try:
-        if sys.argv[1] == '--create-user':
-            db.session.add(User(name='TEST', email='test@test.com', password='test'))
-            db.session.commit()
-    except IndexError:       
-        for i in range (1,5701):
-            parse_please(f"{i}.xml")
-            # instantiate_test_users()
+    instantiate_test_users()
+
+    for i in BG_DB_LIST:
+        parse_please(f"{i}.xml")
 
 # 1 - 5701
 # 5703, 11670
