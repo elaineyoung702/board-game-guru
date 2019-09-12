@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from sqlalchemy import func
 # from model import app
 from model import connect_to_db, db
-from model import BoardGame, User, Tag
+from model import BoardGame, User, Tag, BgTag
 
 from server import app
 
@@ -95,20 +95,38 @@ def parse_please(path):
 def instantiate_tags():
     """Instantiating Predetermined Tags/Categories for Board Games."""
 
-    comp = Tag(tag_name="Competitive", tag_description="Players play against each other and compete to win via direct conflict")
-    coop = Tag(tag_name="Cooperative", tag_description="Players usually play against the game and work together towards the same goal")
-    euro = Tag(tag_name="Eurogame", tag_description="Players compete to win with indirect conflict, emphasizing individual development and comparative achievement")
-    light = Tag(tag_name="Light Strategy", tag_description="Easy strategy")   
-    heavy = Tag(tag_name="Heavy Strategy", tag_description="Heavy strategy - not for the lighthearted!")
-    classic = Tag(tag_name="Classic", tag_description="Classic Board Game")
-    family = Tag(tag_name="Family", tag_description="Good for kids and parents of all ages")
-    adult = Tag(tag_name="Mature/Adult", tag_description="Suggested for mature audiences only")
-    legacy = Tag(tag_name="Legacy", tag_description="Legacy games incoporate a changing board and ongoing story changes")
-    exp = Tag(tag_name="Expansion", tag_description="Expansion of an original game")
-    port = Tag(tag_name="Easily Portable", tag_description="Game is easy to take on the go.")
+    comp = Tag(tag_name="Competitive",
+                tag_description="Players play against each other and compete to \
+                win via direct conflict")
+    coop = Tag(tag_name="Cooperative",
+                tag_description="Players play against the game and work together \
+                towards the same goal")
+    euro = Tag(tag_name="Eurogame",
+                tag_description="Players compete to win with indirect conflict, \
+                emphasizing individual development and comparative achievement")
+    light = Tag(tag_name="Light Strategy",
+                tag_description="Easy strats")   
+    heavy = Tag(tag_name="Heavy Strategy",
+                tag_description="Not for the lighthearted!")
+    classic = Tag(tag_name="Classic",
+                tag_description="Old School Games")
+    family = Tag(tag_name="Family",
+                tag_description="Good for kids and parents of all ages")
+    adult = Tag(tag_name="Mature/Adult",
+                tag_description="For mature audiences only")
+    hide = Tag(tag_name="Hidden Role",
+                tag_description="Who are the good guys? Who are badguiz?")
+    legacy = Tag(tag_name="Legacy",
+                tag_description="Game incorporates a changing board and ongoing \
+                story plotline")
+    exp = Tag(tag_name="Expansion",
+                tag_description="Branch off of an original game")
+    port = Tag(tag_name="Easily Portable",
+                tag_description="Easy to take on the go!")
 
 
-    db.session.add_all([comp, coop, euro, light, heavy, classic, family, adult, legacy, exp, port])
+    db.session.add_all([comp, coop, euro, light, heavy, classic, family, adult,
+                        legacy, exp, port, hide])
     db.session.commit()
 
 
@@ -182,6 +200,30 @@ def instantiate_test_users():
         db.session.add(user)
         db.session.commit()
 
+    elaine_favs = [233312, 234396, 198773, 171233, 161936, 143884, 136063, 1198]
+
+    for bg_id in elaine_favs:
+        new_fav = elaine.add_fav(BoardGame.query.filter(BoardGame.bg_id==bg_id).one())
+
+    for i in range(1, 80):
+        bgtag = BgTag(user_id=i, bg_id=161936, tag_id=2)
+        bgtag1 = BgTag(user_id=i, bg_id=161936, tag_id=9)
+        bgtag2 = BgTag(user_id=i, bg_id=233312, tag_id=2)
+        bgtag3 = BgTag(user_id=i, bg_id=233312, tag_id=4)
+        bgtag4 = BgTag(user_id=i, bg_id=233312, tag_id=7)
+        bgtag5 = BgTag(user_id=i, bg_id=37111, tag_id=1)
+        bgtag6 = BgTag(user_id=i, bg_id=37111, tag_id=2)
+        bgtag7 = BgTag(user_id=i, bg_id=37111, tag_id=12)
+        bgtag8 = BgTag(user_id=i, bg_id=1198, tag_id=1)
+        bgtag9 = BgTag(user_id=i, bg_id=1198, tag_id=6)
+        bgtag10 = BgTag(user_id=i, bg_id=1198, tag_id=7)
+        bgtag11 = BgTag(user_id=i, bg_id=37111, tag_id=11)
+
+        db.session.add_all([bgtag, bgtag1, bgtag2, bgtag3, bgtag4, bgtag5, bgtag6,
+                            bgtag7, bgtag8, bgtag9, bgtag10, bgtag11])
+        
+    db.session.commit()
+
 
 ##############################################################
 
@@ -190,12 +232,15 @@ if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
 
+    for i in BG_DB_LIST:
+        parse_please(f"{i}.xml")
+
     instantiate_tags()
 
     instantiate_test_users()
 
-    for i in BG_DB_LIST:
-        parse_please(f"{i}.xml")
+
+
 
 # 1 - 5701
 # 5703, 11670
