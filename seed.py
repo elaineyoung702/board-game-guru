@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 from sqlalchemy import func
-# from model import app
 from model import connect_to_db, db
 from model import BoardGame, User, Tag, BgTag
 
@@ -171,7 +170,7 @@ def instantiate_test_users():
     db.session.add_all([elaine, jack, vonny, romain, ashley, jay, jeff, chance, 
                         natalie, shadi, alyssa, meggie, steph, kiko, cj])
 
-    lst = ["Mario Speedwagon","Petey Cruiser","Anna Sthesia","Paul Molive",
+    fake_user_lst = ["Mario Speedwagon","Petey Cruiser","Anna Sthesia","Paul Molive",
             "Anna Mull","Gail Forcewind","Paige Turner","Bob Frapples",
             "Walter Melon","Nick R. Bocker","Barb Ackue","Buck Kinnear","Greta Life",
             "Ira Membrit","Shonda Leer","Brock Lee","Maya Didas","Pete Sariya",
@@ -193,7 +192,7 @@ def instantiate_test_users():
             "Olive Yu","Gene Jacket","Tom Atoe","Doug Out","Sharon Needles",
             "Beau Tie","Serj Protector"]
 
-    for name in lst:
+    for name in fake_user_lst:
         email = name.replace(" ", "_")
         email = email + "@test.com"
         user = User(name=name, email=email, password="test")
@@ -221,7 +220,7 @@ def instantiate_test_users():
 
         db.session.add_all([bgtag, bgtag1, bgtag2, bgtag3, bgtag4, bgtag5, bgtag6,
                             bgtag7, bgtag8, bgtag9, bgtag10, bgtag11])
-        
+
     db.session.commit()
 
 
@@ -238,12 +237,6 @@ if __name__ == "__main__":
     instantiate_tags()
 
     instantiate_test_users()
-
-
-
-
-# 1 - 5701
-# 5703, 11670
 
 
 
