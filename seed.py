@@ -2,9 +2,7 @@ from bs4 import BeautifulSoup
 from sqlalchemy import func
 from model import connect_to_db, db
 from model import BoardGame, User, Tag, BgTag
-
 from server import app
-
 import html
 
 
@@ -129,100 +127,6 @@ def instantiate_tags():
     db.session.commit()
 
 
-BG_DB_LIST = [13,15,34,74,163,171,188,320,811,822,859,891,1198,1258,1294,1297,
-                1301,1339,1406,1501,1927,2001,2002,2223,2243,2281,2407,2452,2453,
-                2655,2679,2719,2921,2957,3076,3837,3955,4143,4991,5048,5432,5522,
-                5839,6541,7336,7927,9209,9220,9963,10361,10547,10681,11542,16992,
-                25669,30549,31260,31481,36235,37111,37904,38378,39856,40381,40398,
-                43443,43539,50381,65244,68448,70323,70919,82168,85905,97903,98229,
-                98778,102548,102652,110327,123260,123540,124361,124708,124742,126163,
-                129437,131357,133473,136063,139976,141648,143884,145659,146021,
-                147666,148228,152241,155068,156546,156689,157969,159515,160499,
-                161936,162886,163908,167791,169124,169786,171131,171233,171890,
-                172225,172242,173346,174430,178900,181304,185154,193621,194594,
-                194607,195856,198773,204053,205637,209685,217085,217372,220775,
-                221107,224037,225694,228660,229491,230802,232823,233312,234396,
-                242302,244992,245271,249821,254640,266192,273330]
-
-
-
-def instantiate_test_users():
-    """Create fake user data for demonstration of tags."""
-
-    elaine = User(name="Elaine", email="elaine@test.com", password="test")
-    jack = User(name="Jack", email="jack@test.com", password="test")
-    vonny = User(name="Vonny", email="vonny@test.com", password="test")
-    romain = User(name="Romain", email="romain@test.com", password="test")
-    ashley = User(name="Ashley", email="ashley@test.com", password="test")
-    jay = User(name="Jay", email="jay@test.com", password="test")
-    meggie = User(name="Meggie", email="meggie@test.com", password="test")
-    jeff = User(name="Jeff", email="jeff@test.com", password="test")
-    chance = User(name="Chance", email="chance@test.com", password="test")
-    natalie = User(name="Natalie", email="natalie@test.com", password="test")
-    shadi = User(name="Shadi", email="shadi@test.com", password="test")
-    alyssa = User(name="Alyssa", email="alyssa@test.com", password="test")
-    danners = User(name="Danners", email="danners@test.com", password="test")
-    steph = User(name="Steph", email="steph@test.com", password="test")
-    kiko = User(name="kiko", email="kiko@test.com", password="test")
-    cj = User(name="CJ", email="cj@test.com", password="test")
-
-
-    db.session.add_all([elaine, jack, vonny, romain, ashley, jay, jeff, chance, 
-                        natalie, shadi, alyssa, meggie, steph, kiko, cj])
-
-    fake_user_lst = ["Mario Speedwagon","Petey Cruiser","Anna Sthesia","Paul Molive",
-            "Anna Mull","Gail Forcewind","Paige Turner","Bob Frapples",
-            "Walter Melon","Nick R. Bocker","Barb Ackue","Buck Kinnear","Greta Life",
-            "Ira Membrit","Shonda Leer","Brock Lee","Maya Didas","Pete Sariya",
-            "Monty Carlo","Sal Monella","Sue Vaneer","Cliff Hanger","Barb Dwyer",
-            "Terry Aki","Cory Ander","Robin Banks","Jimmy Changa","Barry Wine",
-            "Wilma Mumduya","Buster Hyman","Poppa Cherry","Zack Lee","Don Stairs",
-            "Saul T. Balls","Peter Pants","Hal Appeno ","Otto Matic","Moe Fugga",
-            "Graham Cracker","Tom Foolery","Al Dente","Bud Wiser","Polly Tech",
-            "Holly Graham","Frank N. Stein","Cam L. Toe","Pat Agonia","Tara Zona",
-            "Barry Cade","Phil Anthropist ","Marvin Gardens","Phil Harmonic ",
-            "Arty Ficial","Will Power","Donatella Nobatti","Juan Annatoo",
-            "Stew Gots","Anna Rexia","Bill Emia","Curt N. Call","Max Emum",
-            "Minnie Mum","Bill Yerds","Hap E. Birthday","Matt Innae","Polly Science",
-            "Tara Misu","Ed U. Cation","Gerry Atric","Kerry Oaky","Midge Itz",
-            "Gabe Lackmen","Mary Christmas","Dan Druff","Jim Nasium","Angie O. Plasty",
-            "Ella Vator","Sal Vidge","Bart Ender","Artie Choke","Hans Olo",
-            "Hugh Briss","Gene Poole","Ty Tanic","Manuel Labor","Lynn Guini",
-            "Claire Voyant","Peg Leg","Jack E. Sack","Marty Graw","Ash Wednesday",
-            "Olive Yu","Gene Jacket","Tom Atoe","Doug Out","Sharon Needles",
-            "Beau Tie","Serj Protector"]
-
-    for name in fake_user_lst:
-        email = name.replace(" ", "_")
-        email = email + "@test.com"
-        user = User(name=name, email=email, password="test")
-        db.session.add(user)
-        db.session.commit()
-
-    elaine_favs = [233312, 234396, 198773, 171233, 161936, 143884, 136063, 1198]
-
-    for bg_id in elaine_favs:
-        new_fav = elaine.add_fav(BoardGame.query.filter(BoardGame.bg_id==bg_id).one())
-
-    for i in range(1, 80):
-        bgtag = BgTag(user_id=i, bg_id=161936, tag_id=2)
-        bgtag1 = BgTag(user_id=i, bg_id=161936, tag_id=9)
-        bgtag2 = BgTag(user_id=i, bg_id=233312, tag_id=2)
-        bgtag3 = BgTag(user_id=i, bg_id=233312, tag_id=4)
-        bgtag4 = BgTag(user_id=i, bg_id=233312, tag_id=7)
-        bgtag5 = BgTag(user_id=i, bg_id=37111, tag_id=1)
-        bgtag6 = BgTag(user_id=i, bg_id=37111, tag_id=2)
-        bgtag7 = BgTag(user_id=i, bg_id=37111, tag_id=12)
-        bgtag8 = BgTag(user_id=i, bg_id=1198, tag_id=1)
-        bgtag9 = BgTag(user_id=i, bg_id=1198, tag_id=6)
-        bgtag10 = BgTag(user_id=i, bg_id=1198, tag_id=7)
-        bgtag11 = BgTag(user_id=i, bg_id=37111, tag_id=11)
-
-        db.session.add_all([bgtag, bgtag1, bgtag2, bgtag3, bgtag4, bgtag5, bgtag6,
-                            bgtag7, bgtag8, bgtag9, bgtag10, bgtag11])
-
-    db.session.commit()
-
 
 ##############################################################
 
@@ -233,10 +137,6 @@ if __name__ == "__main__":
 
     for i in BG_DB_LIST:
         parse_please(f"{i}.xml")
-
-    instantiate_tags()
-
-    instantiate_test_users()
 
 
 
