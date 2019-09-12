@@ -1,21 +1,18 @@
 {% extends 'base.html' %}
+
 {% block title %}User Registration{% endblock %}
 
 {% block body %}
 
-<br><br>
-<div class="row">
-    <br><br>
-    <div class="col-sm-8 offset-2">
-        <h3>To take full advantage of our site's features, please create a Board Game Guru User account.</h3><br><br>
-        <form action='/register' method='POST'>
-            <div class="form-group">
-                Name: <input type="text" class="form-control" name="name" required><br>
-                Email: <input class="form-control" type="email" name="email" required><br>
-                Password: <input class="form-control" type="password" name="password" required><br>
-                <input class="btn select-btn" type="submit" style="background-color: #ed8f13;" value="Register">
-            </div>
-        </form>
-    </div></div>
+<div class="container">
+    <h3>To take full advantage of our site's features, please create a Board Game Guru User Account.</h3>
+    
+    <form action='/register' method='POST'>
+        Name: <input type="text" class="form-control" name="name" required><br>
+        Email: <input class="form-control" type="email" name="email" required><br>
+        Password: <input class="form-control" type="password" name="password" required><br>
+        <input class="btn org-btn" type="submit" value="Register">
+    </form>
+ </div>
 
 {% endblock %}
