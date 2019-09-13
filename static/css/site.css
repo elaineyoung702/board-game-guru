@@ -18,7 +18,7 @@ img {
   margin-top: 10%;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h5 {
   color: white;
   padding-top: 70px;
   text-align: center;
@@ -52,6 +52,7 @@ form {
 }
 
 .navbar {
+  background-color: black;
   border-style: solid;
   border-color: grey;
   border-width: 1px;
