@@ -53,7 +53,6 @@ class User(db.Model):
         self.favorites.append(boardgame)
 
 
-
 class BoardGame(db.Model):
     """Board Game Object."""
 
