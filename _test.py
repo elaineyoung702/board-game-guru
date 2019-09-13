@@ -14,7 +14,7 @@ class BoardGameGuruTests(unittest.TestCase):
 
     def test_homepage(self):
         result = self.client.get("/")
-        self.assertIn(b"Welcome to the Board Game Guru", result.data)
+        self.assertIn(b"Enter Site", result.data)
 
 
 class BoardGameGuruDatabase(unittest.TestCase):
@@ -34,7 +34,7 @@ class BoardGameGuruDatabase(unittest.TestCase):
 
     def test_db_page(self):
         result = self.client.get("/database")
-        self.assertIn(b"Column Headers", result.data)
+        self.assertIn(b"View Board Game Guru's database below", result.data)
 
     def test_user_query(self):
         user = User.query.get(3)
@@ -58,7 +58,6 @@ class BoardGameGuruDatabase(unittest.TestCase):
         self.assertIn("Classic", tag1.tag_name)
         self.assertIs(3, tag2.tag_id)
 
-
     def test_get_tags_by_bg_method(self):
         user = User.query.get(1)
         [tag] = user.get_tags_by_bg(36218)
@@ -69,13 +68,11 @@ class BoardGameGuruDatabase(unittest.TestCase):
         fav_bg_id = user.get_user_favs()
         self.assertIn(9000, fav_bg_id)
 
-
     def test_boardgame_bg_tags(self):
         bg = BoardGame.query.get(9000)
         [bgtag1, bgtag2] = bg.bg_tags
         self.assertIs(1, bgtag1.tag_id)
         self.assertIs(1, bgtag2.tag_id)
-
 
     def test_count_tags_method(self):
         bg = BoardGame.query.get(9000)
