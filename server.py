@@ -1,5 +1,4 @@
-from flask import Flask, request, session
-from flask import render_template, redirect, jsonify
+from flask import Flask, request, session, render_template, redirect, jsonify
 from jinja2 import StrictUndefined
 from model import connect_to_db, db, BoardGame, User, Favorite, Tag, BgTag
 import os
@@ -16,6 +15,7 @@ def show_front_page():
     """Display Board Game Guru Front Page."""
 
     return render_template("homepage.html")
+
 
 @app.route("/selection")
 def display_homepage():
@@ -132,7 +132,7 @@ def show_boardgame_info(bg_id):
 def show_database():
     """Show Board Game Database."""
 
-    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).all()
+    bg_obj_list = BoardGame.query.order_by(BoardGame.bg_id.desc()).limit(25).all()
 
     if "user_id" in session:
         user = User.query.get(session["user_id"])
