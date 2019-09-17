@@ -9,8 +9,8 @@ Elaine Young is the Bay Area Software Engineer that created Board Game Guru. For
 ## Tech Stack
 
 __Back-end tools and languages:__
-    ..* Flask
-    ..* Python3.6
+    * Flask
+    * Python3.6
     * PostgreSQL
     * SQLAlchemy
     * XML
