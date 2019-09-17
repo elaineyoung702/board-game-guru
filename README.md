@@ -16,15 +16,15 @@ __Back-end tools and languages:__
     * XML
 
 __Front-end tools and languages:__
-    * JavaScript
-    * Popper.js
-    * JQuery
-    * AJAX
-    * JSON
-    * Jinja2
-    * Bootstrap
-    * HTML5
-    * CSS3
+  * JavaScript
+  * Popper.js
+  * JQuery
+  * AJAX
+  * JSON
+  * Jinja2
+  * Bootstrap
+  * HTML5
+  * CSS3
 
 __APIs used:__
     * BeautifulSoup
