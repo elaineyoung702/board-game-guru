@@ -39,7 +39,7 @@ Users can create a Board Game Guru Account.
 
 Users can browse database of board games.
 
-
+![alt text](https://github.com/elaineyoung702/board-game-guru/blob/master/static/img/board-game-guru-database.png "Board Game Guru Database")
 
 
 Users can favorite a board game and add it to their Favorites Collection. This can be done from the board game page or from browsing the database.
