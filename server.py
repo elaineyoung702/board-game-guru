@@ -150,6 +150,7 @@ def show_database():
 
 @app.route("/new-favorite", methods=["POST"])
 def check_favorites_table():
+    """Check if Favorite Exists for User to either Instantiate or Delete."""
 
     try:
         bg_id = request.form.get("bg_id")
@@ -181,7 +182,7 @@ def check_favorites_table():
 
 @app.route("/favorites")
 def show_user_favorites():
-    """Show User"s Favorite Board Games."""
+    """Show User's Favorite Board Games."""
 
     if "user_id" in session:
         user = User.query.get(session["user_id"])
@@ -215,6 +216,7 @@ def show_search_form():
 
 @app.route("/bg-tagged", methods=["POST"])
 def tag_a_board_game():
+    """Checks Whether to Instantiate or Delete BgTag for User"""
 
     tag_id = request.form.get("tag_id")
     user_id = session["user_id"]
